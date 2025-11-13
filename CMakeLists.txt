@@ -17,7 +17,11 @@ add_executable(ProfessorScheduler_Public_ main.cpp
         MainWindow.cpp
         MainWindow.h
         Schedule.cpp
-        Schedule.h)
+        Schedule.h
+        CreateAccount.cpp
+        CreateAccount.h
+        User.cpp
+        User.h)
 target_link_libraries(ProfessorScheduler_Public_
         Qt::Core
         Qt::Gui

@@ -1,24 +1,27 @@
-#include "MainWindow.h"
+//
+// Created by Stefan Pirvu on 13.11.2025.
+//
+
 #include "CreateAccount.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QFrame>
+#include <QCheckBox>
 #include <QMessageBox>
 #include <QWidget>
 
-MainWindow::MainWindow(QWidget *parent)
+CreateAccount::CreateAccount(QWidget *parent)
     : QMainWindow(parent) {
     setupUi();
     applyStyles();
 }
 
-MainWindow::~MainWindow() {
+CreateAccount::~CreateAccount() {
 }
 
-void MainWindow::setupUi() {
+void CreateAccount::setupUi() {
     auto *centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -38,7 +41,7 @@ void MainWindow::setupUi() {
     brandTitle->setObjectName("brandTitle");
     brandTitle->setWordWrap(true);
 
-    auto *brandSubtitle = new QLabel("Manage your academic\nschedule efficiently", this);
+    auto *brandSubtitle = new QLabel("Join us to organize your\nacademic life better", this);
     brandSubtitle->setObjectName("brandSubtitle");
     brandSubtitle->setWordWrap(true);
 
@@ -48,7 +51,7 @@ void MainWindow::setupUi() {
     leftLayout->addWidget(brandSubtitle);
     leftLayout->addStretch();
 
-    // Right panel - Login form
+    // Right panel - Create Account form
     auto *rightPanel = new QWidget(this);
     rightPanel->setObjectName("rightPanel");
 
@@ -60,17 +63,29 @@ void MainWindow::setupUi() {
     auto *formLayout = new QVBoxLayout(formWidget);
     formLayout->setSpacing(0);
 
-    // Welcome header
-    auto *welcomeLabel = new QLabel("Welcome Back", this);
-    welcomeLabel->setObjectName("welcomeLabel");
+    // Header
+    auto *headerLabel = new QLabel("Create Account", this);
+    headerLabel->setObjectName("welcomeLabel");
 
-    auto *subtitleLabel = new QLabel("Please login to your account", this);
+    auto *subtitleLabel = new QLabel("Fill in your details to get started", this);
     subtitleLabel->setObjectName("subtitleLabel");
 
-    formLayout->addWidget(welcomeLabel);
+    formLayout->addWidget(headerLabel);
     formLayout->addSpacing(10);
     formLayout->addWidget(subtitleLabel);
-    formLayout->addSpacing(40);
+    formLayout->addSpacing(35);
+
+    // Full Name field
+    auto *nameLabel = new QLabel("Full Name", this);
+    nameLabel->setObjectName("fieldLabel");
+    fullNameLineEdit = new QLineEdit(this);
+    fullNameLineEdit->setObjectName("inputField");
+    fullNameLineEdit->setPlaceholderText("Enter your full name");
+
+    formLayout->addWidget(nameLabel);
+    formLayout->addSpacing(8);
+    formLayout->addWidget(fullNameLineEdit);
+    formLayout->addSpacing(20);
 
     // Email field
     auto *emailLabel = new QLabel("Email", this);
@@ -82,7 +97,7 @@ void MainWindow::setupUi() {
     formLayout->addWidget(emailLabel);
     formLayout->addSpacing(8);
     formLayout->addWidget(emailLineEdit);
-    formLayout->addSpacing(25);
+    formLayout->addSpacing(20);
 
     // Password field
     auto *passwordLabel = new QLabel("Password", this);
@@ -95,43 +110,53 @@ void MainWindow::setupUi() {
     formLayout->addWidget(passwordLabel);
     formLayout->addSpacing(8);
     formLayout->addWidget(passwordLineEdit);
-    formLayout->addSpacing(15);
-
-    // Forgot password link
-    auto *forgotLabel = new QLabel("<a href='#' style='color: #70B2B2; text-decoration: underline;'>Forgot password?</a>", this);
-    forgotLabel->setObjectName("linkLabel");
-    forgotLabel->setAlignment(Qt::AlignRight);
-    forgotLabel->setTextFormat(Qt::RichText);
-    forgotLabel->setOpenExternalLinks(false);
-
-    formLayout->addWidget(forgotLabel);
-    formLayout->addSpacing(30);
-
-    // Login button
-    loginButton = new QPushButton("Login", this);
-    loginButton->setObjectName("loginButton");
-    loginButton->setCursor(Qt::PointingHandCursor);
-    connect(loginButton, &QPushButton::clicked, this, &MainWindow::onLoginClicked);
-
-    formLayout->addWidget(loginButton);
     formLayout->addSpacing(20);
 
-    // Sign up link
-    auto *signupLayout = new QHBoxLayout();
-    auto *signupText = new QLabel("Don't have an account? ", this);
-    signupText->setObjectName("normalText");
-    auto *signupLink = new QLabel("<a href='#' style='color: #016B61; font-weight: 600; text-decoration: underline;'>Sign up</a>", this);
-    signupLink->setObjectName("linkLabel");
-    signupLink->setTextFormat(Qt::RichText);
-    signupLink->setOpenExternalLinks(false);
-    connect(signupLink, &QLabel::linkActivated, this, &MainWindow::onSignUpClicked);
+    // Confirm Password field
+    auto *confirmPasswordLabel = new QLabel("Confirm Password", this);
+    confirmPasswordLabel->setObjectName("fieldLabel");
+    confirmPasswordLineEdit = new QLineEdit(this);
+    confirmPasswordLineEdit->setObjectName("inputField");
+    confirmPasswordLineEdit->setEchoMode(QLineEdit::Password);
+    confirmPasswordLineEdit->setPlaceholderText("Confirm your password");
 
-    signupLayout->addStretch();
-    signupLayout->addWidget(signupText);
-    signupLayout->addWidget(signupLink);
-    signupLayout->addStretch();
+    formLayout->addWidget(confirmPasswordLabel);
+    formLayout->addSpacing(8);
+    formLayout->addWidget(confirmPasswordLineEdit);
+    formLayout->addSpacing(20);
 
-    formLayout->addLayout(signupLayout);
+    // Professor checkbox
+    professorCheckBox = new QCheckBox("I am a Professor", this);
+    professorCheckBox->setObjectName("professorCheckBox");
+
+    formLayout->addWidget(professorCheckBox);
+    formLayout->addSpacing(25);
+
+    // Create Account button
+    createAccountButton = new QPushButton("Create Account", this);
+    createAccountButton->setObjectName("loginButton");
+    createAccountButton->setCursor(Qt::PointingHandCursor);
+    connect(createAccountButton, &QPushButton::clicked, this, &CreateAccount::onCreateAccountClicked);
+
+    formLayout->addWidget(createAccountButton);
+    formLayout->addSpacing(20);
+
+    // Back to login link
+    auto *loginLayout = new QHBoxLayout();
+    auto *loginText = new QLabel("Already have an account? ", this);
+    loginText->setObjectName("normalText");
+    auto *loginLink = new QLabel("<a href='#' style='color: #016B61; font-weight: 600; text-decoration: underline;'>Login</a>", this);
+    loginLink->setObjectName("linkLabel");
+    loginLink->setTextFormat(Qt::RichText);
+    loginLink->setOpenExternalLinks(false);
+    connect(loginLink, &QLabel::linkActivated, this, &CreateAccount::onBackToLoginClicked);
+
+    loginLayout->addStretch();
+    loginLayout->addWidget(loginText);
+    loginLayout->addWidget(loginLink);
+    loginLayout->addStretch();
+
+    formLayout->addLayout(loginLayout);
 
     rightLayout->addWidget(formWidget);
 
@@ -139,12 +164,12 @@ void MainWindow::setupUi() {
     mainLayout->addWidget(leftPanel, 1);
     mainLayout->addWidget(rightPanel, 1);
 
-    setWindowTitle("Professor Scheduler - Login");
+    setWindowTitle("Professor Scheduler - Create Account");
     resize(900, 600);
     setMinimumSize(900, 600);
 }
 
-void MainWindow::applyStyles() {
+void CreateAccount::applyStyles() {
     QString style = R"(
         QMainWindow {
             background-color: #E5E9C5;
@@ -201,6 +226,25 @@ void MainWindow::applyStyles() {
             outline: none;
         }
 
+        #professorCheckBox {
+            color: #016B61;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        #professorCheckBox::indicator {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #70B2B2;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        #professorCheckBox::indicator:checked {
+            background-color: #016B61;
+            border: 2px solid #016B61;
+        }
+
         #loginButton {
             background-color: #016B61;
             color: white;
@@ -232,11 +276,20 @@ void MainWindow::applyStyles() {
     this->setStyleSheet(style);
 }
 
-void MainWindow::onLoginClicked() {
+void CreateAccount::onCreateAccountClicked() {
+    QString fullName = fullNameLineEdit->text().trimmed();
     QString email = emailLineEdit->text().trimmed();
     QString password = passwordLineEdit->text();
+    QString confirmPassword = confirmPasswordLineEdit->text();
+    bool isProfessor = professorCheckBox->isChecked();
 
-    // Basic validation
+    // Validation
+    if (fullName.isEmpty()) {
+        QMessageBox::warning(this, "Validation Error",
+                           "Please enter your full name.");
+        return;
+    }
+
     if (email.isEmpty()) {
         QMessageBox::warning(this, "Validation Error",
                            "Please enter your email address.");
@@ -245,22 +298,32 @@ void MainWindow::onLoginClicked() {
 
     if (password.isEmpty()) {
         QMessageBox::warning(this, "Validation Error",
-                           "Please enter your password.");
+                           "Please enter a password.");
         return;
     }
 
-    // TODO: Implement actual authentication logic here
-    QMessageBox::information(this, "Login",
-                            QString("Login attempt with email: %1").arg(email));
+    if (password.length() < 6) {
+        QMessageBox::warning(this, "Validation Error",
+                           "Password must be at least 6 characters long.");
+        return;
+    }
+
+    if (password != confirmPassword) {
+        QMessageBox::warning(this, "Validation Error",
+                           "Passwords do not match.");
+        return;
+    }
+
+    // TODO: Implement actual account creation logic here
+    QString accountType = isProfessor ? "Professor" : "Student";
+    QMessageBox::information(this, "Account Created",
+                            QString("Account created for %1\nEmail: %2\nType: %3")
+                            .arg(fullName).arg(email).arg(accountType));
+
+    // After successful creation, go back to login
+    onBackToLoginClicked();
 }
 
-void MainWindow::onSignUpClicked() {
-    auto *createAccountWindow = new CreateAccount(this);
-    createAccountWindow->setAttribute(Qt::WA_DeleteOnClose);
-    createAccountWindow->show();
-    this->hide();
-
-    connect(createAccountWindow, &QMainWindow::destroyed, this, [this]() {
-        this->show();
-    });
+void CreateAccount::onBackToLoginClicked() {
+    close();
 }

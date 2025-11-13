@@ -1006,8 +1006,14 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/limits.h \
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdarg.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /CMakeLists.txt \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /CreateAccount.cpp \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /CreateAccount.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /MainWindow.cpp \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /MainWindow.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Schedule.cpp \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Schedule.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /User.cpp \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /User.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /cmake-build-debug/CMakeFiles/3.29.6/CMakeCCompiler.cmake \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /cmake-build-debug/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /cmake-build-debug/CMakeFiles/3.29.6/CMakeSystem.cmake \
@@ -1169,10 +1175,12 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qtguiglobal.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qtransform.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qwindowdefs.h \
+	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QCheckBox \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QLineEdit \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QMainWindow \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QPushButton \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qabstractbutton.h \
+	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qcheckbox.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qframe.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qlineedit.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qmainwindow.h \

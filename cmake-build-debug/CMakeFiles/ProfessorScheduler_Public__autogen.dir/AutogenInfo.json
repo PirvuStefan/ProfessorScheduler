@@ -620,6 +620,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/Users/stefanpirvu/ProfessorScheduler Public /CreateAccount.h",
+			"MU",
+			"EWIEGA46WW/moc_CreateAccount.cpp",
+			null
+		],
+		[
 			"/Users/stefanpirvu/ProfessorScheduler Public /MainWindow.h",
 			"MU",
 			"EWIEGA46WW/moc_MainWindow.cpp",
@@ -629,6 +635,12 @@
 			"/Users/stefanpirvu/ProfessorScheduler Public /Schedule.h",
 			"MU",
 			"EWIEGA46WW/moc_Schedule.cpp",
+			null
+		],
+		[
+			"/Users/stefanpirvu/ProfessorScheduler Public /User.h",
+			"MU",
+			"EWIEGA46WW/moc_User.cpp",
 			null
 		]
 	],
@@ -692,6 +704,11 @@
 	"SOURCES" : 
 	[
 		[
+			"/Users/stefanpirvu/ProfessorScheduler Public /CreateAccount.cpp",
+			"MU",
+			null
+		],
+		[
 			"/Users/stefanpirvu/ProfessorScheduler Public /MainWindow.cpp",
 			"MU",
 			null
@@ -701,6 +718,7 @@
 			"MU",
 			null
 		],
+		[ "/Users/stefanpirvu/ProfessorScheduler Public /User.cpp", "MU", null ],
 		[ "/Users/stefanpirvu/ProfessorScheduler Public /main.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],

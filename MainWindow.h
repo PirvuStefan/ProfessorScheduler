@@ -14,6 +14,7 @@ public:
 
 private slots:
     void onLoginClicked();
+    void onSignUpClicked();
 
 private:
     void setupUi();
