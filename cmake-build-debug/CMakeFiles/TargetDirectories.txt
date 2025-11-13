@@ -1,0 +1,5 @@
+/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/CMakeFiles/ProfessorScheduler_Public_.dir
+/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/CMakeFiles/ProfessorScheduler_Public__autogen_timestamp_deps.dir
+/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/CMakeFiles/ProfessorScheduler_Public__autogen.dir

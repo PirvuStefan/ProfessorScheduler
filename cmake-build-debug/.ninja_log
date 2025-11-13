@@ -1,0 +1,10 @@
+# ninja log v6
+2	273	1763060416298809955	build.ninja	a3ee5b5a830ac368
+11	443	1763060370577165000	ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+11	443	1763060370577165000	ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+11	443	1763060370577165000	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+11	443	1763060370577165000	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+443	1410	1763060370595041756	CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorScheduler_Public__autogen/mocs_compilation.cpp.o	1668fe0175dfb71f
+1466	1574	1763060371617754115	ProfessorScheduler_Public_	48609fe3cd22f119
+444	1380	1763060370595313881	CMakeFiles/ProfessorScheduler_Public_.dir/main.cpp.o	b7864c657c764ac
+444	1466	1763060370595463006	CMakeFiles/ProfessorScheduler_Public_.dir/MainWindow.cpp.o	782d6249af4afc57

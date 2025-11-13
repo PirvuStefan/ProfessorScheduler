@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_ProfessorScheduler_Public__FILE /Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public_)
+set(__QT_DEPLOY_TARGET_ProfessorScheduler_Public__TYPE EXECUTABLE)
