@@ -26,7 +26,7 @@ std::optional<User> MainWindow::authenticateUser(const QString &email, const QSt
     QTextStream in(&file);
     while (!in.atEnd()) {
         QString line = in.readLine();
-        QStringList parts = line.split(";");
+        QStringList parts = line.split(",");
         if (parts.size() < 4) continue;
 
         if (parts[1] == email && parts[2] == password) {
@@ -34,7 +34,7 @@ std::optional<User> MainWindow::authenticateUser(const QString &email, const QSt
             return User(parts[0], parts[1], parts[2], isProfessor);
         }
     }
-    return std::nullopt; // Login failed
+    return std::nullopt;
 }
 
 
@@ -279,9 +279,19 @@ void MainWindow::onLoginClicked() {
         return;
     }
 
+    auto userResult = authenticateUser(email, password);
+    if (!userResult.has_value()) {
+        QMessageBox::warning(this, "Login Failed",
+                           "Invalid email or password. Please try again.");
+        return;
+    }
+
+    User actual = userResult.value();
+    actual.Print();
+
     // TODO: Implement actual authentication logic here
     QMessageBox::information(this, "Login",
-                            QString("Login attempt with email: %1").arg(email));
+                            QString("Login attempt with email: %1 \n SUCCES LOGGED").arg(email));
 }
 
 void MainWindow::onSignUpClicked() {
