@@ -312,6 +312,21 @@ void CreateAccount::onCreateAccountClicked() {
         return;
     }
 
+    bool digit_found = false;
+
+    for( QChar c : password ) {
+        if( c >= '0' && c <= '9' ) {
+            digit_found = true;
+            break;
+        }
+
+    }
+    if(!digit_found) {
+        QMessageBox::warning(this, "Validation Error",
+                           "Password must contain at least one digit.");
+        return;
+    }
+
     if (password != confirmPassword) {
         QMessageBox::warning(this, "Validation Error",
                            "Passwords do not match.");
