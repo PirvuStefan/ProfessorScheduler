@@ -81,6 +81,7 @@ void CreateAccount::setupUi() {
     fullNameLineEdit = new QLineEdit(this);
     fullNameLineEdit->setObjectName("inputField");
     fullNameLineEdit->setPlaceholderText("Enter your full name");
+    fullNameLineEdit->setMinimumHeight(50);
 
     formLayout->addWidget(nameLabel);
     formLayout->addSpacing(8);
@@ -93,6 +94,7 @@ void CreateAccount::setupUi() {
     emailLineEdit = new QLineEdit(this);
     emailLineEdit->setObjectName("inputField");
     emailLineEdit->setPlaceholderText("Enter your email");
+    emailLineEdit->setMinimumHeight(50);
 
     formLayout->addWidget(emailLabel);
     formLayout->addSpacing(8);
@@ -106,6 +108,7 @@ void CreateAccount::setupUi() {
     passwordLineEdit->setObjectName("inputField");
     passwordLineEdit->setEchoMode(QLineEdit::Password);
     passwordLineEdit->setPlaceholderText("Enter your password");
+    passwordLineEdit->setMinimumHeight(50);
 
     formLayout->addWidget(passwordLabel);
     formLayout->addSpacing(8);
@@ -119,6 +122,7 @@ void CreateAccount::setupUi() {
     confirmPasswordLineEdit->setObjectName("inputField");
     confirmPasswordLineEdit->setEchoMode(QLineEdit::Password);
     confirmPasswordLineEdit->setPlaceholderText("Confirm your password");
+    confirmPasswordLineEdit->setMinimumHeight(50);
 
     formLayout->addWidget(confirmPasswordLabel);
     formLayout->addSpacing(8);
@@ -166,7 +170,7 @@ void CreateAccount::setupUi() {
 
     setWindowTitle("Professor Scheduler - Create Account");
     resize(900, 600);
-    setMinimumSize(900, 600);
+    setMinimumSize(900, 700);
 }
 
 void CreateAccount::applyStyles() {
