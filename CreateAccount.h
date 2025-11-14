@@ -14,6 +14,8 @@ class CreateAccount : public QMainWindow {
     Q_OBJECT
 
 public:
+    static void storeAccountDetails(const QString &fullName, const QString &email, const QString &password, bool isProfessor);
+
     explicit CreateAccount(QWidget *parent = nullptr);
     ~CreateAccount();
 

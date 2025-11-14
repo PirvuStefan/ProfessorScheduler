@@ -2,7 +2,7 @@
 // Created by Stefan Pirvu on 13.11.2025.
 //
 
-#include "User.h"
+#include "../Headers/User.h"
 
 User::User(std::string fullName, std::string email, std::string password, bool isProfessor) {
     this->fullName = fullName;
@@ -10,6 +10,18 @@ User::User(std::string fullName, std::string email, std::string password, bool i
     this->password = password;
     this->isProfessor = isProfessor;
 }
+
+User::User(QString fullName, QString email, QString password, bool isProfessor) {
+    this->fullName = fullName.toStdString();
+    this->email = email.toStdString();
+    this->password = password.toStdString();
+    this->isProfessor = isProfessor; // we cast them to vanilla string
+}
+
+void User::AccountCreated() {
+    printf("Account Created\n");
+}
+
 
 std::string User::getName() {
     return this->fullName;
@@ -26,3 +38,4 @@ std::string User::getPassword() {
 bool User::getIsProfessor() const {
     return this->isProfessor;
 }
+

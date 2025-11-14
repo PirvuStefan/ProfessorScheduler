@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QPushButton>
 
+#include "Headers/User.h"
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -13,6 +15,8 @@ public:
     ~MainWindow();
 
 private slots:
+    std::optional<User> authenticateUser(const QString &email, const QString &password);
+
     void onLoginClicked();
     void onSignUpClicked();
 

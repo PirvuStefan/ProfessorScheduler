@@ -3,6 +3,8 @@
 //
 
 #include "CreateAccount.h"
+
+#include <fstream>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -11,6 +13,41 @@
 #include <QCheckBox>
 #include <QMessageBox>
 #include <QWidget>
+#include <QDir>
+#include <QFile>
+
+void CreateAccount::storeAccountDetails(const QString &fullName,const QString &email,const QString &password,bool isProfessor) {
+    // Ensure the Accounts directory exists
+    QDir dir;
+    if (!dir.exists("Accounts")) {
+        if (!dir.mkpath("Accounts")) {
+            qWarning("Could not create Accounts directory.");
+            return;
+        }
+    }
+
+    QFile file("Accounts/accounts.txt");
+
+
+    if (!file.open(QIODevice::Append | QIODevice::Text)) {
+        qWarning("Could not open accounts.txt for writing.");
+        return;
+    }
+
+    QTextStream out(&file);
+
+
+    out << fullName << ","
+        << email << ","
+        << password << ","
+        << (isProfessor ? "1" : "0")   // store bool as 1/0
+        << "\n";
+    // we do store the data in the text file comma delimited for future purposes, if in the near future we want to store them in a database or in an excel sheet, the CSV format will do the job
+
+
+    file.close();
+}
+
 
 CreateAccount::CreateAccount(QWidget *parent)
     : QMainWindow(parent) {
@@ -340,9 +377,11 @@ void CreateAccount::onCreateAccountClicked() {
                             .arg(fullName).arg(email).arg(accountType));
 
     // After successful creation, go back to login
+    storeAccountDetails(fullName, email, password, isProfessor);
     onBackToLoginClicked();
 }
 
 void CreateAccount::onBackToLoginClicked() {
     close();
 }
+

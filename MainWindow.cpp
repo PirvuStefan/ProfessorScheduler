@@ -9,6 +9,36 @@
 #include <QMessageBox>
 #include <QWidget>
 
+#include <optional>
+#include <QFile>
+
+#include "Headers/User.h"
+
+std::optional<User> MainWindow::authenticateUser(const QString &email, const QString &password) {
+
+    // If valid, return User object; otherwise return std::nullopt, indicating login failure, that why we use optional here
+
+    QFile file("Accounts/accounts.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return std::nullopt;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(";");
+        if (parts.size() < 4) continue;
+
+        if (parts[1] == email && parts[2] == password) {
+            bool isProfessor = (parts[3] == "1");
+            return User(parts[0], parts[1], parts[2], isProfessor);
+        }
+    }
+    return std::nullopt; // Login failed
+}
+
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     setupUi();
@@ -38,7 +68,7 @@ void MainWindow::setupUi() {
     brandTitle->setObjectName("brandTitle");
     brandTitle->setWordWrap(true);
 
-    auto *brandSubtitle = new QLabel("Manage your academic\nschedule efficiently", this);
+    auto *brandSubtitle = new QLabel("Manage your academic\nschedule efficiently ✓", this);
     brandSubtitle->setObjectName("brandSubtitle");
     brandSubtitle->setWordWrap(true);
 

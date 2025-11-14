@@ -16,12 +16,12 @@ find_package(Qt6 COMPONENTS
 add_executable(ProfessorScheduler_Public_ main.cpp
         MainWindow.cpp
         MainWindow.h
-        Schedule.cpp
-        Schedule.h
+        Src/Schedule.cpp
+        Headers/Schedule.h
         CreateAccount.cpp
         CreateAccount.h
-        User.cpp
-        User.h)
+        Src/User.cpp
+        Headers/User.h)
 target_link_libraries(ProfessorScheduler_Public_
         Qt::Core
         Qt::Gui
