@@ -5,11 +5,17 @@
 #define PROFESSORSCHEDULER_PUBLIC__STUDENT_H
 
 #pragma once
+
 #include "User.h"
 
+
 class Student : public User {
+
+
 public:
     void AccountCreated() override;
+
+
 };
 
 

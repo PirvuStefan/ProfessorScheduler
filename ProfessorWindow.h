@@ -2,10 +2,22 @@
 #define PROFESSORWINDOW_H
 
 #include <QWidget>
+#include <QLabel>
 #include <string>
 
-class QLabel;
 class QPushButton;
+
+// Custom label for gradient text
+class GradientLabel : public QLabel
+{
+    Q_OBJECT
+
+public:
+    explicit GradientLabel(const QString &text, QWidget *parent = nullptr);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+};
 
 class ProfessorWindow : public QWidget
 {
@@ -19,7 +31,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QLabel *m_greetingLabel;
+    GradientLabel *m_greetingLabel;
     QLabel *m_nameLabel;
     QPushButton *m_scheduleButton;
     QPushButton *m_resourcesButton;

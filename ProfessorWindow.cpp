@@ -8,6 +8,36 @@
 #include <QFont>
 #include <QPainterPath>
 #include <QPushButton>
+#include <QLinearGradient>
+
+// GradientLabel implementation
+GradientLabel::GradientLabel(const QString &text, QWidget *parent)
+    : QLabel(text, parent)
+{
+    setAttribute(Qt::WA_TranslucentBackground);
+}
+
+void GradientLabel::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+
+    // Create gradient from teal to green to yellow
+    QLinearGradient gradient(0, 0, width(), 0);
+    gradient.setColorAt(0.0, QColor("#70B2B2"));   // Teal
+    gradient.setColorAt(0.5, QColor("#57C785"));   // Green
+    gradient.setColorAt(1.0, QColor("#EDDD53"));   // Yellow
+
+    QBrush gradientBrush(gradient);
+    painter.setBrush(gradientBrush);
+    painter.setPen(QPen(gradientBrush, 0));
+
+    // Set font
+    painter.setFont(font());
+
+    // Draw text with gradient
+    painter.drawText(rect(), alignment(), text());
+}
 
 
 ProfessorWindow::ProfessorWindow(const std::string &professorName,
@@ -28,9 +58,17 @@ void ProfessorWindow::setupUi(const QString &professorName)
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAutoFillBackground(false);
 
+    QString textStyle = R"(
+        #brandSubtitle {
+            color: #E5E9C5;
+            font-size: 16px;
+            line-height: 24px;
+        }
+    )";
+
     // ----- Labels -----
-    m_greetingLabel = new QLabel("Glad to see you back", this);
-    m_nameLabel     = new QLabel(professorName, this);
+    m_greetingLabel = new GradientLabel("Hello, " + professorName + ", \nwelcome back", this);
+    m_nameLabel     = new QLabel("Manage your schedules and teaching resources", this);
 
     // Colors matching the screenshot
     // Greeting: light teal #76B2BC approx
@@ -38,7 +76,8 @@ void ProfessorWindow::setupUi(const QString &professorName)
     greetPal.setColor(QPalette::WindowText, QColor("#76B2BC"));
     m_greetingLabel->setPalette(greetPal);
 
-    // Name: white
+
+    // Name: white (this is now the subtitle)
     QPalette namePal = m_nameLabel->palette();
     namePal.setColor(QPalette::WindowText, Qt::white);
     m_nameLabel->setPalette(namePal);
@@ -46,12 +85,12 @@ void ProfessorWindow::setupUi(const QString &professorName)
     // Fonts
     QFont greetingFont;
     greetingFont.setPointSize(26);
-    greetingFont.setBold(false);
+    greetingFont.setBold(true);
     m_greetingLabel->setFont(greetingFont);
 
     QFont nameFont;
-    nameFont.setPointSize(26);
-    nameFont.setBold(true);
+    nameFont.setPointSize(18);
+    nameFont.setBold(false);
     m_nameLabel->setFont(nameFont);
 
     // Remove label backgrounds
@@ -85,6 +124,8 @@ void ProfessorWindow::setupUi(const QString &professorName)
         }
     )";
 
+
+
     m_scheduleButton->setStyleSheet(buttonStyle);
     m_resourcesButton->setStyleSheet(buttonStyle);
     m_scheduleButton->setCursor(Qt::PointingHandCursor);
@@ -109,7 +150,7 @@ void ProfessorWindow::setupUi(const QString &professorName)
     auto *buttonWidget = new QWidget(this);
     buttonWidget->setAttribute(Qt::WA_TranslucentBackground);
     auto *buttonLayout = new QHBoxLayout(buttonWidget);
-    buttonLayout->setContentsMargins(100, 50, 100, 100);
+    buttonLayout->setContentsMargins(150, 50, 100, 100);
     buttonLayout->setSpacing(30);
     buttonLayout->addWidget(m_scheduleButton);
     buttonLayout->addWidget(m_resourcesButton);

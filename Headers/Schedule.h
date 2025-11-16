@@ -10,11 +10,10 @@
 class Schedule {
     public:
     std::string type; // if it is a lecture, lab, seminar, project etc.
-    std::string day;
     std::pair <int, int> period; // from when to when (eg. 8-10)
     std::string subject;
     bool optional; // if the schedule is optional or mandatory ( we should assign by default that it is mandatory)
-    Schedule(std::string type, std::string day, std::string subject, bool optional);
+    Schedule(std::string subject, std::string type, bool optional = true);
 };
 
 
