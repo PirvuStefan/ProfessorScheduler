@@ -1,146 +1,116 @@
-//
-// Created by Stefan Pirvu on 15.11.2025.
-//
+#include "professorwindow.h"
 
-#include "ProfessorWindow.h"
+#include <QLabel>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QWidget>
+#include <QPainter>
+#include <QPaintEvent>
 #include <QFont>
+#include <QPainterPath>
 
-ProfessorWindow::ProfessorWindow(const std::string& professorName, QWidget *parent)
-    : QMainWindow(parent), professorName(professorName) {
-    setupUI();
-    applyStyles();
+
+ProfessorWindow::ProfessorWindow(const std::string &professorName,
+                                 QWidget *parent)
+    : QWidget(parent)
+{
+    QString nameQString = QString::fromStdString(professorName);
+    setupUi(nameQString);
 }
 
-ProfessorWindow::~ProfessorWindow() {
+void ProfessorWindow::setupUi(const QString &professorName)
+{
+    // Size similar to your mockup (800x600)
+    resize(800, 600);
+    setWindowTitle("Professor");
+
+    // Transparent base; everything drawn in paintEvent
+    setAttribute(Qt::WA_OpaquePaintEvent);
+    setAutoFillBackground(false);
+
+    // ----- Labels -----
+    m_greetingLabel = new QLabel("Glad to see you back", this);
+    m_nameLabel     = new QLabel(professorName, this);
+
+    // Colors matching the screenshot
+    // Greeting: light teal #76B2BC approx
+    QPalette greetPal = m_greetingLabel->palette();
+    greetPal.setColor(QPalette::WindowText, QColor("#76B2BC"));
+    m_greetingLabel->setPalette(greetPal);
+
+    // Name: white
+    QPalette namePal = m_nameLabel->palette();
+    namePal.setColor(QPalette::WindowText, Qt::white);
+    m_nameLabel->setPalette(namePal);
+
+    // Fonts
+    QFont greetingFont;
+    greetingFont.setPointSize(26);
+    greetingFont.setBold(false);
+    m_greetingLabel->setFont(greetingFont);
+
+    QFont nameFont;
+    nameFont.setPointSize(26);
+    nameFont.setBold(true);
+    m_nameLabel->setFont(nameFont);
+
+    // Remove label backgrounds
+    m_greetingLabel->setAttribute(Qt::WA_TranslucentBackground);
+    m_nameLabel->setAttribute(Qt::WA_TranslucentBackground);
+
+    // Layout: put them in upper left, similar to mockup
+    auto *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(180, 130, 0, 0);  // tune for exact look
+    layout->setSpacing(18);
+
+    layout->addWidget(m_greetingLabel, 0, Qt::AlignLeft | Qt::AlignTop);
+    layout->addWidget(m_nameLabel, 0, Qt::AlignLeft | Qt::AlignTop);
+    layout->addStretch();
+
+    setLayout(layout);
 }
 
-void ProfessorWindow::setupUI() {
-    setWindowTitle("Professor Dashboard");
-    setMinimumSize(800, 600);
+void ProfessorWindow::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
 
-    QWidget* centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(centralWidget);
-    mainLayout->setContentsMargins(40, 30, 40, 40);
-    mainLayout->setSpacing(30);
+    const int w = width();
+    const int h = height();
 
-    // Top bar with profile button
-    QHBoxLayout* topBar = new QHBoxLayout();
-    topBar->addStretch();
+    // Colors from mockup:
+    // bottom: dark teal  #006A5C (approx)
+    // top: light cream   #E7E9B5 (approx)
+    QColor bottomColor("#006A5C");
+    QColor topColor("#E7E9B5");
 
-    profileButton = new QPushButton("👤", this);
-    profileButton->setFixedSize(50, 50);
-    profileButton->setCursor(Qt::PointingHandCursor);
-    connect(profileButton, &QPushButton::clicked, this, &ProfessorWindow::onProfileClicked);
-    topBar->addWidget(profileButton);
+    // ---- Paint bottom solid color ----
+    painter.fillRect(rect(), bottomColor);
 
-    mainLayout->addLayout(topBar);
+    // ---- Paint top wavy shape ----
+    QPainterPath topPath;
 
-    // Welcome text
-    welcomeLabel = new QLabel(QString::fromStdString("Hello, " + professorName + ", welcome back"), this);
-    welcomeLabel->setAlignment(Qt::AlignCenter);
-    QFont welcomeFont("Arial", 32, QFont::Bold);
-    welcomeLabel->setFont(welcomeFont);
-    mainLayout->addWidget(welcomeLabel);
+    // Start from left top
+    topPath.moveTo(0, 0);
+    topPath.lineTo(w, 0);
 
-    // Subtitle
-    subtitleLabel = new QLabel("Manage your schedules and teaching resources", this);
-    subtitleLabel->setAlignment(Qt::AlignCenter);
-    QFont subtitleFont("Arial", 16);
-    subtitleLabel->setFont(subtitleFont);
-    mainLayout->addWidget(subtitleLabel);
+    // Right edge down a bit where wave touches
+    int waveYRight = h * 0.30;        // ~30% from top on right
+    int waveYLeft  = h * 0.55;        // ~55% from top on left (lower)
 
-    mainLayout->addSpacing(20);
+    topPath.lineTo(w, waveYRight);
 
-    // Buttons layout
-    QHBoxLayout* buttonsLayout = new QHBoxLayout();
-    buttonsLayout->setSpacing(20);
+    // Draw smooth wave from right to left using a cubic Bezier curve.
+    // Tune control points to match screenshot curvature.
+    QPointF c1(w * 0.75, waveYRight + h * 0.05);  // first control
+    QPointF c2(w * 0.40, waveYLeft  - h * 0.10);  // second control
+    QPointF end(0, waveYLeft);
 
-    viewScheduleButton = new QPushButton("View My Schedule", this);
-    viewScheduleButton->setMinimumSize(200, 50);
-    viewScheduleButton->setCursor(Qt::PointingHandCursor);
-    connect(viewScheduleButton, &QPushButton::clicked, this, &ProfessorWindow::onViewScheduleClicked);
+    topPath.cubicTo(c1, c2, end);
 
-    viewResourcesButton = new QPushButton("View Teaching Resources", this);
-    viewResourcesButton->setMinimumSize(200, 50);
-    viewResourcesButton->setCursor(Qt::PointingHandCursor);
-    connect(viewResourcesButton, &QPushButton::clicked, this, &ProfessorWindow::onViewResourcesClicked);
+    // Close path up the left edge
+    topPath.lineTo(0, 0);
+    topPath.closeSubpath();
 
-    buttonsLayout->addStretch();
-    buttonsLayout->addWidget(viewScheduleButton);
-    buttonsLayout->addWidget(viewResourcesButton);
-    buttonsLayout->addStretch();
-
-    mainLayout->addLayout(buttonsLayout);
-    mainLayout->addStretch();
-
-    // Teaching idiom with gradient text
-    idiomLabel = new QLabel("\"The art of teaching is the art of assisting discovery.\"", this);
-    idiomLabel->setAlignment(Qt::AlignCenter);
-    QFont idiomFont("Arial", 14, QFont::Normal, true);
-    idiomLabel->setFont(idiomFont);
-    mainLayout->addWidget(idiomLabel);
-}
-
-void ProfessorWindow::applyStyles() {
-    // Color palette: #016B61 #70B2B2 #9ECFD4 #E5E9C5
-
-    setStyleSheet(
-        "QMainWindow {"
-        "   background-color: #E5E9C5;"
-        "}"
-        "QPushButton {"
-        "   background-color: #016B61;"
-        "   color: white;"
-        "   border: none;"
-        "   border-radius: 8px;"
-        "   font-size: 16px;"
-        "   font-weight: bold;"
-        "   padding: 12px 24px;"
-        "}"
-        "QPushButton:hover {"
-        "   background-color: #70B2B2;"
-        "}"
-        "QPushButton:pressed {"
-        "   background-color: #9ECFD4;"
-        "}"
-        "QPushButton#profileButton {"
-        "   background-color: #9ECFD4;"
-        "   border-radius: 25px;"
-        "   font-size: 24px;"
-        "}"
-        "QPushButton#profileButton:hover {"
-        "   background-color: #70B2B2;"
-        "}"
-    );
-
-    profileButton->setObjectName("profileButton");
-
-    // Gradient effect for welcome label
-    welcomeLabel->setStyleSheet("color: #016B61;");
-    subtitleLabel->setStyleSheet("color: #70B2B2;");
-
-    // Gradient effect for idiom label
-    idiomLabel->setStyleSheet(
-        "QLabel {"
-        "   color: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
-        "       stop:0 #016B61, stop:0.5 #70B2B2, stop:1 #9ECFD4);"
-        "}"
-    );
-}
-
-void ProfessorWindow::onViewScheduleClicked() {
-    // TODO: Implement schedule view
-}
-
-void ProfessorWindow::onViewResourcesClicked() {
-    // TODO: Implement resources view
-}
-
-void ProfessorWindow::onProfileClicked() {
-    // TODO: Implement profile menu
+    painter.fillPath(topPath, topColor);
 }

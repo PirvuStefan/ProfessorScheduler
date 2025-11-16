@@ -1,40 +1,27 @@
-//
-// Created by Stefan Pirvu on 15.11.2025.
-//
+#ifndef PROFESSORWINDOW_H
+#define PROFESSORWINDOW_H
 
-#ifndef PROFESSORSCHEDULER_PUBLIC__PROFESSORWINDOW_H
-#define PROFESSORSCHEDULER_PUBLIC__PROFESSORWINDOW_H
-
-#include <QMainWindow>
-#include <QPushButton>
-#include <QLabel>
+#include <QWidget>
 #include <string>
 
-class ProfessorWindow : public QMainWindow {
+class QLabel;
+
+class ProfessorWindow : public QWidget
+{
     Q_OBJECT
 
 public:
-    explicit ProfessorWindow(const std::string& professorName, QWidget *parent = nullptr);
-    ~ProfessorWindow();
+    explicit ProfessorWindow(const std::string& professorName,
+                             QWidget *parent = nullptr);
 
-private slots:
-    void onViewScheduleClicked();
-    void onViewResourcesClicked();
-    void onProfileClicked();
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
 private:
-    void setupUI();
-    void applyStyles();
+    QLabel *m_greetingLabel;
+    QLabel *m_nameLabel;
 
-    std::string professorName;
-
-    // UI Components
-    QLabel* welcomeLabel;
-    QLabel* subtitleLabel;
-    QLabel* idiomLabel;
-    QPushButton* viewScheduleButton;
-    QPushButton* viewResourcesButton;
-    QPushButton* profileButton;
+    void setupUi(const QString &professorName);
 };
 
-#endif //PROFESSORSCHEDULER_PUBLIC__PROFESSORWINDOW_H
+#endif // PROFESSORWINDOW_H

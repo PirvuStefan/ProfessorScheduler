@@ -290,16 +290,14 @@ void MainWindow::onLoginClicked() {
     User actual = userResult.value();
     actual.Print();
 
-    // TODO: Implement actual authentication logic here
-    QMessageBox::information(this, "Login",
-                            QString("Login attempt with email: %1 \n SUCCES LOGGED").arg(email));
-
-    auto *profWindow = new ProfessorWindow(email.toStdString(), this);
-    profWindow->setAttribute(Qt::WA_DeleteOnClose);
-    profWindow->show();
+    // Open Professor Window after successful login
+    auto *professorWindow = new ProfessorWindow(actual.getName());
+    professorWindow->setAttribute(Qt::WA_DeleteOnClose);
+    professorWindow->show();
     this->hide();
 
-    connect(profWindow, &QMainWindow::destroyed, this, [this]() {
+    // Show main window again when professor window is closed
+    connect(professorWindow, &QWidget::destroyed, this, [this]() {
         this->show();
     });
 }
