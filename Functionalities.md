@@ -10,17 +10,15 @@ This page allows the user to create a new account by providing necessary details
 The `User` class contains the following attributes:
 
 ```cpp
-class User {
-private:
-    std::string fullName;     // Full name of the user
-    std::string email;        // User's email address
-    std::string password;     // User's password
-    bool isProfessor;         // Flag indicating if user is a professor (true) or student (false)
-};
+protected:
+    std::string fullName;    // Full name of the user
+    std::string email;       // Email address for login
+    std::string password;    // User password (stored as plain text)
+    bool isProfessor;        // Flag indicating if user is a professor (true) or student (false)
 ```
 
-**Attribute Details:**
-- `fullName` - Stores the complete name of the user
-- `email` - Stores the user's email address for authentication
-- `password` - Stores the user's password for authentication
-- `isProfessor` - Boolean flag to distinguish between professors and students
+### Attribute Details:
+- **fullName**: Stores the complete name of the user
+- **email**: Used as the unique identifier for login
+- **password**: Authentication credential
+- **isProfessor**: Determines user role and access level

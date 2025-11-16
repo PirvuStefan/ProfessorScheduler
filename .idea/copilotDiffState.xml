@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/Functionalities.md">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/Functionalities.md" />
+              <option name="originalContent" value="## Login Page&#10;&#10;The first page when you do run the program, loads the GUI and asks for email and password, if the user does not currently have an account, he does have an option to create one&#10;&#10;## Create Account Page&#10;This page allows the user to create a new account by providing necessary details such as email, password, and other required information. Once the account is created, the user can log in using the newly created credentials.&#10;&#10;## User Class Attributes&#10;&#10;The `User` class contains the following attributes:&#10;&#10;```cpp&#10;class User {&#10;private:&#10;    std::string fullName;     // Full name of the user&#10;    std::string email;        // User's email address&#10;    std::string password;     // User's password&#10;    bool isProfessor;         // Flag indicating if user is a professor (true) or student (false)&#10;};&#10;```&#10;&#10;**Attribute Details:**&#10;- `fullName` - Stores the complete name of the user&#10;- `email` - Stores the user's email address for authentication&#10;- `password` - Stores the user's password for authentication&#10;- `isProfessor` - Boolean flag to distinguish between professors and students&#10;" />
+              <option name="updatedContent" value="## Login Page&#10;&#10;The first page when you do run the program, loads the GUI and asks for email and password, if the user does not currently have an account, he does have an option to create one&#10;&#10;## Create Account Page&#10;This page allows the user to create a new account by providing necessary details such as email, password, and other required information. Once the account is created, the user can log in using the newly created credentials.&#10;&#10;## User Class Attributes&#10;&#10;The `User` class contains the following attributes:&#10;&#10;```cpp&#10;protected:&#10;    std::string fullName;    // Full name of the user&#10;    std::string email;       // Email address for login&#10;    std::string password;    // User password (stored as plain text)&#10;    bool isProfessor;        // Flag indicating if user is a professor (true) or student (false)&#10;```&#10;&#10;### Attribute Details:&#10;- **fullName**: Stores the complete name of the user&#10;- **email**: Used as the unique identifier for login&#10;- **password**: Authentication credential&#10;- **isProfessor**: Determines user role and access level" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

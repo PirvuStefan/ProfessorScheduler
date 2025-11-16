@@ -17,6 +17,8 @@ protected:
     bool isProfessor;
 
 public:
+    virtual ~User() = default;
+
     User(std::string fullName, std::string email, std::string password, bool isProfessor = false);
     User(QString fullName, QString email, QString password, bool isProfessor = false);
 

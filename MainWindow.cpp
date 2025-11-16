@@ -12,6 +12,7 @@
 #include <optional>
 #include <QFile>
 
+#include "ProfessorWindow.h"
 #include "Headers/User.h"
 
 std::optional<User> MainWindow::authenticateUser(const QString &email, const QString &password) {
@@ -292,6 +293,15 @@ void MainWindow::onLoginClicked() {
     // TODO: Implement actual authentication logic here
     QMessageBox::information(this, "Login",
                             QString("Login attempt with email: %1 \n SUCCES LOGGED").arg(email));
+
+    auto *profWindow = new ProfessorWindow(email.toStdString(), this);
+    profWindow->setAttribute(Qt::WA_DeleteOnClose);
+    profWindow->show();
+    this->hide();
+
+    connect(profWindow, &QMainWindow::destroyed, this, [this]() {
+        this->show();
+    });
 }
 
 void MainWindow::onSignUpClicked() {

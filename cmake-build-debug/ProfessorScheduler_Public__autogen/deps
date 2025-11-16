@@ -1,24 +1,97 @@
 ProfessorScheduler_Public__autogen/timestamp: \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCCompiler.cmake.in \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCCompilerABI.c \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCInformation.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCXXCompiler.cmake.in \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCXXCompilerABI.cpp \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCXXInformation.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeCompilerIdDetection.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineCXXCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineCompilerSupport.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeFindBinUtils.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeFindDependencyMacro.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeGenericSystem.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeParseImplicitIncludeInfo.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeParseImplicitLinkInfo.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeParseLibraryArchitecture.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeSystem.cmake.in \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CMakeTestCompilerCommon.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CheckCSourceCompiles.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CheckCXXCompilerFlag.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CheckCXXSourceCompiles.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CheckIncludeFile.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/CheckLibraryExists.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/ADSP-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/ARMCC-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/ARMClang-DetermineCompiler.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/AppleClang-C.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/AppleClang-CXX.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/AppleClang-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Borland-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Bruce-C-DetermineCompiler.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Clang-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Clang-DetermineCompilerInternal.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Clang.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Compaq-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Cray-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/CrayClang-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Embarcadero-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Fujitsu-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/GHS-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/GNU-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/GNU.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/HP-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/HP-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/IAR-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Intel-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/LCC-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/MSVC-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/NVHPC-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/NVIDIA-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/OrangeC-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/PGI-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/PathScale-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/SCO-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/SDCC-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/SunPro-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/TI-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/TIClang-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Tasking-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/Watcom-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/XL-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/XLClang-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/zOS-C-DetermineCompiler.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/FindOpenGL.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/FindPackageMessage.cmake \
@@ -28,9 +101,13 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CMakeCXXLinkerInformation.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CMakeInspectCLinker.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CMakeInspectCXXLinker.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CheckCompilerFlag.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CheckFlagCommonConfig.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Internal/FeatureTesting.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Linker/AppleClang-C.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Linker/AppleClang-CXX.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Linker/AppleClang.cmake \
@@ -40,6 +117,7 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Apple-Clang-C.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Apple-Clang-CXX.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Apple-Clang.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Darwin-Determine-CXX.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Darwin-Initialize.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Darwin.cmake \
 	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-4.0/Modules/Platform/Linker/Apple-AppleClang-C.cmake \
@@ -941,11 +1019,17 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /CMakeLists.txt \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /CreateAccount.cpp \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /CreateAccount.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Professor.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Schedule.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Student.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/User.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /MainWindow.cpp \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /MainWindow.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /ProfessorWindow.cpp \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /ProfessorWindow.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Src/Professor.cpp \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Src/Schedule.cpp \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Src/Student.cpp \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Src/User.cpp \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /cmake-build-debug/CMakeFiles/4.0.2/CMakeCCompiler.cmake \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /cmake-build-debug/CMakeFiles/4.0.2/CMakeCXXCompiler.cmake \
@@ -999,6 +1083,7 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qglobalstatic.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qhash.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qhashfunctions.h \
+	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qiodevice.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qiodevicebase.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qiterable.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/qiterator.h \
@@ -1093,6 +1178,7 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpaintdevice.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpalette.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpen.h \
+	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpicture.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpixelformat.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpixmap.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qpolygon.h \
@@ -1109,12 +1195,14 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qtransform.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtGui.framework/Versions/A/Headers/qwindowdefs.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QCheckBox \
+	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QLabel \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QLineEdit \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QMainWindow \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/QPushButton \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qabstractbutton.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qcheckbox.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qframe.h \
+	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qlabel.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qlineedit.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qmainwindow.h \
 	/opt/homebrew/Cellar/qtbase/6.9.3/lib/QtWidgets.framework/Versions/A/Headers/qpushbutton.h \

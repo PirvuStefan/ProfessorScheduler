@@ -28,8 +28,8 @@ void User::Print() {
 
 }
 
-void User::AccountCreated() {
-    printf("Account Created\n");
+void User::AccountCreated() { // base class implementation, we will override it in derived classes
+    printf("Base Account Created\n");
 }
 
 
