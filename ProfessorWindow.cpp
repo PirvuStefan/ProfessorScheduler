@@ -2,10 +2,12 @@
 
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QFont>
 #include <QPainterPath>
+#include <QPushButton>
 
 
 ProfessorWindow::ProfessorWindow(const std::string &professorName,
@@ -56,16 +58,67 @@ void ProfessorWindow::setupUi(const QString &professorName)
     m_greetingLabel->setAttribute(Qt::WA_TranslucentBackground);
     m_nameLabel->setAttribute(Qt::WA_TranslucentBackground);
 
-    // Layout: put them in upper left, similar to mockup
-    auto *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(180, 130, 0, 0);  // tune for exact look
-    layout->setSpacing(18);
+    // ----- Buttons -----
+    m_scheduleButton = new QPushButton("View My Schedules", this);
+    m_resourcesButton = new QPushButton("See My Resources", this);
 
-    layout->addWidget(m_greetingLabel, 0, Qt::AlignLeft | Qt::AlignTop);
-    layout->addWidget(m_nameLabel, 0, Qt::AlignLeft | Qt::AlignTop);
-    layout->addStretch();
+    // Button styling matching MainWindow
+    QString buttonStyle = R"(
+        QPushButton {
+            background-color: #016B61;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            min-height: 48px;
+            min-width: 200px;
+        }
 
-    setLayout(layout);
+        QPushButton:hover {
+            background-color: #70B2B2;
+        }
+
+        QPushButton:pressed {
+            background-color: #9ECFD4;
+        }
+    )";
+
+    m_scheduleButton->setStyleSheet(buttonStyle);
+    m_resourcesButton->setStyleSheet(buttonStyle);
+    m_scheduleButton->setCursor(Qt::PointingHandCursor);
+    m_resourcesButton->setCursor(Qt::PointingHandCursor);
+
+    // Layout: text at top, buttons below the curve
+    auto *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
+
+    // Top section for text
+    auto *topWidget = new QWidget(this);
+    topWidget->setAttribute(Qt::WA_TranslucentBackground);
+    auto *topLayout = new QVBoxLayout(topWidget);
+    topLayout->setContentsMargins(180, 130, 0, 0);
+    topLayout->setSpacing(18);
+    topLayout->addWidget(m_greetingLabel, 0, Qt::AlignLeft | Qt::AlignTop);
+    topLayout->addWidget(m_nameLabel, 0, Qt::AlignLeft | Qt::AlignTop);
+    topLayout->addStretch();
+
+    // Bottom section for buttons
+    auto *buttonWidget = new QWidget(this);
+    buttonWidget->setAttribute(Qt::WA_TranslucentBackground);
+    auto *buttonLayout = new QHBoxLayout(buttonWidget);
+    buttonLayout->setContentsMargins(100, 50, 100, 100);
+    buttonLayout->setSpacing(30);
+    buttonLayout->addWidget(m_scheduleButton);
+    buttonLayout->addWidget(m_resourcesButton);
+    buttonLayout->addStretch();
+
+    mainLayout->addWidget(topWidget);
+    mainLayout->addWidget(buttonWidget);
+
+    setLayout(mainLayout);
 }
 
 void ProfessorWindow::paintEvent(QPaintEvent *event)
@@ -81,8 +134,8 @@ void ProfessorWindow::paintEvent(QPaintEvent *event)
     // Colors from mockup:
     // bottom: dark teal  #006A5C (approx)
     // top: light cream   #E7E9B5 (approx)
-    QColor bottomColor("#006A5C");
-    QColor topColor("#E7E9B5");
+    QColor bottomColor("#E7E9B5");
+    QColor topColor("#006A5C");
 
     // ---- Paint bottom solid color ----
     painter.fillRect(rect(), bottomColor);
@@ -102,7 +155,7 @@ void ProfessorWindow::paintEvent(QPaintEvent *event)
 
     // Draw smooth wave from right to left using a cubic Bezier curve.
     // Tune control points to match screenshot curvature.
-    QPointF c1(w * 0.75, waveYRight + h * 0.05);  // first control
+    QPointF c1(w * 0.75, waveYRight + h * 0.25);  // first control
     QPointF c2(w * 0.40, waveYLeft  - h * 0.10);  // second control
     QPointF end(0, waveYLeft);
 

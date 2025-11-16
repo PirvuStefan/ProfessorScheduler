@@ -5,6 +5,7 @@
 #include <string>
 
 class QLabel;
+class QPushButton;
 
 class ProfessorWindow : public QWidget
 {
@@ -20,6 +21,8 @@ protected:
 private:
     QLabel *m_greetingLabel;
     QLabel *m_nameLabel;
+    QPushButton *m_scheduleButton;
+    QPushButton *m_resourcesButton;
 
     void setupUi(const QString &professorName);
 };

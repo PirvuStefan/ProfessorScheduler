@@ -12,6 +12,15 @@
             </PendingDiffInfo>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/ProfessorWindow.h">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/ProfessorWindow.h" />
+              <option name="originalContent" value="#ifndef PROFESSORWINDOW_H&#10;#define PROFESSORWINDOW_H&#10;&#10;#include &lt;QWidget&gt;&#10;#include &lt;string&gt;&#10;&#10;class QLabel;&#10;&#10;class ProfessorWindow : public QWidget&#10;{&#10;    Q_OBJECT&#10;&#10;public:&#10;    explicit ProfessorWindow(const std::string&amp; professorName,&#10;                             QWidget *parent = nullptr);&#10;&#10;protected:&#10;    void paintEvent(QPaintEvent *event) override;&#10;&#10;private:&#10;    QLabel *m_greetingLabel;&#10;    QLabel *m_nameLabel;&#10;&#10;    void setupUi(const QString &amp;professorName);&#10;};&#10;&#10;#endif // PROFESSORWINDOW_H&#10;" />
+              <option name="updatedContent" value="#ifndef PROFESSORWINDOW_H&#10;#define PROFESSORWINDOW_H&#10;&#10;#include &lt;QWidget&gt;&#10;#include &lt;string&gt;&#10;&#10;class QLabel;&#10;class QPushButton;&#10;&#10;class ProfessorWindow : public QWidget&#10;{&#10;    Q_OBJECT&#10;&#10;public:&#10;    explicit ProfessorWindow(const std::string&amp; professorName,&#10;                             QWidget *parent = nullptr);&#10;&#10;protected:&#10;    void paintEvent(QPaintEvent *event) override;&#10;&#10;private:&#10;    QLabel *m_greetingLabel;&#10;    QLabel *m_nameLabel;&#10;    QPushButton *m_scheduleButton;&#10;    QPushButton *m_resourcesButton;&#10;&#10;    void setupUi(const QString &amp;professorName);&#10;};&#10;&#10;#endif // PROFESSORWINDOW_H" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
