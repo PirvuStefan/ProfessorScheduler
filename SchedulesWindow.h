@@ -6,39 +6,29 @@
 #define PROFESSORSCHEDULER_PUBLIC__SCHEDULESWINDOW_H
 
 #include <QWidget>
-#include <QGridLayout>
-#include <QLabel>
-#include <QFrame>
-#include <QScrollArea>
-#include <vector>
-#include <string>
+#include <QTableWidget>
+#include <QComboBox>
+#include <QPushButton>
 
-class SchedulesWindow : public QWidget {
+class SchedulesWindow : public QWidget
+{
     Q_OBJECT
 
 public:
     explicit SchedulesWindow(QWidget *parent = nullptr);
-    ~SchedulesWindow() override = default;
 
 private:
-    void setupUI();
-    void createScheduleGrid();
-    QFrame* createCourseBox(const QString& courseName = "");
+    void setupUi();
+    void populateScheduleTable();
+    void updateScheduleForDay(const QString &day);
 
-    QGridLayout* mainLayout;
-    QGridLayout* scheduleGrid;
-    QScrollArea* scrollArea;
+    QComboBox *m_daySelector;  // Changed from m_groupSelector
+    QTableWidget *m_scheduleTable;
+    QPushButton *m_backButton;
 
-    // Color palette
-    const QString COLOR_PRIMARY = "#016B61";
-    const QString COLOR_SECONDARY = "#70B2B2";
-    const QString COLOR_TERTIARY = "#9ECFD4";
-    const QString COLOR_LIGHT = "#E5E9C5";
-
-    const std::vector<QString> days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-    const std::vector<QString> timeSlots = {"8-10", "10-12", "12-14", "14-16", "16-18", "18-20"};
-    const int NUM_GROUPS = 3;
-    const int SUBGROUPS_PER_GROUP = 2;
+    // Time slots from 8:00 to 20:00
+    QStringList m_timeSlots;
+    QStringList m_subGroups;  // Changed from m_daysOfWeek
 };
 
 #endif //PROFESSORSCHEDULER_PUBLIC__SCHEDULESWINDOW_H

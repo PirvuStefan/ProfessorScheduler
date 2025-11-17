@@ -5,117 +5,189 @@
 #include "SchedulesWindow.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QPushButton>
+#include <QLabel>
+#include <QHeaderView>
+#include <QPainter>
 
-SchedulesWindow::SchedulesWindow(QWidget *parent) : QWidget(parent) {
-    setupUI();
+SchedulesWindow::SchedulesWindow(QWidget *parent)
+    : QWidget(parent)
+{
+    // Initialize time slots (8:00 to 20:00)
+    m_timeSlots = {"08:00-10:00", "10:00-12:00", "12:00-14:00",
+                   "14:00-16:00", "16:00-18:00", "18:00-20:00"};
+
+    // 6 sub-groups (3 groups with 2 divisions each)
+    m_subGroups = {"Group 1A", "Group 1B", "Group 2A",
+                   "Group 2B", "Group 3A", "Group 3B"};
+
+    setupUi();
 }
 
-void SchedulesWindow::setupUI() {
-    mainLayout = new QGridLayout(this);
+void SchedulesWindow::setupUi()
+{
+    resize(1200, 800);  // Wider to accommodate 6 columns
+    setWindowTitle("My Schedules");
+
+    auto *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(30, 30, 30, 30);
+    mainLayout->setSpacing(20);
 
     // Title
-    QLabel* title = new QLabel("Weekly Schedule", this);
-    title->setStyleSheet(QString("font-size: 24px; font-weight: bold; color: %1; padding: 10px;").arg(COLOR_PRIMARY));
-    title->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(title, 0, 0);
+    auto *titleLabel = new QLabel("Weekly Schedule", this);
+    QFont titleFont;
+    titleFont.setPointSize(24);
+    titleFont.setBold(true);
+    titleLabel->setFont(titleFont);
+    titleLabel->setStyleSheet("color: #006A5C;");
 
-    // Create scroll area for the schedule grid
-    scrollArea = new QScrollArea(this);
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setStyleSheet(QString("background-color: white; border: 2px solid %1;").arg(COLOR_TERTIARY));
+    // Day selector
+    auto *selectorLayout = new QHBoxLayout();
+    auto *dayLabel = new QLabel("Select Day:", this);
+    dayLabel->setStyleSheet("color: #006A5C; font-size: 14px;");
 
-    QWidget* scheduleContainer = new QWidget();
-    scheduleGrid = new QGridLayout(scheduleContainer);
-    scheduleGrid->setSpacing(2);
-
-    createScheduleGrid();
-
-    scrollArea->setWidget(scheduleContainer);
-    mainLayout->addWidget(scrollArea, 1, 0);
-
-    setLayout(mainLayout);
-    resize(1200, 700);
-}
-
-void SchedulesWindow::createScheduleGrid() {
-    // Header: Empty corner cell
-    QLabel* corner = new QLabel("");
-    corner->setStyleSheet(QString("background-color: %1; border: 1px solid %2;").arg(COLOR_LIGHT).arg(COLOR_PRIMARY));
-    scheduleGrid->addWidget(corner, 0, 0);
-
-    // Column headers: Time slots and groups
-    int col = 1;
-    for (const QString& timeSlot : timeSlots) {
-        // Time slot header spanning all subgroups
-        QLabel* timeHeader = new QLabel(timeSlot);
-        timeHeader->setAlignment(Qt::AlignCenter);
-        timeHeader->setStyleSheet(QString("background-color: %1; color: white; font-weight: bold; padding: 8px; border: 1px solid %1;").arg(COLOR_PRIMARY));
-        scheduleGrid->addWidget(timeHeader, 0, col, 1, NUM_GROUPS * SUBGROUPS_PER_GROUP);
-
-        // Group and subgroup headers
-        for (int group = 1; group <= NUM_GROUPS; ++group) {
-            QLabel* groupHeader = new QLabel(QString("Group %1").arg(group));
-            groupHeader->setAlignment(Qt::AlignCenter);
-            groupHeader->setStyleSheet(QString("background-color: %1; color: white; font-weight: bold; padding: 5px; border: 1px solid %2;").arg(COLOR_SECONDARY).arg(COLOR_PRIMARY));
-            scheduleGrid->addWidget(groupHeader, 1, col, 1, SUBGROUPS_PER_GROUP);
-
-            for (int subgroup = 1; subgroup <= SUBGROUPS_PER_GROUP; ++subgroup) {
-                QLabel* subgroupHeader = new QLabel(QString("SG %1").arg(subgroup));
-                subgroupHeader->setAlignment(Qt::AlignCenter);
-                subgroupHeader->setStyleSheet(QString("background-color: %1; color: %2; padding: 3px; border: 1px solid %2; font-size: 11px;").arg(COLOR_TERTIARY).arg(COLOR_PRIMARY));
-                scheduleGrid->addWidget(subgroupHeader, 2, col);
-                col++;
-            }
+    m_daySelector = new QComboBox(this);
+    // Days of the week selector
+    m_daySelector->addItems({"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
+    m_daySelector->setStyleSheet(R"(
+        QComboBox {
+            background-color: white;
+            border: 2px solid #006A5C;
+            border-radius: 5px;
+            padding: 8px;
+            min-width: 150px;
+            font-size: 14px;
         }
+        QComboBox:hover {
+            border-color: #70B2B2;
+        }
+    )");
+
+    selectorLayout->addWidget(dayLabel);
+    selectorLayout->addWidget(m_daySelector);
+    selectorLayout->addStretch();
+
+    // Schedule table - Hours on left, Sub-groups as columns
+    m_scheduleTable = new QTableWidget(this);
+    m_scheduleTable->setRowCount(m_timeSlots.size());
+    m_scheduleTable->setColumnCount(m_subGroups.size());
+
+    // Set headers
+    m_scheduleTable->setVerticalHeaderLabels(m_timeSlots);
+    m_scheduleTable->setHorizontalHeaderLabels(m_subGroups);
+
+    // Style the table
+    m_scheduleTable->setStyleSheet(R"(
+        QTableWidget {
+            background-color: white;
+            gridline-color: #70B2B2;
+            border: 2px solid #006A5C;
+            border-radius: 8px;
+        }
+        QTableWidget::item {
+            padding: 10px;
+            border: 1px solid #E0E0E0;
+        }
+        QHeaderView::section {
+            background-color: #006A5C;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 12px;
+            border: 1px solid #004D45;
+        }
+    )");
+
+    // Set column widths (wider for content)
+    for (int col = 0; col < m_subGroups.size(); ++col) {
+        m_scheduleTable->setColumnWidth(col, 180);
     }
 
-    // Row headers: Days and schedule cells
-    int row = 3;
-    for (const QString& day : days) {
-        // Day label
-        QLabel* dayLabel = new QLabel(day);
-        dayLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
-        dayLabel->setStyleSheet(QString("background-color: %1; color: white; font-weight: bold; padding: 10px; border: 1px solid %1;").arg(COLOR_PRIMARY));
-        scheduleGrid->addWidget(dayLabel, row, 0);
+    // Set row heights (taller for subject + professor)
+    for (int row = 0; row < m_timeSlots.size(); ++row) {
+        m_scheduleTable->setRowHeight(row, 100);
+    }
 
-        // Create course boxes for each time slot and subgroup
-        col = 1;
-        for (int timeSlot = 0; timeSlot < timeSlots.size(); ++timeSlot) {
-            for (int group = 1; group <= NUM_GROUPS; ++group) {
-                for (int subgroup = 1; subgroup <= SUBGROUPS_PER_GROUP; ++subgroup) {
-                    QFrame* courseBox = createCourseBox();
-                    scheduleGrid->addWidget(courseBox, row, col);
-                    col++;
-                }
-            }
+    // Configure headers
+    m_scheduleTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    m_scheduleTable->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    m_scheduleTable->verticalHeader()->setDefaultSectionSize(100);
+
+    // Make table non-editable
+    m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_scheduleTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    // Back button
+    m_backButton = new QPushButton("← Back", this);
+    m_backButton->setStyleSheet(R"(
+        QPushButton {
+            background-color: #006A5C;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 5px;
+            min-height: 40px;
         }
-        row++;
+        QPushButton:hover {
+            background-color: #70B2B2;
+        }
+        QPushButton:pressed {
+            background-color: #9ECFD4;
+        }
+    )");
+    m_backButton->setCursor(Qt::PointingHandCursor);
+
+    // Add widgets to layout
+    mainLayout->addWidget(titleLabel);
+    mainLayout->addLayout(selectorLayout);
+    mainLayout->addWidget(m_scheduleTable, 1); // Stretch factor 1
+    mainLayout->addWidget(m_backButton, 0, Qt::AlignLeft);
+
+    // Populate initial data
+    populateScheduleTable();
+
+    // Connections
+    connect(m_daySelector, &QComboBox::currentTextChanged,
+            this, &SchedulesWindow::updateScheduleForDay);
+    connect(m_backButton, &QPushButton::clicked, this, &QWidget::close);
+}
+
+void SchedulesWindow::populateScheduleTable()
+{
+    // Sample data - each cell contains subject and professor
+    // This will change based on the selected day
+    for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
+        for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+            auto *cellWidget = new QWidget();
+            auto *cellLayout = new QVBoxLayout(cellWidget);
+            cellLayout->setContentsMargins(5, 5, 5, 5);
+            cellLayout->setSpacing(5);
+
+            // Subject label
+            auto *subjectLabel = new QLabel("Mathematics", cellWidget);
+            subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #006A5C;");
+            subjectLabel->setAlignment(Qt::AlignCenter);
+
+            // Professor label
+            auto *profLabel = new QLabel("Prof. John Smith", cellWidget);
+            profLabel->setStyleSheet("font-size: 11px; color: #555555;");
+            profLabel->setAlignment(Qt::AlignCenter);
+            profLabel->setWordWrap(true);
+
+            cellLayout->addWidget(subjectLabel);
+            cellLayout->addWidget(profLabel);
+            cellLayout->addStretch();
+
+            m_scheduleTable->setCellWidget(row, col, cellWidget);
+        }
     }
 }
 
-QFrame* SchedulesWindow::createCourseBox(const QString& courseName) {
-    QFrame* box = new QFrame();
-    box->setFrameStyle(QFrame::Box);
-    box->setMinimumSize(80, 60);
-    box->setStyleSheet(QString(
-        "QFrame {"
-        "   background-color: white;"
-        "   border: 2px solid %1;"
-        "   border-radius: 4px;"
-        "}"
-        "QFrame:hover {"
-        "   background-color: %2;"
-        "   border: 2px solid %3;"
-        "}"
-    ).arg(COLOR_TERTIARY).arg(COLOR_LIGHT).arg(COLOR_SECONDARY));
-
-    QVBoxLayout* boxLayout = new QVBoxLayout(box);
-    QLabel* courseLabel = new QLabel(courseName.isEmpty() ? "" : courseName);
-    courseLabel->setAlignment(Qt::AlignCenter);
-    courseLabel->setWordWrap(true);
-    courseLabel->setStyleSheet(QString("color: %1; font-size: 10px; border: none;").arg(COLOR_PRIMARY));
-    boxLayout->addWidget(courseLabel);
-
-    return box;
+void SchedulesWindow::updateScheduleForDay(const QString &day)
+{
+    // Update schedule based on selected day
+    // This is where you'd load specific schedule data for each day
+    // Different courses and professors for Monday, Tuesday, etc.
+    populateScheduleTable();
 }
