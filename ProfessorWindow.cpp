@@ -219,13 +219,13 @@ void ProfessorWindow::paintEvent(QPaintEvent *event)
 
 
 void ProfessorWindow::onScheduleButtonClicked() {
-    auto *schedulesWindow = new SchedulesWindow(this);
+    auto *schedulesWindow = new SchedulesWindow(nullptr);
     schedulesWindow->setAttribute(Qt::WA_DeleteOnClose);
-    schedulesWindow->show();
-    this->hide();
 
     connect(schedulesWindow, &QWidget::destroyed, this, [this]() {
         this->show();
     });
-}
 
+    schedulesWindow->show();
+    this->hide();
+}
