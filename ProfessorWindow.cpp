@@ -10,6 +10,8 @@
 #include <QPushButton>
 #include <QLinearGradient>
 
+#include "SchedulesWindow.h"
+
 // GradientLabel implementation
 GradientLabel::GradientLabel(const QString &text, QWidget *parent)
     : QLabel(text, parent)
@@ -67,7 +69,7 @@ void ProfessorWindow::setupUi(const QString &professorName)
     )";
 
     // ----- Labels -----
-    m_greetingLabel = new GradientLabel("Hello, " + professorName + ", \nwelcome back", this);
+    m_greetingLabel = new GradientLabel("Hello, " + professorName + ", \nwelcome back ☀", this);
     m_nameLabel     = new QLabel("Manage your schedules and teaching resources", this);
 
     // Colors matching the screenshot
@@ -136,22 +138,23 @@ void ProfessorWindow::setupUi(const QString &professorName)
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
-    // Top section for text
+    // Top section for text - centered
     auto *topWidget = new QWidget(this);
     topWidget->setAttribute(Qt::WA_TranslucentBackground);
     auto *topLayout = new QVBoxLayout(topWidget);
-    topLayout->setContentsMargins(180, 130, 0, 0);
+    topLayout->setContentsMargins(50, 130, 50, 0);
     topLayout->setSpacing(18);
-    topLayout->addWidget(m_greetingLabel, 0, Qt::AlignLeft | Qt::AlignTop);
-    topLayout->addWidget(m_nameLabel, 0, Qt::AlignLeft | Qt::AlignTop);
+    topLayout->addWidget(m_greetingLabel, 0, Qt::AlignCenter);
+    topLayout->addWidget(m_nameLabel, 0, Qt::AlignCenter);
     topLayout->addStretch();
 
-    // Bottom section for buttons
+    // Bottom section for buttons - centered
     auto *buttonWidget = new QWidget(this);
     buttonWidget->setAttribute(Qt::WA_TranslucentBackground);
     auto *buttonLayout = new QHBoxLayout(buttonWidget);
-    buttonLayout->setContentsMargins(150, 50, 100, 100);
+    buttonLayout->setContentsMargins(50, 50, 50, 100);
     buttonLayout->setSpacing(30);
+    buttonLayout->addStretch();
     buttonLayout->addWidget(m_scheduleButton);
     buttonLayout->addWidget(m_resourcesButton);
     buttonLayout->addStretch();
@@ -160,6 +163,11 @@ void ProfessorWindow::setupUi(const QString &professorName)
     mainLayout->addWidget(buttonWidget);
 
     setLayout(mainLayout);
+
+
+
+    connect(m_scheduleButton, &QPushButton::clicked, this, &ProfessorWindow::onScheduleButtonClicked);
+
 }
 
 void ProfessorWindow::paintEvent(QPaintEvent *event)
@@ -208,3 +216,16 @@ void ProfessorWindow::paintEvent(QPaintEvent *event)
 
     painter.fillPath(topPath, topColor);
 }
+
+
+void ProfessorWindow::onScheduleButtonClicked() {
+    auto *schedulesWindow = new SchedulesWindow(this);
+    schedulesWindow->setAttribute(Qt::WA_DeleteOnClose);
+    schedulesWindow->show();
+    this->hide();
+
+    connect(schedulesWindow, &QWidget::destroyed, this, [this]() {
+        this->show();
+    });
+}
+

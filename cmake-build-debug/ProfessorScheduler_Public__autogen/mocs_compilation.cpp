@@ -2,3 +2,4 @@
 #include "EWIEGA46WW/moc_CreateAccount.cpp"
 #include "EWIEGA46WW/moc_MainWindow.cpp"
 #include "EWIEGA46WW/moc_ProfessorWindow.cpp"
+#include "EWIEGA46WW/moc_SchedulesWindow.cpp"

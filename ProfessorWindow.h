@@ -30,6 +30,9 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
 
+private slots:
+    void onScheduleButtonClicked();
+
 private:
     GradientLabel *m_greetingLabel;
     QLabel *m_nameLabel;
