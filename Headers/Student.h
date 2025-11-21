@@ -12,10 +12,12 @@
 class Student : public User {
 
 
+
+
 public:
     void AccountCreated() override;
 
-
+    Student(const User &user);
 };
 
 

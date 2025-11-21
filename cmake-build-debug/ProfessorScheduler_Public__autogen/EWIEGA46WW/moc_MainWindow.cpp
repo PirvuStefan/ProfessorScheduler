@@ -41,7 +41,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     QtMocHelpers::StringRefStorage qt_stringData {
         "MainWindow",
         "authenticateUser",
-        "std::optional<User>",
+        "User*",
         "",
         "email",
         "password",
@@ -51,7 +51,7 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
 
     QtMocHelpers::UintData qt_methods {
         // Slot 'authenticateUser'
-        QtMocHelpers::SlotData<std::optional<User>(const QString &, const QString &)>(1, 3, QMC::AccessPrivate, 0x80000000 | 2, {{
+        QtMocHelpers::SlotData<User *(const QString &, const QString &)>(1, 3, QMC::AccessPrivate, 0x80000000 | 2, {{
             { QMetaType::QString, 4 }, { QMetaType::QString, 5 },
         }}),
         // Slot 'onLoginClicked'
@@ -81,8 +81,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: { std::optional<User> _r = _t->authenticateUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])));
-            if (_a[0]) *reinterpret_cast< std::optional<User>*>(_a[0]) = std::move(_r); }  break;
+        case 0: { User* _r = _t->authenticateUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])));
+            if (_a[0]) *reinterpret_cast< User**>(_a[0]) = std::move(_r); }  break;
         case 1: _t->onLoginClicked(); break;
         case 2: _t->onSignUpClicked(); break;
         default: ;

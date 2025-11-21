@@ -8,3 +8,5 @@ void Student::AccountCreated() {
 
     printf("Student Account Created\n");
 }
+
+Student::Student(const User& user) : User(user) {}

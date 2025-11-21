@@ -14,14 +14,17 @@
 
 #include "ProfessorWindow.h"
 #include "Headers/User.h"
+#include "Headers/UserFactory.h"
+#include "Headers/Professor.h"
+#include "Headers/Student.h"
 
-std::optional<User> MainWindow::authenticateUser(const QString &email, const QString &password) {
+User* MainWindow::authenticateUser(const QString &email, const QString &password) {
 
-    // If valid, return User object; otherwise return std::nullopt, indicating login failure, that why we use optional here
+
 
     QFile file("Accounts/accounts.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return std::nullopt;
+        return nullptr;
     }
 
     QTextStream in(&file);
@@ -32,10 +35,11 @@ std::optional<User> MainWindow::authenticateUser(const QString &email, const QSt
 
         if (parts[1] == email && parts[2] == password) {
             bool isProfessor = (parts[3] == "1");
-            return User(parts[0], parts[1], parts[2], isProfessor);
+            User user = User(parts[0], parts[1], parts[2]);
+            return UserFactory::createUser(user, isProfessor);
         }
     }
-    return std::nullopt;
+    return nullptr;
 }
 
 
@@ -281,25 +285,38 @@ void MainWindow::onLoginClicked() {
     }
 
     auto userResult = authenticateUser(email, password);
-    if (!userResult.has_value()) {
+    if (!userResult) {
         QMessageBox::warning(this, "Login Failed",
                            "Invalid email or password. Please try again.");
         return;
     }
 
-    User actual = userResult.value();
-    actual.Print();
+    User *actual = userResult;
+    actual->Print();
 
-    // Open Professor Window after successful login
-    auto *professorWindow = new ProfessorWindow(actual.getName());
-    professorWindow->setAttribute(Qt::WA_DeleteOnClose);
-    professorWindow->show();
-    this->hide();
+    if (dynamic_cast<Professor*>(actual)) {
+        auto *professorWindow = new ProfessorWindow(actual->getName());
+        professorWindow->setAttribute(Qt::WA_DeleteOnClose);
+        professorWindow->show();
+        this->hide();
+
+        // Show main window again when professor window is closed
+        connect(professorWindow, &QWidget::destroyed, this, [this]() {
+            this->show();
+        });
+    } else if (dynamic_cast<Student*>(actual)) {
+        QMessageBox::information(this, "Login Successful",
+                                 QString("Logged in as student: %1").arg(actual->getName()));
+        // TODO: open Student window if available
+    }
+
+
+
+
+
 
     // Show main window again when professor window is closed
-    connect(professorWindow, &QWidget::destroyed, this, [this]() {
-        this->show();
-    });
+
 }
 
 void MainWindow::onSignUpClicked() {

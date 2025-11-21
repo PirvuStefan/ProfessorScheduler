@@ -17,10 +17,23 @@ protected:
     bool isProfessor;        // Flag indicating if user is a professor (true) or student (false)
     bool isProfessor;         // Flag indicating if user is a professor (true) or student (false)
 };
-### Attribute Details:
-- **fullName**: Stores the complete name of the user
-- **email**: Used as the unique identifier for login
-- **password**: Authentication credential
-- **isProfessor**: Determines user role and access level
-- `password` - Stores the user's password for authentication
-- `isProfessor` - Boolean flag to distinguish between professors and students
+
+```
+
+## Main Page
+
+Based on the login credentials, the user is directed to the main page which varies depending on whether the user is a professor or a student.
+For that logic , the program uses an intermediate class `UserFactory` that checks the credentials and returns the appropriate derived class.
+(Factory Design Pattern)
+
+```cpp
+
+User* UserFactory::createUser(User user, bool isProfessor) {
+    if (isProfessor)
+    return new Professor(user);
+    return new Student(user);
+} // the factory method that creates either a Professor or Student object based on the isProfessor flag
+// we do test if the logic is successful in the main function
+
+```
+

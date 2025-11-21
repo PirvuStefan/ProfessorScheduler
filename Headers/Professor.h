@@ -11,6 +11,8 @@
 class Professor : public User {
     public:
     void AccountCreated() override;
+
+    Professor(const User &user);
 };
 
 

@@ -101,7 +101,7 @@ void ProfessorWindow::setupUi(const QString &professorName)
 
     // ----- Buttons -----
     m_scheduleButton = new QPushButton("View My Schedules", this);
-    m_resourcesButton = new QPushButton("See My Resources", this);
+
 
     // Button styling matching MainWindow
     QString buttonStyle = R"(
@@ -129,10 +129,7 @@ void ProfessorWindow::setupUi(const QString &professorName)
 
 
     m_scheduleButton->setStyleSheet(buttonStyle);
-    m_resourcesButton->setStyleSheet(buttonStyle);
     m_scheduleButton->setCursor(Qt::PointingHandCursor);
-    m_resourcesButton->setCursor(Qt::PointingHandCursor);
-
     // Layout: text at top, buttons below the curve
     auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -156,7 +153,6 @@ void ProfessorWindow::setupUi(const QString &professorName)
     buttonLayout->setSpacing(30);
     buttonLayout->addStretch();
     buttonLayout->addWidget(m_scheduleButton);
-    buttonLayout->addWidget(m_resourcesButton);
     buttonLayout->addStretch();
 
     mainLayout->addWidget(topWidget);

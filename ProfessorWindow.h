@@ -37,7 +37,6 @@ private:
     GradientLabel *m_greetingLabel;
     QLabel *m_nameLabel;
     QPushButton *m_scheduleButton;
-    QPushButton *m_resourcesButton;
 
     void setupUi(const QString &professorName);
 };

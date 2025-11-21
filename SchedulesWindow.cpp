@@ -28,6 +28,9 @@ void SchedulesWindow::setupUi()
     resize(1200, 800);  // Wider to accommodate 6 columns
     setWindowTitle("My Schedules");
 
+    // Set background color to match palette
+    setStyleSheet("background-color: #E5E9C5;");
+
     auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(30, 30, 30, 30);
     mainLayout->setSpacing(20);
@@ -38,12 +41,12 @@ void SchedulesWindow::setupUi()
     titleFont.setPointSize(24);
     titleFont.setBold(true);
     titleLabel->setFont(titleFont);
-    titleLabel->setStyleSheet("color: #006A5C;");
+    titleLabel->setStyleSheet("color: #016B61; background-color: transparent;");
 
     // Day selector
     auto *selectorLayout = new QHBoxLayout();
     auto *dayLabel = new QLabel("Select Day:", this);
-    dayLabel->setStyleSheet("color: #006A5C; font-size: 14px;");
+    dayLabel->setStyleSheet("color: #016B61; font-size: 14px; background-color: transparent;");
 
     m_daySelector = new QComboBox(this);
     // Days of the week selector
@@ -51,14 +54,23 @@ void SchedulesWindow::setupUi()
     m_daySelector->setStyleSheet(R"(
         QComboBox {
             background-color: white;
-            border: 2px solid #006A5C;
+            border: 2px solid #016B61;
             border-radius: 5px;
             padding: 8px;
             min-width: 150px;
             font-size: 14px;
+            color: #016B61;
         }
         QComboBox:hover {
             border-color: #70B2B2;
+        }
+        QComboBox::drop-down {
+            border: none;
+        }
+        QComboBox QAbstractItemView {
+            background-color: white;
+            selection-background-color: #9ECFD4;
+            selection-color: #016B61;
         }
     )");
 
@@ -80,20 +92,20 @@ void SchedulesWindow::setupUi()
         QTableWidget {
             background-color: white;
             gridline-color: #70B2B2;
-            border: 2px solid #006A5C;
+            border: 2px solid #016B61;
             border-radius: 8px;
         }
         QTableWidget::item {
             padding: 10px;
-            border: 1px solid #E0E0E0;
+            border: 1px solid #E5E9C5;
         }
         QHeaderView::section {
-            background-color: #006A5C;
+            background-color: #016B61;
             color: white;
             font-weight: bold;
             font-size: 13px;
             padding: 12px;
-            border: 1px solid #004D45;
+            border: 1px solid #70B2B2;
         }
     )");
 
@@ -120,7 +132,7 @@ void SchedulesWindow::setupUi()
     m_backButton = new QPushButton("← Back", this);
     m_backButton->setStyleSheet(R"(
         QPushButton {
-            background-color: #006A5C;
+            background-color: #016B61;
             color: white;
             font-size: 14px;
             font-weight: 600;
@@ -166,12 +178,12 @@ void SchedulesWindow::populateScheduleTable()
 
             // Subject label
             auto *subjectLabel = new QLabel("Mathematics", cellWidget);
-            subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #006A5C;");
+            subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #016B61; background-color: transparent;");
             subjectLabel->setAlignment(Qt::AlignCenter);
 
             // Professor label
             auto *profLabel = new QLabel("Prof. John Smith", cellWidget);
-            profLabel->setStyleSheet("font-size: 11px; color: #555555;");
+            profLabel->setStyleSheet("font-size: 11px; color: #70B2B2; background-color: transparent;");
             profLabel->setAlignment(Qt::AlignCenter);
             profLabel->setWordWrap(true);
 

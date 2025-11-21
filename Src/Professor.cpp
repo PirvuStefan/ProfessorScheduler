@@ -5,6 +5,8 @@
 #include "../Headers/Professor.h"
 
 void Professor::AccountCreated() {
-    // Implementation goes here
     printf("Professor Account Created\n");
 }
+
+
+Professor::Professor(const User& user) : User(user) {}

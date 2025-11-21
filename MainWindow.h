@@ -15,7 +15,7 @@ public:
     ~MainWindow();
 
 private slots:
-    static std::optional<User> authenticateUser(const QString &email, const QString &password);
+    static User *authenticateUser(const QString &email, const QString &password);
 
     void onLoginClicked();
     void onSignUpClicked();
