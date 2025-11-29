@@ -35,8 +35,7 @@ User* MainWindow::authenticateUser(const QString &email, const QString &password
 
         if (parts[1] == email && parts[2] == password) {
             bool isProfessor = (parts[3] == "1");
-            User user = User(parts[0], parts[1], parts[2]);
-            return UserFactory::createUser(user, isProfessor);
+            return UserFactory::createUser(parts[1], parts[2], parts[3], isProfessor);
         }
     }
     return nullptr;
@@ -294,15 +293,17 @@ void MainWindow::onLoginClicked() {
     User *actual = userResult;
     actual->Print();
 
-    auto *professorWindow = new ProfessorWindow(actual->getName());
-    professorWindow->setAttribute(Qt::WA_DeleteOnClose);
-    professorWindow->show();
+    QWidget userWindow = actual->createWidget(this);
+
+    userWindow.setAttribute(Qt::WA_DeleteOnClose);
+    userWindow.show();
     this->hide();
 
-    // Show main window again when professor window is closed
-    connect(professorWindow, &QWidget::destroyed, this, [this]() {
+    // Show main window again when user window is closed
+    connect(&userWindow, &QWidget::destroyed, this, [this]() {
         this->show();
     });
+
 
 
 

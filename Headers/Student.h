@@ -16,6 +16,9 @@ class Student : public User {
 
 public:
     void AccountCreated() override;
+    Student(QString email, QString password, QString name);
+    QWidget createWidget(QWidget *parent) override;
+
 
     Student(const User &user);
 };

@@ -13,7 +13,7 @@
 class UserFactory{
 
     public:
-    static User* createUser(User user, bool isProfessor);
+    static User* createUser(QString email, QString password, QString name, bool isProfessor);
 };
 
 

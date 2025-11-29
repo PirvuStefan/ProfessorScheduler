@@ -1,4 +1,4 @@
-#include "professorwindow.h"
+#include "ProfessorWindow.h"
 
 #include <QLabel>
 #include <QVBoxLayout>

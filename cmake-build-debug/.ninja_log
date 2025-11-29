@@ -39,3 +39,30 @@
 24	76	1764420700017276408	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
 77	1364	1764420700070113178	CMakeFiles/ProfessorScheduler_Public_.dir/MainWindow.cpp.o	8d115fddf6516084
 1364	1585	1764420701357675409	ProfessorScheduler_Public_	217f5ae44dd20a4
+18	532	1764425966733063000	ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+18	532	1764425966733063000	ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+18	532	1764425966733063000	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+18	532	1764425966733063000	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+534	2060	1764425966749656733	CMakeFiles/ProfessorScheduler_Public_.dir/Src/User.cpp.o	95f4ecb01c76be31
+536	2061	1764425966751122287	CMakeFiles/ProfessorScheduler_Public_.dir/Src/Student.cpp.o	877320ea3b5902a0
+536	2063	1764425966751325788	CMakeFiles/ProfessorScheduler_Public_.dir/Src/Professor.cpp.o	14d4f01567f922a2
+533	2065	1764425966748453099	CMakeFiles/ProfessorScheduler_Public_.dir/main.cpp.o	407482b09360fbdf
+533	2202	1764425966748593183	CMakeFiles/ProfessorScheduler_Public_.dir/MainWindow.cpp.o	8d115fddf6516084
+533	2243	1764425966748140471	CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorScheduler_Public__autogen/mocs_compilation.cpp.o	10baa1dabd01250d
+2061	2834	1764425968276963359	CMakeFiles/ProfessorScheduler_Public_.dir/Src/UserFactory.cpp.o	c9f234c8f9110cde
+2060	3063	1764425968275685224	CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorWindow.cpp.o	42e151732033224c
+11	62	1764426013022770151	ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+11	62	1764426013022770151	ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+11	62	1764426013022770151	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+11	62	1764426013022770151	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+63	1256	1764426013074267104	CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorWindow.cpp.o	42e151732033224c
+11	65	1764427469029938269	ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+11	65	1764427469029938269	ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+11	65	1764427469029938269	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+11	65	1764427469029938269	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+65	1418	1764427469084435974	CMakeFiles/ProfessorScheduler_Public_.dir/MainWindow.cpp.o	8d115fddf6516084
+22	75	1764428615732884156	ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+22	75	1764428615732884156	ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+22	75	1764428615732884156	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/timestamp	29160981726277c7
+22	75	1764428615732884156	/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/mocs_compilation.cpp	29160981726277c7
+76	1205	1764428615786486122	CMakeFiles/ProfessorScheduler_Public_.dir/Src/Student.cpp.o	877320ea3b5902a0

@@ -13,6 +13,10 @@ class Professor : public User {
     void AccountCreated() override;
 
     Professor(const User &user);
+
+    Professor(QString email, QString password, QString name);
+
+    QWidget createWidget(QWidget *parent) override;
 };
 
 

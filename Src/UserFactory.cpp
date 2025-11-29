@@ -7,8 +7,8 @@
 #include "../Headers/Professor.h"
 #include "../Headers/Student.h"
 
-User* UserFactory::createUser(User user, bool isProfessor) {
+User* UserFactory::createUser(QString email, QString password, QString name, bool isProfessor) {
     if (isProfessor)
-    return new Professor(user);
-    return new Student(user);
+    return new Professor(email, password, name);
+    return new Student(email, password, name);
 }
