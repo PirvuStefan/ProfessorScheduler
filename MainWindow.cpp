@@ -295,7 +295,6 @@ void MainWindow::onLoginClicked() {
 
     // replace creation of user window so it is top-level (no parent)
     QWidget* userWindow = actual->createWidget(nullptr);
-
     userWindow->setAttribute(Qt::WA_DeleteOnClose);
     userWindow->show();
     this->hide();
