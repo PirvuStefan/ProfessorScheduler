@@ -45,7 +45,7 @@ public:
     std::string getPassword();
 
     virtual void AccountCreated() ; // we do want to have a different print message when a professor or a student creates an account
-    virtual QWidget createWidget(QWidget *parent) = 0 ; // we will override this method in derived classes to set the user interface depending on the type of user
+    virtual QWidget* createWidget(QWidget *parent) = 0 ; // we will override this method in derived classes to set the user interface depending on the type of user
 };
 
 #endif //USER_H

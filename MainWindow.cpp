@@ -293,14 +293,15 @@ void MainWindow::onLoginClicked() {
     User *actual = userResult;
     actual->Print();
 
-    QWidget userWindow = actual->createWidget(this);
+    // replace creation of user window so it is top-level (no parent)
+    QWidget* userWindow = actual->createWidget(nullptr);
 
-    userWindow.setAttribute(Qt::WA_DeleteOnClose);
-    userWindow.show();
+    userWindow->setAttribute(Qt::WA_DeleteOnClose);
+    userWindow->show();
     this->hide();
 
     // Show main window again when user window is closed
-    connect(&userWindow, &QWidget::destroyed, this, [this]() {
+    connect(userWindow, &QWidget::destroyed, this, [this]() {
         this->show();
     });
 

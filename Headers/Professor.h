@@ -16,7 +16,7 @@ class Professor : public User {
 
     Professor(QString email, QString password, QString name);
 
-    QWidget createWidget(QWidget *parent) override;
+    QWidget* createWidget(QWidget *parent) override;
 };
 
 

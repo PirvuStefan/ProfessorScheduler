@@ -15,11 +15,9 @@ Professor::Professor(const User& user) : User(user) {}
 
 Professor::Professor( QString email, QString password, QString name) : User(name, email, password) {}
 
-QWidget User::createWidget(QWidget* parent) {
+QWidget* Professor::createWidget(QWidget* parent) {
     QWidget* w = new QWidget(parent);
     auto layout = new QVBoxLayout(w);
     layout->addWidget(new QLabel("Professor view"));
-    return QWidget(w);
-
-
+    return w;
 }
