@@ -294,21 +294,19 @@ void MainWindow::onLoginClicked() {
     User *actual = userResult;
     actual->Print();
 
-    if (dynamic_cast<Professor*>(actual)) {
-        auto *professorWindow = new ProfessorWindow(actual->getName());
-        professorWindow->setAttribute(Qt::WA_DeleteOnClose);
-        professorWindow->show();
-        this->hide();
+    auto *professorWindow = new ProfessorWindow(actual->getName());
+    professorWindow->setAttribute(Qt::WA_DeleteOnClose);
+    professorWindow->show();
+    this->hide();
 
-        // Show main window again when professor window is closed
-        connect(professorWindow, &QWidget::destroyed, this, [this]() {
-            this->show();
-        });
-    } else if (dynamic_cast<Student*>(actual)) {
-        QMessageBox::information(this, "Login Successful",
-                                 QString("Logged in as student: %1").arg(actual->getName()));
-        // TODO: open Student window if available
-    }
+    // Show main window again when professor window is closed
+    connect(professorWindow, &QWidget::destroyed, this, [this]() {
+        this->show();
+    });
+
+
+
+
 
 
 

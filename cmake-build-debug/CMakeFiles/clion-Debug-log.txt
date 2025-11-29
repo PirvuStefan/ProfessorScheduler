@@ -17,9 +17,9 @@
 -- Performing Test HAVE_STDATOMIC
 -- Performing Test HAVE_STDATOMIC - Success
 -- Found WrapAtomic: TRUE
--- Found OpenGL: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework
+-- Found OpenGL: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework
 -- Found WrapOpenGL: TRUE
 -- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
--- Configuring done (1.8s)
--- Generating done (0.1s)
+-- Configuring done (3.7s)
+-- Generating done (0.2s)
 -- Build files have been written to: /Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug
