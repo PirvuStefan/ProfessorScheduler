@@ -73,6 +73,9 @@ QWidget* Professor::createWidget(QWidget* parent) {
             m_subtitle->setPalette(subPal);
             m_subtitle->setAttribute(Qt::WA_TranslucentBackground);
 
+            resize(900, 600);
+            setMinimumSize(900, 600);
+
             // Button
             m_scheduleButton = new QPushButton("View My Schedules", this);
             QString buttonStyle = R"(

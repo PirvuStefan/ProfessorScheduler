@@ -14,8 +14,6 @@ protected:
     std::string fullName;    // Full name of the user
     std::string email;       // Email address for login
     std::string password;    // User password (stored as plain text)
-    bool isProfessor;        // Flag indicating if user is a professor (true) or student (false)
-    bool isProfessor;         // Flag indicating if user is a professor (true) or student (false)
 };
 
 ```
