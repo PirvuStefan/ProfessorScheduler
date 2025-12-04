@@ -32,9 +32,11 @@ User* MainWindow::authenticateUser(const QString &email, const QString &password
         QStringList parts = line.split(",");
         if (parts.size() < 4) continue;
 
+
+
         if (parts[1] == email && parts[2] == password) {
             bool isProfessor = (parts[3] == "1");
-            return UserFactory::createUser(parts[1], parts[2], parts[3], isProfessor);
+            return UserFactory::createUser(parts[1], parts[2], parts[0], isProfessor);
         }
     }
     return nullptr;

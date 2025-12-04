@@ -18,6 +18,7 @@
 #include <QComboBox>
 #include <QHeaderView>
 #include <vector>
+#include <iostream>
 
 void Professor::AccountCreated()  {
     printf("Professor Account Created\n");
@@ -62,7 +63,7 @@ QWidget* Professor::createWidget(QWidget* parent,User* user) {
     // Local view widget that paints the background/wave and hosts the controls
     class LocalProfessorView : public QWidget {
     public:
-        explicit LocalProfessorView(QWidget *parent = nullptr) : QWidget(parent) {
+        explicit LocalProfessorView(QWidget *parent = nullptr, User* user = nullptr) : QWidget(parent) {
             setAttribute(Qt::WA_OpaquePaintEvent);
             setAutoFillBackground(false);
 
@@ -135,7 +136,11 @@ QWidget* Professor::createWidget(QWidget* parent,User* user) {
 
 
 
-            m_greeting->setText("Hello, professor,\nwelcome back ☀");
+            QString name = user ? QString::fromStdString(user->getName()) : QString("Professor");
+            std::cout << "numele " + name.toStdString() << std::endl;
+
+            // use parsed name in the greeting
+            m_greeting->setText(QString("Hello, %1,\nwelcome back ☀").arg(name));
             m_subtitle->setText("Manage your schedules and teaching resources");
         }
 
@@ -183,8 +188,8 @@ QWidget* Professor::createWidget(QWidget* parent,User* user) {
         QPushButton *m_scheduleButton = nullptr;
     };
 
-    // create and return the local view; caller can further customize or connect the button
-    auto *view = new LocalProfessorView(parent);
+
+    auto *view = new LocalProfessorView(parent, user);
 
     // Connect the schedule button to create and show the schedule widget
     QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view, user]() {
