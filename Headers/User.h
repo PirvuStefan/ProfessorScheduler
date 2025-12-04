@@ -10,20 +10,18 @@
 #include <vector>
 #include "Schedule.h"
 #include <QWidget>
+#include "TimeUtilis.h"
 
 
 class User {
-
-public:
-    enum Day { MONDAY = 0, TUESDAY = 1, WEDNESDAY = 2, THURSDAY = 3, FRIDAY = 4};
-
 
 
 protected:
     std::string fullName;
     std::string email;
     std::string password;
-    std::vector < Schedule > schedules; // each user can have multiple schedules,
+
+    std::map < TimeUtilis::Day, std::vector < Schedule > > schedules;    // each user can have multiple schedules,
     // for example a professor can have multiple courses he is teaching, and each course has its own schedule,
     // the courses that he does not teach will appear to the professor as being occupied or not ( black / grey )
     // on the other hand, for students, all the schedules will load, since they attend all the courses, and the 'non-occupied'
@@ -45,6 +43,8 @@ public:
     std::string getEmail();
     std::string getPassword();
 
+
+    virtual std::map < TimeUtilis::Day, std::vector < Schedule > > initialiseSchedules() = 0 ; // this will be declared pure virtual, but we leave it as virtual for now, so we can test the code easier
     virtual void AccountCreated() ; // we do want to have a different print message when a professor or a student creates an account
     virtual void AccountLogin()  = 0;
     virtual QWidget* createWidget(QWidget *parent) = 0 ; // we will override this method in derived classes to set the user interface depending on the type of user

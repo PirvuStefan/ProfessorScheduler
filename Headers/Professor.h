@@ -18,6 +18,8 @@ class Professor : public User {
 
     Professor(QString email, QString password, QString name);
 
+
+    std::map < TimeUtilis::Day, std::vector < Schedule > > initialiseSchedules() override;
     QWidget* createWidget(QWidget *parent) override;
     QWidget* createScheduleWidget(QWidget *parent) override;
 

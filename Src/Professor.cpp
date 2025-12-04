@@ -17,6 +17,7 @@
 #include <QTableWidget>
 #include <QComboBox>
 #include <QHeaderView>
+#include <vector>
 
 void Professor::AccountCreated()  {
     printf("Professor Account Created\n");
@@ -131,6 +132,9 @@ QWidget* Professor::createWidget(QWidget* parent) {
             mainLayout->addWidget(buttonWidget);
 
             // sensible defaults; caller may update text or connect the button
+
+
+
             m_greeting->setText("Hello, professor,\nwelcome back ☀");
             m_subtitle->setText("Manage your schedules and teaching resources");
         }
@@ -403,6 +407,11 @@ QWidget* Professor::createScheduleWidget(QWidget* parent) {
     };
 
     return new ProfessorScheduleWidget(parent);
+}
+
+
+std::map<TimeUtilis::Day, std::vector<Schedule>> Professor::initialiseSchedules(){
+    return std::map<TimeUtilis::Day, std::vector<Schedule>>();
 }
 
 

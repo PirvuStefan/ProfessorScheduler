@@ -854,6 +854,7 @@ ProfessorScheduler_Public__autogen/timestamp: \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Professor.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Schedule.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Student.h \
+	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/TimeUtilis.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/User.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/UserFactory.h \
 	/Users/stefanpirvu/ProfessorScheduler\ Public\ /MainWindow.cpp \

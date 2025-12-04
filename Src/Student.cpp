@@ -376,3 +376,7 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
     return new StudentScheduleWidget(parent);
 }
 
+std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
+    return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+}
+

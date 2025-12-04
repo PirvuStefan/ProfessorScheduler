@@ -725,6 +725,7 @@
   /Library/Developer/CommandLineTools/SDKs/MacOSX26.1.sdk/usr/include/xlocale.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX26.1.sdk/usr/include/xlocale/_time.h \
   /Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/Schedule.h \
+  /Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/TimeUtilis.h \
   /Users/stefanpirvu/ProfessorScheduler\ Public\ /Headers/User.h \
   /opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/q17memory.h \
   /opt/homebrew/Cellar/qtbase/6.9.3/lib/QtCore.framework/Versions/A/Headers/q20functional.h \
