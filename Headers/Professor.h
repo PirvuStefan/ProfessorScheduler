@@ -20,8 +20,8 @@ class Professor : public User {
 
 
     std::map < TimeUtilis::Day, std::vector < Schedule > > initialiseSchedules() override;
-    QWidget* createWidget(QWidget *parent) override;
-    QWidget* createScheduleWidget(QWidget *parent) override;
+    QWidget* createWidget(QWidget *parent, User *user) override;
+    QWidget* createScheduleWidget(QWidget *parent, User *user) override;
 
 
 };

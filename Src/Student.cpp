@@ -11,9 +11,11 @@
 #include <QWidget>
 #include <QTableWidget>
 #include <QComboBox>
+#include <qdir.h>
 #include <QHeaderView>
 #include <QTableWidgetItem>
 #include <QFont>
+#include <iostream>
 
 void Student::AccountCreated() {
 
@@ -28,7 +30,7 @@ Student::Student(const User& user) : User(user) {}
 
 Student::Student( QString email, QString password, QString name) : User(name, email, password) {}
 
-QWidget* Student::createWidget(QWidget* parent) {
+QWidget* Student::createWidget(QWidget* parent, User* user) {
     // Local gradient-text label
     class GradientLabel : public QLabel {
     public:
@@ -55,7 +57,8 @@ QWidget* Student::createWidget(QWidget* parent) {
     // Local view widget that paints the background/wave and hosts the controls
     class LocalStudentView : public QWidget {
     public:
-        explicit LocalStudentView(QWidget *parent = nullptr) : QWidget(parent) {
+        // allow user to be optional but accept it so we can read the name
+        explicit LocalStudentView(QWidget *parent = nullptr, User* user = nullptr) : QWidget(parent) {
             setAttribute(Qt::WA_OpaquePaintEvent);
             setAutoFillBackground(false);
 
@@ -124,8 +127,12 @@ QWidget* Student::createWidget(QWidget* parent) {
             mainLayout->addWidget(topWidget);
             mainLayout->addWidget(buttonWidget);
 
-            // sensible defaults; caller may update text or connect the button
-            m_greeting->setText("Hello, professor,\nwelcome back ☀");
+            // safely obtain name (handle nullptr)
+            QString name = user ? QString::fromStdString(user->getName()) : QString("Student");
+            std::cout << name.toStdString() << std::endl;
+
+            // use parsed name in the greeting
+            m_greeting->setText(QString("Hello, %1,\nwelcome back ☀").arg(name));
             m_subtitle->setText("Manage your schedules and teaching resources");
         }
 
@@ -174,19 +181,20 @@ QWidget* Student::createWidget(QWidget* parent) {
     };
 
     // create and return the local view; caller can further customize or connect the button
-    auto *view = new LocalStudentView(parent);
+    // pass 'user' so the nested view can parse the student's name
+    auto *view = new LocalStudentView(parent, user);
 
     // Connect the schedule button to create and show the schedule widget
-    QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view]() {
-        QWidget* scheduleWidget = this->createScheduleWidget(nullptr);
-        scheduleWidget->setAttribute(Qt::WA_DeleteOnClose);
-        scheduleWidget->show();
-    });
+   QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view, user]() {
+            QWidget* scheduleWidget = this->createScheduleWidget(nullptr, user);
+            scheduleWidget->setAttribute(Qt::WA_DeleteOnClose);
+            scheduleWidget->show();
+        });
 
     return view;
 }
 
-QWidget* Student::createScheduleWidget(QWidget* parent) {
+QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
     // Create a schedule widget similar to SchedulesWindow but for students
     class StudentScheduleWidget : public QWidget {
     public:
@@ -379,4 +387,3 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
 std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
     return std::map<TimeUtilis::Day, std::vector<Schedule>>();
 }
-
