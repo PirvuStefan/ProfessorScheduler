@@ -26,8 +26,6 @@ add_executable(ProfessorScheduler_Public_ main.cpp
         Headers/Student.h
         Src/Professor.cpp
         Headers/Professor.h
-        ProfessorWindow.cpp
-        ProfessorWindow.h
         SchedulesWindow.cpp
         SchedulesWindow.h
         Src/UserFactory.cpp

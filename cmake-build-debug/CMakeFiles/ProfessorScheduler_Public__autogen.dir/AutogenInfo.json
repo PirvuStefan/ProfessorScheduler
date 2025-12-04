@@ -591,12 +591,6 @@
 			null
 		],
 		[
-			"/Users/stefanpirvu/ProfessorScheduler Public /ProfessorWindow.h",
-			"MU",
-			"EWIEGA46WW/moc_ProfessorWindow.cpp",
-			null
-		],
-		[
 			"/Users/stefanpirvu/ProfessorScheduler Public /SchedulesWindow.h",
 			"MU",
 			"EWIEGA46WW/moc_SchedulesWindow.cpp",
@@ -670,11 +664,6 @@
 		],
 		[
 			"/Users/stefanpirvu/ProfessorScheduler Public /MainWindow.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/stefanpirvu/ProfessorScheduler Public /ProfessorWindow.cpp",
 			"MU",
 			null
 		],

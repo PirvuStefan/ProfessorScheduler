@@ -12,11 +12,16 @@ class Professor : public User {
     public:
     void AccountCreated() override;
 
+    void AccountLogin() override;
+
     Professor(const User &user);
 
     Professor(QString email, QString password, QString name);
 
     QWidget* createWidget(QWidget *parent) override;
+    QWidget* createScheduleWidget(QWidget *parent) override;
+
+
 };
 
 

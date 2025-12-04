@@ -9,6 +9,8 @@
 
 class Schedule {
     public:
+    std::string day; // Monday, Tuesday, Wednesday, Thursday, Friday
+    std::string room; // room number where the schedule takes place
     std::string type; // if it is a lecture, lab, seminar, project etc.
     std::pair <int, int> period; // from when to when (eg. 8-10)
     std::string subject;

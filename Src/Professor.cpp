@@ -13,11 +13,19 @@
 #include <QLinearGradient>
 #include <QFont>
 #include <QPalette>
-#include <QDebug>  // Add this for debugging
+#include <QDebug>
+#include <QTableWidget>
+#include <QComboBox>
+#include <QHeaderView>
 
-void Professor::AccountCreated() {
+void Professor::AccountCreated()  {
     printf("Professor Account Created\n");
 }
+
+void Professor::AccountLogin() {
+    printf("Professor Logged In\n");
+}
+
 
 
 Professor::Professor(const User& user) : User(user) {}
@@ -174,5 +182,196 @@ QWidget* Professor::createWidget(QWidget* parent) {
     // create and return the local view; caller can further customize or connect the button
     auto *view = new LocalProfessorView(parent);
 
+    // Connect the schedule button to create and show the schedule widget
+    QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view]() {
+        QWidget* scheduleWidget = this->createScheduleWidget(nullptr);
+        scheduleWidget->setAttribute(Qt::WA_DeleteOnClose);
+        scheduleWidget->show();
+    });
+
     return view;
 }
+
+QWidget* Professor::createScheduleWidget(QWidget* parent) {
+    // Create a schedule widget similar to SchedulesWindow but as a QWidget
+    class ProfessorScheduleWidget : public QWidget {
+    public:
+        explicit ProfessorScheduleWidget(QWidget *parent = nullptr) : QWidget(parent) {
+            setupUi();
+        }
+
+    private:
+        void setupUi() {
+            resize(1200, 800);
+            setWindowTitle("My Schedules");
+            setStyleSheet("background-color: #E5E9C5;");
+
+            auto *mainLayout = new QVBoxLayout(this);
+            mainLayout->setContentsMargins(30, 30, 30, 30);
+            mainLayout->setSpacing(20);
+
+            // Title
+            auto *titleLabel = new QLabel("Weekly Schedule", this);
+            QFont titleFont;
+            titleFont.setPointSize(24);
+            titleFont.setBold(true);
+            titleLabel->setFont(titleFont);
+            titleLabel->setStyleSheet("color: #016B61; background-color: transparent;");
+
+            // Day selector
+            auto *selectorLayout = new QHBoxLayout();
+            auto *dayLabel = new QLabel("Select Day:", this);
+            dayLabel->setStyleSheet("color: #016B61; font-size: 14px; background-color: transparent;");
+
+            m_daySelector = new QComboBox(this);
+            m_daySelector->addItems({"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
+            m_daySelector->setStyleSheet(R"(
+                QComboBox {
+                    background-color: white;
+                    border: 2px solid #016B61;
+                    border-radius: 5px;
+                    padding: 8px;
+                    min-width: 150px;
+                    font-size: 14px;
+                    color: #016B61;
+                }
+                QComboBox:hover {
+                    border-color: #70B2B2;
+                }
+                QComboBox::drop-down {
+                    border: none;
+                }
+                QComboBox QAbstractItemView {
+                    background-color: white;
+                    selection-background-color: #9ECFD4;
+                    selection-color: #016B61;
+                }
+            )");
+
+            selectorLayout->addWidget(dayLabel);
+            selectorLayout->addWidget(m_daySelector);
+            selectorLayout->addStretch();
+
+            // Schedule table
+            m_scheduleTable = new QTableWidget(this);
+            QStringList timeSlots = {"08:00-10:00", "10:00-12:00", "12:00-14:00",
+                                     "14:00-16:00", "16:00-18:00", "18:00-20:00"};
+            QStringList subGroups = {"Group 1A", "Group 1B", "Group 2A",
+                                     "Group 2B", "Group 3A", "Group 3B"};
+
+            m_scheduleTable->setRowCount(timeSlots.size());
+            m_scheduleTable->setColumnCount(subGroups.size());
+            m_scheduleTable->setVerticalHeaderLabels(timeSlots);
+            m_scheduleTable->setHorizontalHeaderLabels(subGroups);
+
+            m_scheduleTable->setStyleSheet(R"(
+                QTableWidget {
+                    background-color: white;
+                    gridline-color: #70B2B2;
+                    border: 2px solid #016B61;
+                    border-radius: 8px;
+                }
+                QTableWidget::item {
+                    padding: 10px;
+                    border: 1px solid #E5E9C5;
+                }
+                QHeaderView::section {
+                    background-color: #016B61;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 13px;
+                    padding: 12px;
+                    border: 1px solid #70B2B2;
+                }
+            )");
+
+            for (int col = 0; col < subGroups.size(); ++col) {
+                m_scheduleTable->setColumnWidth(col, 180);
+            }
+
+            for (int row = 0; row < timeSlots.size(); ++row) {
+                m_scheduleTable->setRowHeight(row, 100);
+            }
+
+            m_scheduleTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+            m_scheduleTable->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+            m_scheduleTable->verticalHeader()->setDefaultSectionSize(100);
+            m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+            m_scheduleTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
+            // Back button
+            m_backButton = new QPushButton("← Back", this);
+            m_backButton->setStyleSheet(R"(
+                QPushButton {
+                    background-color: #016B61;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: 600;
+                    padding: 10px 24px;
+                    border: none;
+                    border-radius: 5px;
+                    min-height: 40px;
+                }
+                QPushButton:hover {
+                    background-color: #70B2B2;
+                }
+                QPushButton:pressed {
+                    background-color: #9ECFD4;
+                }
+            )");
+            m_backButton->setCursor(Qt::PointingHandCursor);
+
+            mainLayout->addWidget(titleLabel);
+            mainLayout->addLayout(selectorLayout);
+            mainLayout->addWidget(m_scheduleTable, 1);
+            mainLayout->addWidget(m_backButton, 0, Qt::AlignLeft);
+
+            // Populate with sample data
+            populateScheduleTable();
+
+            // Connect signals
+            connect(m_daySelector, &QComboBox::currentTextChanged,
+                    this, &ProfessorScheduleWidget::updateScheduleForDay);
+            connect(m_backButton, &QPushButton::clicked, this, &QWidget::close);
+        }
+
+        void populateScheduleTable() {
+            for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
+                for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+                    auto *cellWidget = new QWidget();
+                    auto *cellLayout = new QVBoxLayout(cellWidget);
+                    cellLayout->setContentsMargins(5, 5, 5, 5);
+                    cellLayout->setSpacing(5);
+
+                    auto *subjectLabel = new QLabel("Mathematics", cellWidget);
+                    subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #016B61; background-color: transparent;");
+                    subjectLabel->setAlignment(Qt::AlignCenter);
+
+                    auto *profLabel = new QLabel("Prof. John Smith", cellWidget);
+                    profLabel->setStyleSheet("font-size: 11px; color: #70B2B2; background-color: transparent;");
+                    profLabel->setAlignment(Qt::AlignCenter);
+                    profLabel->setWordWrap(true);
+
+                    cellLayout->addWidget(subjectLabel);
+                    cellLayout->addWidget(profLabel);
+                    cellLayout->addStretch();
+
+                    m_scheduleTable->setCellWidget(row, col, cellWidget);
+                }
+            }
+        }
+
+        void updateScheduleForDay(const QString &day) {
+            Q_UNUSED(day);
+            populateScheduleTable();
+        }
+
+        QComboBox *m_daySelector;
+        QTableWidget *m_scheduleTable;
+        QPushButton *m_backButton;
+    };
+
+    return new ProfessorScheduleWidget(parent);
+}
+
+

@@ -137,17 +137,6 @@ build CMakeFiles/ProfessorScheduler_Public_.dir/Src/Professor.cpp.o: CXX_COMPILE
   TARGET_COMPILE_PDB = CMakeFiles/ProfessorScheduler_Public_.dir/
   TARGET_PDB = ProfessorScheduler_Public_.pdb
 
-build CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorWindow.cpp.o: CXX_COMPILER__ProfessorScheduler_Public__unscanned_Debug /Users/stefanpirvu/ProfessorScheduler$ Public$ /ProfessorWindow.cpp || cmake_object_order_depends_target_ProfessorScheduler_Public_
-  CONFIG = Debug
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorWindow.cpp.o.d
-  FLAGS = -g -std=gnu++17 -arch arm64 -fcolor-diagnostics
-  INCLUDES = -isystem "/Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug/ProfessorScheduler_Public__autogen/include" -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtGui.framework/Headers -isystem /opt/homebrew/lib/QtWidgets.framework/Headers
-  OBJECT_DIR = CMakeFiles/ProfessorScheduler_Public_.dir
-  OBJECT_FILE_DIR = CMakeFiles/ProfessorScheduler_Public_.dir
-  TARGET_COMPILE_PDB = CMakeFiles/ProfessorScheduler_Public_.dir/
-  TARGET_PDB = ProfessorScheduler_Public_.pdb
-
 build CMakeFiles/ProfessorScheduler_Public_.dir/SchedulesWindow.cpp.o: CXX_COMPILER__ProfessorScheduler_Public__unscanned_Debug /Users/stefanpirvu/ProfessorScheduler$ Public$ /SchedulesWindow.cpp || cmake_object_order_depends_target_ProfessorScheduler_Public_
   CONFIG = Debug
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -178,7 +167,7 @@ build CMakeFiles/ProfessorScheduler_Public_.dir/Src/UserFactory.cpp.o: CXX_COMPI
 #############################################
 # Link the executable ProfessorScheduler_Public_
 
-build ProfessorScheduler_Public_: CXX_EXECUTABLE_LINKER__ProfessorScheduler_Public__Debug CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorScheduler_Public__autogen/mocs_compilation.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/main.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/MainWindow.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/Schedule.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/CreateAccount.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/User.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/Student.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/Professor.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorWindow.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/SchedulesWindow.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/UserFactory.cpp.o | /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore || ProfessorScheduler_Public__autogen ProfessorScheduler_Public__autogen_timestamp_deps
+build ProfessorScheduler_Public_: CXX_EXECUTABLE_LINKER__ProfessorScheduler_Public__Debug CMakeFiles/ProfessorScheduler_Public_.dir/ProfessorScheduler_Public__autogen/mocs_compilation.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/main.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/MainWindow.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/Schedule.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/CreateAccount.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/User.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/Student.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/Professor.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/SchedulesWindow.cpp.o CMakeFiles/ProfessorScheduler_Public_.dir/Src/UserFactory.cpp.o | /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore || ProfessorScheduler_Public__autogen ProfessorScheduler_Public__autogen_timestamp_deps
   CONFIG = Debug
   FLAGS = -g -arch arm64
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets  /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui  -framework AppKit  -framework OpenGL  -framework ImageIO  -framework Metal  /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore  -framework IOKit  -framework DiskArbitration  -framework UniformTypeIdentifiers

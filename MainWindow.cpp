@@ -12,7 +12,6 @@
 #include <optional>
 #include <QFile>
 
-#include "ProfessorWindow.h"
 #include "Headers/User.h"
 #include "Headers/UserFactory.h"
 #include "Headers/Professor.h"
@@ -292,6 +291,7 @@ void MainWindow::onLoginClicked() {
 
     User *actual = userResult;
     actual->Print();
+    actual->AccountLogin(); // polymorphic call to see which type of user logged in ( professor / student )
 
     // replace creation of user window so it is top-level (no parent)
     QWidget* userWindow = actual->createWidget(nullptr);
