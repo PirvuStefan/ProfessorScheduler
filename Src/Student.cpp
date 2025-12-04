@@ -53,9 +53,9 @@ QWidget* Student::createWidget(QWidget* parent) {
     };
 
     // Local view widget that paints the background/wave and hosts the controls
-    class LocalProfessorView : public QWidget {
+    class LocalStudentView : public QWidget {
     public:
-        explicit LocalProfessorView(QWidget *parent = nullptr) : QWidget(parent) {
+        explicit LocalStudentView(QWidget *parent = nullptr) : QWidget(parent) {
             setAttribute(Qt::WA_OpaquePaintEvent);
             setAutoFillBackground(false);
 
@@ -174,7 +174,7 @@ QWidget* Student::createWidget(QWidget* parent) {
     };
 
     // create and return the local view; caller can further customize or connect the button
-    auto *view = new LocalProfessorView(parent);
+    auto *view = new LocalStudentView(parent);
 
     // Connect the schedule button to create and show the schedule widget
     QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view]() {
@@ -197,7 +197,7 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
     private:
         void setupUi() {
             resize(1200, 800);
-            setWindowTitle("My Schedule");
+            setWindowTitle("My Schedules");
             setStyleSheet("background-color: #E5E9C5;");
 
             auto *mainLayout = new QVBoxLayout(this);
@@ -205,7 +205,7 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
             mainLayout->setSpacing(20);
 
             // Title
-            auto *titleLabel = new QLabel("My Weekly Schedule", this);
+            auto *titleLabel = new QLabel("Weekly Schedule", this);
             QFont titleFont;
             titleFont.setPointSize(24);
             titleFont.setBold(true);
@@ -246,16 +246,17 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
             selectorLayout->addWidget(m_daySelector);
             selectorLayout->addStretch();
 
-            // Schedule table - simpler for students (just time slots)
+            // Schedule table
             m_scheduleTable = new QTableWidget(this);
             QStringList timeSlots = {"08:00-10:00", "10:00-12:00", "12:00-14:00",
                                      "14:00-16:00", "16:00-18:00", "18:00-20:00"};
-            QStringList columns = {"Course", "Professor", "Room", "Type"};
+            QStringList subGroups = {"Group 1A", "Group 1B", "Group 2A",
+                                     "Group 2B", "Group 3A", "Group 3B"};
 
             m_scheduleTable->setRowCount(timeSlots.size());
-            m_scheduleTable->setColumnCount(columns.size());
+            m_scheduleTable->setColumnCount(subGroups.size());
             m_scheduleTable->setVerticalHeaderLabels(timeSlots);
-            m_scheduleTable->setHorizontalHeaderLabels(columns);
+            m_scheduleTable->setHorizontalHeaderLabels(subGroups);
 
             m_scheduleTable->setStyleSheet(R"(
                 QTableWidget {
@@ -278,17 +279,17 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                 }
             )");
 
-            for (int col = 0; col < columns.size(); ++col) {
-                m_scheduleTable->setColumnWidth(col, 250);
+            for (int col = 0; col < subGroups.size(); ++col) {
+                m_scheduleTable->setColumnWidth(col, 180);
             }
 
             for (int row = 0; row < timeSlots.size(); ++row) {
-                m_scheduleTable->setRowHeight(row, 80);
+                m_scheduleTable->setRowHeight(row, 100);
             }
 
-            m_scheduleTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            m_scheduleTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
             m_scheduleTable->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-            m_scheduleTable->verticalHeader()->setDefaultSectionSize(80);
+            m_scheduleTable->verticalHeader()->setDefaultSectionSize(100);
             m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
             m_scheduleTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -329,34 +330,28 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
         }
 
         void populateScheduleTable() {
-            // Sample schedule data for students
-            QStringList courses = {"Mathematics", "Physics", "Computer Science", "Free Time", "Chemistry", "English"};
-            QStringList professors = {"Prof. Smith", "Prof. Johnson", "Prof. Williams", "-", "Prof. Brown", "Prof. Davis"};
-            QStringList rooms = {"Room 101", "Lab 204", "Room 305", "-", "Lab 102", "Room 201"};
-            QStringList types = {"Lecture", "Lab", "Seminar", "-", "Lab", "Lecture"};
-
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
-                auto *courseItem = new QTableWidgetItem(courses[row % courses.size()]);
-                auto *profItem = new QTableWidgetItem(professors[row % professors.size()]);
-                auto *roomItem = new QTableWidgetItem(rooms[row % rooms.size()]);
-                auto *typeItem = new QTableWidgetItem(types[row % types.size()]);
+                for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+                    auto *cellWidget = new QWidget();
+                    auto *cellLayout = new QVBoxLayout(cellWidget);
+                    cellLayout->setContentsMargins(5, 5, 5, 5);
+                    cellLayout->setSpacing(5);
 
-                courseItem->setTextAlignment(Qt::AlignCenter);
-                profItem->setTextAlignment(Qt::AlignCenter);
-                roomItem->setTextAlignment(Qt::AlignCenter);
-                typeItem->setTextAlignment(Qt::AlignCenter);
+                    auto *subjectLabel = new QLabel("Mathematics", cellWidget);
+                    subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #016B61; background-color: transparent;");
+                    subjectLabel->setAlignment(Qt::AlignCenter);
 
-                QFont font;
-                font.setPointSize(11);
-                courseItem->setFont(font);
-                profItem->setFont(font);
-                roomItem->setFont(font);
-                typeItem->setFont(font);
+                    auto *profLabel = new QLabel("Prof. John Smith", cellWidget);
+                    profLabel->setStyleSheet("font-size: 11px; color: #70B2B2; background-color: transparent;");
+                    profLabel->setAlignment(Qt::AlignCenter);
+                    profLabel->setWordWrap(true);
 
-                m_scheduleTable->setItem(row, 0, courseItem);
-                m_scheduleTable->setItem(row, 1, profItem);
-                m_scheduleTable->setItem(row, 2, roomItem);
-                m_scheduleTable->setItem(row, 3, typeItem);
+                    cellLayout->addWidget(subjectLabel);
+                    cellLayout->addWidget(profLabel);
+                    cellLayout->addStretch();
+
+                    m_scheduleTable->setCellWidget(row, col, cellWidget);
+                }
             }
         }
 
