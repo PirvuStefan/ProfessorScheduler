@@ -21,5 +21,5 @@
 -- Found WrapOpenGL: TRUE
 -- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
 -- Configuring done (1.9s)
--- Generating done (0.1s)
+-- Generating done (0.2s)
 -- Build files have been written to: /Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug

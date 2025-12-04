@@ -14,6 +14,7 @@
 
 class User {
 
+public:
     enum Day { MONDAY = 0, TUESDAY = 1, WEDNESDAY = 2, THURSDAY = 3, FRIDAY = 4};
 
 

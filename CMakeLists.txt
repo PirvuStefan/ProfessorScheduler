@@ -29,7 +29,8 @@ add_executable(ProfessorScheduler_Public_ main.cpp
         SchedulesWindow.cpp
         SchedulesWindow.h
         Src/UserFactory.cpp
-        Headers/UserFactory.h)
+        Headers/UserFactory.h
+        Headers/TimeUtilis.h)
 target_link_libraries(ProfessorScheduler_Public_
         Qt::Core
         Qt::Gui

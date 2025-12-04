@@ -299,6 +299,37 @@ QWidget* Professor::createScheduleWidget(QWidget* parent) {
             m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
             m_scheduleTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
+
+
+            m_scheduleTable->setStyleSheet(R"(
+                QTableWidget {
+                    background-color: white;
+                    gridline-color: #70B2B2;
+                    border: 2px solid #016B61;
+                    border-radius: 8px;
+                }
+                QTableWidget::item {
+                    padding: 10px;
+                    border: 1px solid #E5E9C5;
+                }
+                QTableWidget::item:selected {
+                    background-color: #9ECFD4;
+                    border: 2px solid #016B61;
+                }
+                QTableWidget::item:focus {
+                    border: 2px solid #016B61;
+                    outline: none;
+                }
+                QHeaderView::section {
+                    background-color: #016B61;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 13px;
+                    padding: 12px;
+                    border: 1px solid #70B2B2;
+                }
+            )");
+
             // Back button
             m_backButton = new QPushButton("← Back", this);
             m_backButton->setStyleSheet(R"(
