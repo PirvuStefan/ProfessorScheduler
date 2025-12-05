@@ -42,6 +42,16 @@ std::string User::getPassword() {
     return this->password;
 }
 
+TimeUtilis::Day stringToDayEnum(const std::string &dayStr) {
+    if (dayStr == "MONDAY") return TimeUtilis::Day::MONDAY;
+    if (dayStr == "TUESDAY") return TimeUtilis::Day::TUESDAY;
+    if (dayStr == "WEDNESDAY") return TimeUtilis::Day::WEDNESDAY;
+    if (dayStr == "THURSDAY") return TimeUtilis::Day::THURSDAY;
+    if (dayStr == "FRIDAY") return TimeUtilis::Day::FRIDAY;
+
+    throw std::invalid_argument("Invalid day string: " + dayStr);
+}
+
 
 
 

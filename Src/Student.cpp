@@ -385,5 +385,31 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
 }
 
 std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
+
+
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(",");
+
+
+        //Stefan Groia,Matematica Speciala,lecture,Monday,8-10,B302,mandatory
+        // parts[0] to parts[6]
+        if (parts.size() < 4) continue;
+
+        TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[4].toStdString());
+        Schedule schedule(parts[0].toStdString(), parts[1].toStdString(),
+                                  parts[2].toStdString(), day,
+                                  parts[5].toStdString(), parts[6].toStdString(),
+                                  parts[3].toStdString());
+
+
+    }
+
     return std::map<TimeUtilis::Day, std::vector<Schedule>>();
 }

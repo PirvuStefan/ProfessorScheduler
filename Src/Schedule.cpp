@@ -11,6 +11,16 @@ Schedule::Schedule(std::string subject, std::string type, bool optional = false 
     this->optional = optional;
 }
 
+Schedule::Schedule(std::string professor, std::string subject, std::string type, std::string day, std::pair <int, int > period, std::string room, bool optional = false) {
+    this->professor = professor;
+    this->subject = subject;
+    this->type = type;
+    this->day = day;
+    this->period = period;
+    this->room = room;
+    this->optional = optional;
+}
+
 void Schedule::setOptional(bool optional = true) {
     this->optional = optional;
 }

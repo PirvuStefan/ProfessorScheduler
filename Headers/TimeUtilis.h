@@ -17,6 +17,16 @@ namespace TimeUtilis {
         FRIDAY = 4
 
     }; // more modern and future proof way of defining enums, compared to the traditional one ( no more conflicts between different enums with same values cause they are inside a namespace and scoped )
+
+    Day stringToDayEnum(const std::string &dayStr) {
+        if (dayStr == "MONDAY") return TimeUtilis::Day::MONDAY;
+        if (dayStr == "TUESDAY") return TimeUtilis::Day::TUESDAY;
+        if (dayStr == "WEDNESDAY") return TimeUtilis::Day::WEDNESDAY;
+        if (dayStr == "THURSDAY") return TimeUtilis::Day::THURSDAY;
+        if (dayStr == "FRIDAY") return TimeUtilis::Day::FRIDAY;
+
+        throw std::invalid_argument("Invalid day string: " + dayStr);
+    }
 }
 
 #endif //PROFESSORSCHEDULER_PUBLIC__TIMEUTILIS_H

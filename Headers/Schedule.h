@@ -9,6 +9,7 @@
 
 class Schedule {
     public:
+    std::string professor; // name of the professor teaching the schedule
     std::string day; // Monday, Tuesday, Wednesday, Thursday, Friday
     std::string room; // room number where the schedule takes place
     std::string type; // if it is a lecture, lab, seminar, project etc.
@@ -16,6 +17,9 @@ class Schedule {
     std::string subject;
     bool optional; // if the schedule is optional or mandatory ( we should assign by default that it is mandatory)
     Schedule(std::string subject, std::string type, bool optional);
+
+    Schedule(std::string professor, std::string subject, std::string type, std::string day, std::pair<int, int> period,
+             std::string room, bool optional);
 
     void setOptional(bool optional);
 };
