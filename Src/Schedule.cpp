@@ -5,13 +5,15 @@
 #include "../Headers/Schedule.h"
 #include <string>
 
+#include "../Headers/TimeUtilis.h"
+
 Schedule::Schedule(std::string subject, std::string type, bool optional = false ) {
     this->type = type;
     this->subject = subject;
     this->optional = optional;
 }
 
-Schedule::Schedule(std::string professor, std::string subject, std::string type, std::string day, std::pair <int, int > period, std::string room, bool optional = false) {
+Schedule::Schedule(std::string professor, std::string subject, std::string type, TimeUtilis::Day day, std::pair <int, int > period, std::string room, bool optional = false) {
     this->professor = professor;
     this->subject = subject;
     this->type = type;

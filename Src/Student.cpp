@@ -402,11 +402,25 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
         // parts[0] to parts[6]
         if (parts.size() < 4) continue;
 
-        TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[4].toStdString());
-        Schedule schedule(parts[0].toStdString(), parts[1].toStdString(),
-                                  parts[2].toStdString(), day,
-                                  parts[5].toStdString(), parts[6].toStdString(),
-                                  parts[3].toStdString());
+        bool mandatory = (parts[6] == "mandatory");
+
+        std::pair<int,int> timeSlot;
+        QString timeStr = parts[4].trimmed();
+        QStringList timeParts = timeStr.split('-', Qt::SkipEmptyParts);
+        if (timeParts.size() == 2) {
+            bool ok1 = false, ok2 = false;
+            int start = timeParts[0].trimmed().toInt(&ok1);
+            int end = timeParts[1].trimmed().toInt(&ok2);
+            if (!ok1 || !ok2) continue; // malformed time, skip line
+            timeSlot = std::make_pair(start, end);
+        } else {
+            continue; // unexpected format, skip line
+        }
+
+        TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[3].toStdString());
+
+
+        Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory);
 
 
     }
