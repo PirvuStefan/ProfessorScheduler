@@ -291,7 +291,7 @@ void MainWindow::onLoginClicked() {
         return;
     }
 
-    User *actual = userResult;
+    User* actual = userResult;
     actual->Print();
     actual->AccountLogin(); // polymorphic call to see which type of user logged in ( professor / student )
 

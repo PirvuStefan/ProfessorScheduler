@@ -26,11 +26,66 @@ void Student::AccountLogin() {
     printf("Student Logged In\n");
 }
 
+std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
+
+    std::cout << "Student::initialiseSchedules" << std::endl;
+
+
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+    }
+
+    QTextStream in(&file);
+
+    std::cout<<"Reading schedules.txt" ;
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(",");
+
+
+        //Stefan Groia,Matematica Speciala,lecture,Monday,8-10,B302,mandatory
+        // parts[0] to parts[6]
+        if (parts.size() < 4) continue;
+
+        bool mandatory = (parts[6] == "mandatory");
+
+        std::pair<int,int> timeSlot;
+        QString timeStr = parts[4].trimmed();
+        QStringList timeParts = timeStr.split('-', Qt::SkipEmptyParts);
+        if (timeParts.size() == 2) {
+            bool ok1 = false, ok2 = false;
+            int start = timeParts[0].trimmed().toInt(&ok1);
+            int end = timeParts[1].trimmed().toInt(&ok2);
+            if (!ok1 || !ok2) continue; // malformed time, skip line
+            timeSlot = std::make_pair(start, end);
+        } else {
+            continue; // unexpected format, skip line
+        }
+
+        TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[3].toStdString());
+
+
+        Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory);
+        std::cout << parts[0].toStdString() << parts[1].toStdString() << parts[2].toStdString() << std::endl;
+
+
+
+    }
+
+    std::cout << "da";
+
+    return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+}
+
 Student::Student(const User& user) : User(user) {}
 
 Student::Student( QString email, QString password, QString name) : User(name, email, password) {}
 
 QWidget* Student::createWidget(QWidget* parent, User* user) {
+
+
+
     // Local gradient-text label
     class GradientLabel : public QLabel {
     public:
@@ -196,6 +251,7 @@ QWidget* Student::createWidget(QWidget* parent, User* user) {
 
 QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
     // Create a schedule widget similar to SchedulesWindow but for students
+    this->schedules = initialiseSchedules();
     class StudentScheduleWidget : public QWidget {
     public:
         explicit StudentScheduleWidget(QWidget *parent = nullptr) : QWidget(parent) {
@@ -345,7 +401,10 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
             connect(m_backButton, &QPushButton::clicked, this, &QWidget::close);
         }
 
+
+
         void populateScheduleTable() {
+
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
                 for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
                     auto *cellWidget = new QWidget();
@@ -384,46 +443,4 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
     return new StudentScheduleWidget(parent);
 }
 
-std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
 
-
-    QFile file("Schedules/schedules.txt");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return std::map<TimeUtilis::Day, std::vector<Schedule>>();
-    }
-
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList parts = line.split(",");
-
-
-        //Stefan Groia,Matematica Speciala,lecture,Monday,8-10,B302,mandatory
-        // parts[0] to parts[6]
-        if (parts.size() < 4) continue;
-
-        bool mandatory = (parts[6] == "mandatory");
-
-        std::pair<int,int> timeSlot;
-        QString timeStr = parts[4].trimmed();
-        QStringList timeParts = timeStr.split('-', Qt::SkipEmptyParts);
-        if (timeParts.size() == 2) {
-            bool ok1 = false, ok2 = false;
-            int start = timeParts[0].trimmed().toInt(&ok1);
-            int end = timeParts[1].trimmed().toInt(&ok2);
-            if (!ok1 || !ok2) continue; // malformed time, skip line
-            timeSlot = std::make_pair(start, end);
-        } else {
-            continue; // unexpected format, skip line
-        }
-
-        TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[3].toStdString());
-
-
-        Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory);
-
-
-    }
-
-    return std::map<TimeUtilis::Day, std::vector<Schedule>>();
-}

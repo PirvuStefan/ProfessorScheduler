@@ -17,6 +17,8 @@ class Schedule {
     std::string type; // if it is a lecture, lab, seminar, project etc.
     std::pair <int, int> period; // from when to when (eg. 8-10)
     std::string subject;
+    std::string group; // which group is attending the schedule ( for example group 1A , this is a subgroup, one cell in the schedule table represents a subgroup, but a whole group can attend the same , seminar, or even the whole year in case we do have a course)
+    // so here we parse : 1A , 2B etc. or 1,2,3 for whole group attending , or all or other keyword to represent the whole year attending
     bool optional; // if the schedule is optional or mandatory ( we should assign by default that it is mandatory)
     Schedule(std::string subject, std::string type, bool optional);
 
