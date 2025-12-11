@@ -44,8 +44,8 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
         QStringList parts = line.split(",");
 
 
-        //Stefan Groia,Matematica Speciala,lecture,Monday,8-10,B302,mandatory
-        // parts[0] to parts[6]
+        //Stefan Groia,Matematica Speciala,lecture,Monday,8-10,B302,mandatory,1A
+        // parts[0] to parts[7]
         if (parts.size() < 4) continue;
 
         bool mandatory = (parts[6] == "mandatory");
@@ -66,7 +66,7 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
         TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[3].toStdString());
 
 
-        Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory);
+        Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory, parts[7].toStdString());
         std::cout << parts[0].toStdString() << parts[1].toStdString() << parts[2].toStdString() << std::endl;
 
 

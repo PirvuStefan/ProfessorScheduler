@@ -24,7 +24,7 @@ class Schedule {
 
     Schedule(std::string professor, std::string subject, std::string type, TimeUtilis::Day day,
              std::pair<int, int> period,
-             std::string room, bool optional);
+             std::string room, bool optional, std::string group);
 
 
     void setOptional(bool optional);

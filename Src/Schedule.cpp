@@ -13,7 +13,7 @@ Schedule::Schedule(std::string subject, std::string type, bool optional = false 
     this->optional = optional;
 }
 
-Schedule::Schedule(std::string professor, std::string subject, std::string type, TimeUtilis::Day day, std::pair <int, int > period, std::string room, bool optional = false) {
+Schedule::Schedule(std::string professor, std::string subject, std::string type, TimeUtilis::Day day, std::pair <int, int > period, std::string room, bool optional, std::string group = "all") {
     this->professor = professor;
     this->subject = subject;
     this->type = type;
@@ -21,6 +21,7 @@ Schedule::Schedule(std::string professor, std::string subject, std::string type,
     this->period = period;
     this->room = room;
     this->optional = optional;
+    this->group = group;
 }
 
 void Schedule::setOptional(bool optional = true) {
