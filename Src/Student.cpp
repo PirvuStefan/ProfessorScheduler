@@ -80,7 +80,7 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
         if (schedules.find(day) != schedules.end()) {
             std::sort(schedules[day].begin(), schedules[day].end(), Schedule::compareSchedulesByPeriod);
         }
-    } // sorting done
+    }
 
     std::cout << "da";
 
@@ -360,6 +360,8 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
                 m_scheduleTable->setRowHeight(row, 100);
             }
 
+
+
             m_scheduleTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
             m_scheduleTable->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
             m_scheduleTable->verticalHeader()->setDefaultSectionSize(100);
@@ -412,7 +414,23 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
 
 
 
-        void populateScheduleTable() {
+        void populateScheduleTable(const QString &day = "Monday") {
+
+            // Use provided day or fall back to currently selected day
+            QString selectedDay = day.isEmpty() ? (m_daySelector ? m_daySelector->currentText() : QString()) : day;
+            std::cout << "Populating schedule for day: " << selectedDay.toStdString() << std::endl;
+
+            for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
+                for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+                    QWidget *old = m_scheduleTable->cellWidget(row, col);
+                    if (old) {
+                        m_scheduleTable->removeCellWidget(row, col);
+                        old->deleteLater();
+
+                    }
+                }
+            }
+
 
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
                 for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
@@ -440,8 +458,9 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
         }
 
         void updateScheduleForDay(const QString &day) {
-            Q_UNUSED(day);
-            populateScheduleTable();
+
+            //Q_UNUSED(day);
+            populateScheduleTable(day);
         }
 
         QComboBox *m_daySelector;

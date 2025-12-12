@@ -29,5 +29,9 @@ void Schedule::setOptional(bool optional = true) {
 }
 
 bool Schedule::compareSchedulesByPeriod(const Schedule &a, const Schedule &b) {
+    if (a.period == b.period) {
+    //if periods are equal, we can further sort them by group
+    return a.group < b.group;
+    }
     return a.period < b.period;
 }
