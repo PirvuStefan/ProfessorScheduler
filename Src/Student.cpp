@@ -94,6 +94,10 @@ Student::Student( QString email, QString password, QString name) : User(name, em
 QWidget* Student::createWidget(QWidget* parent, User* user) {
 
 
+   User* user1 = this;
+
+
+
 
     // Local gradient-text label
     class GradientLabel : public QLabel {
@@ -417,7 +421,7 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
         void populateScheduleTable(const QString &day = "Monday") {
 
             // Use provided day or fall back to currently selected day
-            QString selectedDay = day.isEmpty() ? (m_daySelector ? m_daySelector->currentText() : QString()) : day;
+            QString selectedDay = m_daySelector ? m_daySelector->currentText() : day;
             std::cout << "Populating schedule for day: " << selectedDay.toStdString() << std::endl;
 
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
@@ -430,6 +434,8 @@ QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
                     }
                 }
             }
+
+            std::vector < Schedule> daySchedules;
 
 
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
