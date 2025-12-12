@@ -34,7 +34,9 @@ Professor::Professor(const User& user) : User(user) {}
 
 Professor::Professor( QString email, QString password, QString name) : User(name, email, password) {}
 
-QWidget* Professor::createWidget(QWidget* parent,User* user) {
+QWidget* Professor::createWidget(QWidget* parent) {
+
+    User* user = this;
 
 
     // Local gradient-text label
@@ -193,7 +195,7 @@ QWidget* Professor::createWidget(QWidget* parent,User* user) {
 
     // Connect the schedule button to create and show the schedule widget
     QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view, user]() {
-    QWidget* scheduleWidget = this->createScheduleWidget(nullptr, user);
+    QWidget* scheduleWidget = this->createScheduleWidget(nullptr);
     scheduleWidget->setAttribute(Qt::WA_DeleteOnClose);
     scheduleWidget->show();
 });
@@ -201,7 +203,7 @@ QWidget* Professor::createWidget(QWidget* parent,User* user) {
     return view;
 }
 
-QWidget* Professor::createScheduleWidget(QWidget *parent, User *user) {
+QWidget* Professor::createScheduleWidget(QWidget *parent) {
     // Create a schedule widget similar to SchedulesWindow but as a QWidget
     class ProfessorScheduleWidget : public QWidget {
     public:

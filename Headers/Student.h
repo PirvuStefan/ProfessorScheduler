@@ -22,8 +22,8 @@ public:
     std::map<TimeUtilis::Day, std::vector<Schedule>> initialiseSchedules() override;
 
     Student(QString email, QString password, QString name);
-    QWidget* createWidget(QWidget *parent,User *user) override;
-    QWidget* createScheduleWidget(QWidget *parent, User *user) override;
+    QWidget* createWidget(QWidget *parent) override;
+    QWidget* createScheduleWidget(QWidget *parent) override;
 
 
 

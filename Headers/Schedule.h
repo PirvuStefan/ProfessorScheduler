@@ -10,7 +10,7 @@
 
 
 class Schedule {
-    public:
+    protected:
     std::string professor; // name of the professor teaching the schedule
     TimeUtilis::Day day; // Monday, Tuesday, Wednesday, Thursday, Friday
     std::string room; // room number where the schedule takes place
@@ -20,6 +20,7 @@ class Schedule {
     std::string group; // which group is attending the schedule ( for example group 1A , this is a subgroup, one cell in the schedule table represents a subgroup, but a whole group can attend the same , seminar, or even the whole year in case we do have a course)
     // so here we parse : 1A , 2B etc. or 1,2,3 for whole group attending , or all or other keyword to represent the whole year attending
     bool optional; // if the schedule is optional or mandatory ( we should assign by default that it is mandatory)
+    public:
     Schedule(std::string subject, std::string type, bool optional);
 
     Schedule(std::string professor, std::string subject, std::string type, TimeUtilis::Day day, int period,

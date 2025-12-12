@@ -91,10 +91,10 @@ Student::Student(const User& user) : User(user) {}
 
 Student::Student( QString email, QString password, QString name) : User(name, email, password) {}
 
-QWidget* Student::createWidget(QWidget* parent, User* user) {
+QWidget* Student::createWidget(QWidget* parent) {
 
 
-   User* user1 = this;
+   User* user = this;
 
 
 
@@ -254,7 +254,7 @@ QWidget* Student::createWidget(QWidget* parent, User* user) {
 
     // Connect the schedule button to create and show the schedule widget
    QObject::connect(view->scheduleButton(), &QPushButton::clicked, [this, view, user]() {
-            QWidget* scheduleWidget = this->createScheduleWidget(nullptr, user);
+            QWidget* scheduleWidget = this->createScheduleWidget(nullptr);
             scheduleWidget->setAttribute(Qt::WA_DeleteOnClose);
             scheduleWidget->show();
         });
@@ -262,9 +262,11 @@ QWidget* Student::createWidget(QWidget* parent, User* user) {
     return view;
 }
 
-QWidget* Student::createScheduleWidget(QWidget* parent, User* user) {
-    // Create a schedule widget similar to SchedulesWindow but for students
+QWidget* Student::createScheduleWidget(QWidget* parent) {
+
     this->schedules = initialiseSchedules();
+    User* user = this;
+
     class StudentScheduleWidget : public QWidget {
     public:
         explicit StudentScheduleWidget(QWidget *parent = nullptr) : QWidget(parent) {

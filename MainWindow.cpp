@@ -296,7 +296,7 @@ void MainWindow::onLoginClicked() {
     actual->AccountLogin(); // polymorphic call to see which type of user logged in ( professor / student )
 
     // replace creation of user window so it is top-level (no parent)
-        QWidget* userWindow = actual->createWidget(nullptr, userResult);
+        QWidget* userWindow = actual->createWidget(nullptr);
     userWindow->setAttribute(Qt::WA_DeleteOnClose);
     userWindow->show();
     this->hide();
