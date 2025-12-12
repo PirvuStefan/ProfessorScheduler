@@ -36,6 +36,8 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
         return std::map<TimeUtilis::Day, std::vector<Schedule>>();
     }
 
+    std::map<TimeUtilis::Day, std::vector<Schedule>> schedules;
+
     QTextStream in(&file);
 
     std::cout<<"Reading schedules.txt" ;
@@ -50,28 +52,35 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
 
         bool mandatory = (parts[6] == "mandatory");
 
-        std::pair<int,int> timeSlot;
-        QString timeStr = parts[4].trimmed();
-        QStringList timeParts = timeStr.split('-', Qt::SkipEmptyParts);
-        if (timeParts.size() == 2) {
-            bool ok1 = false, ok2 = false;
-            int start = timeParts[0].trimmed().toInt(&ok1);
-            int end = timeParts[1].trimmed().toInt(&ok2);
-            if (!ok1 || !ok2) continue; // malformed time, skip line
-            timeSlot = std::make_pair(start, end);
-        } else {
-            continue; // unexpected format, skip line
-        }
+
+        int timeSlot = parts[4].toInt(); // get starting hour
+
 
         TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[3].toStdString());
 
 
         Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory, parts[7].toStdString());
         std::cout << parts[0].toStdString() << parts[1].toStdString() << parts[2].toStdString() << std::endl;
+        std::cout << parts[4].toInt() << std::endl;
+
+        if ( schedules.find(day) == schedules.end() ) {
+            schedules[day] = std::vector<Schedule>(); // initialize vector if day not present
+            schedules[day].push_back(schedule);
+        }
+        else {
+            schedules[day].push_back(schedule);
+        }
 
 
 
-    }
+    }// we should sort the schedules for each day based on the time slot ( period )
+
+    for (int i = 0; i < 5; ++i) {
+        auto day = static_cast<TimeUtilis::Day>(i);
+        if (schedules.find(day) != schedules.end()) {
+            std::sort(schedules[day].begin(), schedules[day].end(), Schedule::compareSchedulesByPeriod);
+        }
+    } // sorting done
 
     std::cout << "da";
 
