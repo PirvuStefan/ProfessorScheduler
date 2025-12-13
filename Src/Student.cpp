@@ -458,11 +458,25 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
 
 
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
+
+
+            // row corresponds to time slot (8-10, 1: 10-12, etc.)
                 for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+
+                    // no priority queue or anything needed i think , simple vector iteration works because we can think like this:
+                    // each row is a time slot, each column is a subgroup
+                    // timeslot = 10 (row 1) and subgroup = 1B (col 1) means we need to take care of [1][1] cell
+                    // timeslot = 14 (row 3) and subgroup = 3A (col 4) means we need to take care of [3][4] cell
+                    // so we can iterate through the daySchedules vector and find matching schedules for that time slot
+                    // if we do have timeslot = 10 (row 1) and group = 1 ( col 0 and 1 ) we can assign the schedule to both subgroups
+                    // if we do have timeslot = 16 (row 4) and group = all we can assign the schedule to all subgroups ( all columns )
                     auto *cellWidget = new QWidget();
                     auto *cellLayout = new QVBoxLayout(cellWidget);
                     cellLayout->setContentsMargins(5, 5, 5, 5);
                     cellLayout->setSpacing(5);
+
+
+
 
                     auto *subjectLabel = new QLabel("Mathematics", cellWidget);
                     subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #016B61; background-color: transparent;");
