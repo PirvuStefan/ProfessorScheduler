@@ -28,6 +28,11 @@ class Schedule {
 
     static bool compareSchedulesByPeriod(const Schedule &a, const Schedule &b);
 
+    std::string getSubject() const;
+
+    std::string getProfessor() const;
+
+    std::string getColor();
 
 
     void setOptional(bool optional);

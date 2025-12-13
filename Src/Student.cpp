@@ -26,17 +26,20 @@ void Student::AccountLogin() {
     printf("Student Logged In\n");
 }
 
-std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
+void Student::initialiseSchedules(){
+
+
+    std::map<TimeUtilis::Day, std::vector<Schedule>> schedules;
 
     std::cout << "Student::initialiseSchedules" << std::endl;
 
 
     QFile file("Schedules/schedules.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+        this->schedules = schedules;
     }
 
-    std::map<TimeUtilis::Day, std::vector<Schedule>> schedules;
+
 
     QTextStream in(&file);
 
@@ -84,7 +87,7 @@ std::map<TimeUtilis::Day, std::vector<Schedule>> Student::initialiseSchedules(){
 
     std::cout << "da";
 
-    return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+  this->schedules = schedules;
 }
 
 Student::Student(const User& user) : User(user) {}
@@ -129,6 +132,13 @@ QWidget* Student::createWidget(QWidget* parent) {
         explicit LocalStudentView(QWidget *parent = nullptr, User* user = nullptr) : QWidget(parent) {
             setAttribute(Qt::WA_OpaquePaintEvent);
             setAutoFillBackground(false);
+
+            std::cout << user<< "\n\n\n\n" ;
+            user->Print();
+
+            std::cout << user<< "\n\n\n\n" ;
+
+
 
             // Labels
             m_greeting = new GradientLabel("", this);
@@ -264,16 +274,18 @@ QWidget* Student::createWidget(QWidget* parent) {
 
 QWidget* Student::createScheduleWidget(QWidget* parent) {
 
-    this->schedules = initialiseSchedules();
+
     User* user = this;
 
     class StudentScheduleWidget : public QWidget {
     public:
-        explicit StudentScheduleWidget(QWidget *parent = nullptr) : QWidget(parent) {
+        explicit StudentScheduleWidget(QWidget *parent = nullptr, User* user = nullptr) : QWidget(parent), m_user(user) {
             setupUi();
         }
 
     private:
+
+        User* m_user;
         void setupUi() {
             resize(1200, 800);
             setWindowTitle("My Schedules");
@@ -282,6 +294,11 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
             auto *mainLayout = new QVBoxLayout(this);
             mainLayout->setContentsMargins(30, 30, 30, 30);
             mainLayout->setSpacing(20);
+
+
+            m_user->initialiseSchedules();
+
+
 
             // Title
             auto *titleLabel = new QLabel("Weekly Schedule", this);
@@ -437,7 +454,7 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                 }
             }
 
-            std::vector < Schedule> daySchedules;
+            std::vector < Schedule> daySchedules = m_user->getSchedulesForDay(TimeUtilis::stringToDayEnum(day.toStdString())); // very clear not verbose at all
 
 
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
@@ -476,7 +493,7 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
         QPushButton *m_backButton;
     };
 
-    return new StudentScheduleWidget(parent);
+    return new StudentScheduleWidget(parent, user);
 }
 
 

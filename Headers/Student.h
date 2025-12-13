@@ -19,7 +19,7 @@ public:
 
     void AccountLogin() override;
 
-    std::map<TimeUtilis::Day, std::vector<Schedule>> initialiseSchedules() override;
+    void initialiseSchedules() override;
 
     Student(QString email, QString password, QString name);
     QWidget* createWidget(QWidget *parent) override;

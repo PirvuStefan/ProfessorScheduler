@@ -42,6 +42,13 @@ std::string User::getPassword() {
     return this->password;
 }
 
+std::vector<Schedule> User::getSchedulesForDay(TimeUtilis::Day day) {
+    if (schedules.find(day) != schedules.end()) {
+        return schedules[day];
+    }
+    return {};
+}
+
 TimeUtilis::Day stringToDayEnum(const std::string &dayStr) {
     if (dayStr == "MONDAY") return TimeUtilis::Day::MONDAY;
     if (dayStr == "TUESDAY") return TimeUtilis::Day::TUESDAY;

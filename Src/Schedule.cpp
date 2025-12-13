@@ -35,3 +35,20 @@ bool Schedule::compareSchedulesByPeriod(const Schedule &a, const Schedule &b) {
     }
     return a.period < b.period;
 }
+
+std::string Schedule::getSubject() const {
+    return subject;
+}
+
+std::string Schedule::getProfessor() const {
+    return professor;
+}
+
+std::string Schedule::getColor() {
+
+    if (type == "lecture") return "#70B2B2";
+    if (type == "lab") return "#D16924";
+    if (type == "seminar") return "#EDDD53";
+    return "#762BC2"; // project or other types
+
+}

@@ -417,8 +417,9 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 }
 
 
-std::map<TimeUtilis::Day, std::vector<Schedule>> Professor::initialiseSchedules(){
-    return std::map<TimeUtilis::Day, std::vector<Schedule>>();
+void Professor::initialiseSchedules(){
+    std::map<TimeUtilis::Day, std::vector<Schedule>> schedules;
+    this->schedules = schedules;
 
 }
 

@@ -43,8 +43,10 @@ public:
     std::string getEmail();
     std::string getPassword();
 
+    std::vector<Schedule> getSchedulesForDay(TimeUtilis::Day day);
 
-    virtual std::map < TimeUtilis::Day, std::vector < Schedule > > initialiseSchedules() = 0 ; // this will be declared pure virtual, but we leave it as virtual for now, so we can test the code easier
+
+    virtual void initialiseSchedules() = 0 ; // this will be declared pure virtual, but we leave it as virtual for now, so we can test the code easier
     virtual void AccountCreated() ; // we do want to have a different print message when a professor or a student creates an account
     virtual void AccountLogin()  = 0;
     virtual QWidget* createWidget(QWidget *parent) = 0 ; // we will override this method in derived classes to set the user interface depending on the type of user
