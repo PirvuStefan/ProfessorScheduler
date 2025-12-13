@@ -32,7 +32,12 @@ class Schedule {
 
     std::string getProfessor() const;
 
-    std::string getColor();
+    int getTimeSlot() const;
+
+    std::string getGroup() const;
+
+    std::string getColor() const;
+
 
 
     void setOptional(bool optional);

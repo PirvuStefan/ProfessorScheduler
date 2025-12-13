@@ -44,7 +44,15 @@ std::string Schedule::getProfessor() const {
     return professor;
 }
 
-std::string Schedule::getColor() {
+int Schedule::getTimeSlot() const {
+    return period;
+}
+
+std::string Schedule::getGroup() const {
+    return group;
+}
+
+std::string Schedule::getColor() const {
 
     if (type == "lecture") return "#70B2B2";
     if (type == "lab") return "#D16924";

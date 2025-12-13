@@ -478,11 +478,11 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
 
 
 
-                    auto *subjectLabel = new QLabel("Mathematics", cellWidget);
+                    auto *subjectLabel = new QLabel("", cellWidget);
                     subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #016B61; background-color: transparent;");
                     subjectLabel->setAlignment(Qt::AlignCenter);
 
-                    auto *profLabel = new QLabel("Prof. John Smith", cellWidget);
+                    auto *profLabel = new QLabel("", cellWidget);
                     profLabel->setStyleSheet("font-size: 11px; color: #70B2B2; background-color: transparent;");
                     profLabel->setAlignment(Qt::AlignCenter);
                     profLabel->setWordWrap(true);
@@ -492,6 +492,43 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                     cellLayout->addStretch();
 
                     m_scheduleTable->setCellWidget(row, col, cellWidget);
+                }
+            }
+
+            for ( const auto &schedule : daySchedules) {
+                int timeSlot = schedule.getTimeSlot(); // e.g., 8, 10, 12, etc.
+                QString subGroup = QString::fromStdString(schedule.getGroup()); // e.g., "1A", "2B", etc.
+
+                int row = (timeSlot - 8) / 2; // Map time slot to row index
+                int col = -1;
+
+                if (subGroup == "1A") col = 0;
+                else if (subGroup == "1B") col = 1;
+                else if (subGroup == "2A") col = 2;
+                else if (subGroup == "2B") col = 3;
+                else if (subGroup == "3A") col = 4;
+                else if (subGroup == "3B") col = 5;
+
+                if (col != -1 && row >= 0 && row < m_scheduleTable->rowCount()) {
+                    QWidget *cellWidget = m_scheduleTable->cellWidget(row, col);
+                    if (cellWidget) {
+                        auto *layout = static_cast<QVBoxLayout*>(cellWidget->layout());
+                        if (layout && layout->count() >= 2) {
+                            auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
+                            auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+
+                            subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                            profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                        }
+
+
+                        QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
+
+                       //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
+                       cellWidget->setStyleSheet(color);
+                    }
+
                 }
             }
         }
