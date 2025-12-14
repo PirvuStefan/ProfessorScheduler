@@ -499,8 +499,75 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                 int timeSlot = schedule.getTimeSlot(); // e.g., 8, 10, 12, etc.
                 QString subGroup = QString::fromStdString(schedule.getGroup()); // e.g., "1A", "2B", etc.
 
-                int row = (timeSlot - 8) / 2; // Map time slot to row index
+                int row = (timeSlot - 8) / 2;
                 int col = -1;
+
+                if ( subGroup == "all") {
+
+
+
+                    for (col = 0 ; col <= 5;col++) {
+
+                        QWidget *cellWidget = m_scheduleTable->cellWidget(row, col);
+                        if (cellWidget) {
+                            auto *layout = static_cast<QVBoxLayout*>(cellWidget->layout());
+                            if (layout && layout->count() >= 2) {
+                                auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
+                                auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+
+                                 subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                                 profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+
+
+                            }
+
+
+                            QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
+
+
+                            //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
+                            cellWidget->setStyleSheet(color);
+                        }
+
+                    }
+                    continue;
+
+                }
+
+                if ( subGroup == "1" or subGroup == "2" or subGroup == "3") { // technically here we should only have seminars
+                    col = subGroup == "1" ? 0 : (subGroup == "2" ? 2 : 4);
+
+                    for (int i = 0 ; i <= 1;i++) {
+
+                        QWidget *cellWidget = m_scheduleTable->cellWidget(row, col + i);
+                        if (cellWidget) {
+                            auto *layout = static_cast<QVBoxLayout*>(cellWidget->layout());
+                            if (layout && layout->count() >= 2) {
+                                auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
+                                auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+
+                               if (i==0) subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                               if (i==1) profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+
+
+                            }
+
+
+                            QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
+
+
+                            //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
+                            cellWidget->setStyleSheet(color);
+                        }
+
+                    }
+                    continue;
+
+
+
+                }
 
                 if (subGroup == "1A") col = 0;
                 else if (subGroup == "1B") col = 1;
@@ -519,10 +586,17 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
 
                             subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
                             profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                            if (schedule.getSubject().size() > 14) subjectLabel->setStyleSheet("font-weight: bold; font-size: 11px; color: #016B61; background-color: transparent;"); // if they are too big , make the font smaller so everything is clear and visible
+                            if (schedule.getProfessor().size() > 16) profLabel->setStyleSheet("font-size: 9px; color: #70B2B2; background-color: transparent;"); // if they are too big , make the font smaller so everything is clear and visible
+
+
+
+
                         }
 
 
                         QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
 
 
                        //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
