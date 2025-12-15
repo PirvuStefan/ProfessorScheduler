@@ -36,6 +36,8 @@ class Schedule {
 
     std::string getGroup() const;
 
+    std::string getRoom() const;
+
     std::string getColor() const;
 
 

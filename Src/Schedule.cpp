@@ -52,6 +52,10 @@ std::string Schedule::getGroup() const {
     return group;
 }
 
+std::string Schedule::getRoom() const {
+    return room;
+}
+
 std::string Schedule::getColor() const {
 
     if (type == "lecture") return "#0F8CBD";

@@ -389,10 +389,10 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
             m_scheduleTable->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
             m_scheduleTable->verticalHeader()->setDefaultSectionSize(100);
 
-            m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-            m_scheduleTable->setSelectionMode(QAbstractItemView::NoSelection);
-            m_scheduleTable->setFocusPolicy(Qt::NoFocus);
-            m_scheduleTable->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+            //m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+            //m_scheduleTable->setSelectionMode(QAbstractItemView::NoSelection);
+            //m_scheduleTable->setFocusPolicy(Qt::NoFocus);
+            //m_scheduleTable->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
             // select a single cell at a time, but the student should not be able to edit it, just view, so the attrbutes above are like this
 
@@ -487,8 +487,14 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                     profLabel->setAlignment(Qt::AlignCenter);
                     profLabel->setWordWrap(true);
 
+                    auto *roomLabel = new QLabel("", cellWidget);
+                    roomLabel->setStyleSheet("font-size: 9px; color: #3ED67B; background-color: transparent;");
+                    roomLabel->setAlignment(Qt::AlignCenter);
+                    roomLabel->setWordWrap(true);
+
                     cellLayout->addWidget(subjectLabel);
                     cellLayout->addWidget(profLabel);
+                    cellLayout->addWidget(roomLabel);
                     cellLayout->addStretch();
 
                     m_scheduleTable->setCellWidget(row, col, cellWidget);
@@ -514,9 +520,11 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                             if (layout && layout->count() >= 2) {
                                 auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
                                 auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+                                auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
 
-                                 subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
-                                 profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                                 if ( col == 1) subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                                 if ( col == 2 )profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                                 if ( col == 3) roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
 
 
                             }
@@ -546,8 +554,12 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                             if (layout && layout->count() >= 2) {
                                 auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
                                 auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+                                auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
 
-                               if (i==0) subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                               if (i==0) {
+                                   subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                                   roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
+                               }
                                if (i==1) profLabel->setText(QString::fromStdString(schedule.getProfessor()));
 
 
@@ -583,9 +595,11 @@ QWidget* Student::createScheduleWidget(QWidget* parent) {
                         if (layout && layout->count() >= 2) {
                             auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
                             auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+                            auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
 
                             subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
                             profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                            roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
                             if (schedule.getSubject().size() > 14) subjectLabel->setStyleSheet("font-weight: bold; font-size: 11px; color: #016B61; background-color: transparent;"); // if they are too big , make the font smaller so everything is clear and visible
                             if (schedule.getProfessor().size() > 16) profLabel->setStyleSheet("font-size: 9px; color: #70B2B2; background-color: transparent;"); // if they are too big , make the font smaller so everything is clear and visible
 
