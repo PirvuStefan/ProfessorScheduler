@@ -29,7 +29,7 @@ void Schedule::setOwnership(bool ownership = true) {
     this->ownership = ownership;
 }
 
-bool Schedule::getOwnership() const {
+std::optional<bool> Schedule::getOwnership() const {
     return this->ownership;
 }
 
@@ -46,10 +46,12 @@ bool Schedule::compareSchedulesByPeriod(const Schedule &a, const Schedule &b) {
 }
 
 std::string Schedule::getSubject() const {
+    if (ownership == false) return "";
     return subject;
 }
 
 std::string Schedule::getProfessor() const {
+    if (ownership == false) return "";
     return professor;
 }
 
@@ -67,6 +69,7 @@ std::string Schedule::getRoom() const {
 
 std::string Schedule::getColor() const {
 
+    if (ownership == false) return "#302825"; // dark color for non-owned schedules ( highest priority to show they are not available )
     if (type == "lecture") return "#0F8CBD";
     if (type == "lab") return "#D16924";
     if (type == "seminar") return "#EDDD53";
