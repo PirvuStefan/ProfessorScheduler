@@ -22,6 +22,15 @@ Schedule::Schedule(std::string professor, std::string subject, std::string type,
     this->room = room;
     this->optional = optional;
     this->group = group;
+
+}
+
+void Schedule::setOwnership(bool ownership = true) {
+    this->ownership = ownership;
+}
+
+bool Schedule::getOwnership() const {
+    return this->ownership;
 }
 
 void Schedule::setOptional(bool optional = true) {

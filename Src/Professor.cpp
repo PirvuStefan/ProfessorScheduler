@@ -453,6 +453,17 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                                 auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
                                 auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
 
+                                if (!schedule.getOwnership()) {
+                                    QString color = "background-color: #000000; border-radius: 6px;";
+                                    cellWidget->setStyleSheet(color);
+                                    subjectLabel->setText("");
+                                    profLabel->setText("");
+                                    roomLabel->setText("");
+                                    continue;
+                                }
+
+
+
                                  if ( col == 1) subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
                                  if ( col == 2 )profLabel->setText(QString::fromStdString(schedule.getProfessor()));
                                  if ( col == 3) roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
@@ -573,6 +584,8 @@ void Professor::initialiseSchedules(){
 
     std::cout << "Professor::initialiseSchedules" << std::endl;
 
+    User* user = this;
+
 
     QFile file("Schedules/schedules.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -605,6 +618,7 @@ void Professor::initialiseSchedules(){
         Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory, parts[7].toStdString());
         std::cout << parts[0].toStdString() << parts[1].toStdString() << parts[2].toStdString() << std::endl;
         std::cout << parts[4].toInt() << std::endl;
+        if (user->getName() != schedule.getProfessor()) schedule.setOwnership(true);
 
         if ( schedules.find(day) == schedules.end() ) {
             schedules[day] = std::vector<Schedule>(); // initialize vector if day not present

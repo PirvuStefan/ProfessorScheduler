@@ -66,6 +66,8 @@ void Student::initialiseSchedules(){
         std::cout << parts[0].toStdString() << parts[1].toStdString() << parts[2].toStdString() << std::endl;
         std::cout << parts[4].toInt() << std::endl;
 
+
+
         if ( schedules.find(day) == schedules.end() ) {
             schedules[day] = std::vector<Schedule>(); // initialize vector if day not present
             schedules[day].push_back(schedule);
