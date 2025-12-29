@@ -19,6 +19,7 @@
 #include <QHeaderView>
 #include <vector>
 #include <iostream>
+#include <QFile>
 
 void Professor::AccountCreated()  {
     printf("Professor Account Created\n");
@@ -39,7 +40,7 @@ QWidget* Professor::createWidget(QWidget* parent) {
     User* user = this;
 
 
-    // Local gradient-text label
+
     class GradientLabel : public QLabel {
     public:
         explicit GradientLabel(const QString &text, QWidget *parent = nullptr) : QLabel(text, parent) {
@@ -205,13 +206,17 @@ QWidget* Professor::createWidget(QWidget* parent) {
 
 QWidget* Professor::createScheduleWidget(QWidget *parent) {
     // Create a schedule widget similar to SchedulesWindow but as a QWidget
+    User* user = this;
+
     class ProfessorScheduleWidget : public QWidget {
     public:
-        explicit ProfessorScheduleWidget(QWidget *parent = nullptr) : QWidget(parent) {
+        explicit ProfessorScheduleWidget(QWidget *parent = nullptr, User* user = nullptr) : QWidget(parent), m_user(user) {
             setupUi();
         }
 
     private:
+
+        User* m_user;
         void setupUi() {
             resize(1200, 800);
             setWindowTitle("My Schedules");
@@ -220,6 +225,11 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             auto *mainLayout = new QVBoxLayout(this);
             mainLayout->setContentsMargins(30, 30, 30, 30);
             mainLayout->setSpacing(20);
+
+
+            m_user->initialiseSchedules();
+
+
 
             // Title
             auto *titleLabel = new QLabel("Weekly Schedule", this);
@@ -304,42 +314,18 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 m_scheduleTable->setRowHeight(row, 100);
             }
 
+
+
             m_scheduleTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
             m_scheduleTable->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
             m_scheduleTable->verticalHeader()->setDefaultSectionSize(100);
-            m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-            m_scheduleTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
+            //m_scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+            //m_scheduleTable->setSelectionMode(QAbstractItemView::NoSelection);
+            //m_scheduleTable->setFocusPolicy(Qt::NoFocus);
+            //m_scheduleTable->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
-
-            m_scheduleTable->setStyleSheet(R"(
-                QTableWidget {
-                    background-color: white;
-                    gridline-color: #70B2B2;
-                    border: 2px solid #016B61;
-                    border-radius: 8px;
-                }
-                QTableWidget::item {
-                    padding: 10px;
-                    border: 1px solid #E5E9C5;
-                }
-                QTableWidget::item:selected {
-                    background-color: #9ECFD4;
-                    border: 2px solid #016B61;
-                }
-                QTableWidget::item:focus {
-                    border: 2px solid #016B61;
-                    outline: none;
-                }
-                QHeaderView::section {
-                    background-color: #016B61;
-                    color: white;
-                    font-weight: bold;
-                    font-size: 13px;
-                    padding: 12px;
-                    border: 1px solid #70B2B2;
-                }
-            )");
+            // select a single cell at a time, but the student should not be able to edit it, just view, so the attrbutes above are like this
 
             // Back button
             m_backButton = new QPushButton("← Back", this);
@@ -361,6 +347,9 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                     background-color: #9ECFD4;
                 }
             )");
+
+
+
             m_backButton->setCursor(Qt::PointingHandCursor);
 
             mainLayout->addWidget(titleLabel);
@@ -377,35 +366,196 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             connect(m_backButton, &QPushButton::clicked, this, &QWidget::close);
         }
 
-        void populateScheduleTable() {
+
+
+        void populateScheduleTable(const QString &day = "Monday") {
+
+            // Use provided day or fall back to currently selected day
+            QString selectedDay = m_daySelector ? m_daySelector->currentText() : day;
+            std::cout << "Populating schedule for day: " << selectedDay.toStdString() << std::endl;
+
             for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
                 for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+                    QWidget *old = m_scheduleTable->cellWidget(row, col);
+                    if (old) {
+                        m_scheduleTable->removeCellWidget(row, col);
+                        old->deleteLater();
+
+                    }
+                }
+            }
+
+            std::vector < Schedule> daySchedules = m_user->getSchedulesForDay(TimeUtilis::stringToDayEnum(day.toStdString())); // very clear not verbose at all
+
+
+            for (int row = 0; row < m_scheduleTable->rowCount(); ++row) {
+
+
+            // row corresponds to time slot (8-10, 1: 10-12, etc.)
+                for (int col = 0; col < m_scheduleTable->columnCount(); ++col) {
+
+                    // no priority queue or anything needed i think , simple vector iteration works because we can think like this:
+                    // each row is a time slot, each column is a subgroup
+                    // timeslot = 10 (row 1) and subgroup = 1B (col 1) means we need to take care of [1][1] cell
+                    // timeslot = 14 (row 3) and subgroup = 3A (col 4) means we need to take care of [3][4] cell
+                    // so we can iterate through the daySchedules vector and find matching schedules for that time slot
+                    // if we do have timeslot = 10 (row 1) and group = 1 ( col 0 and 1 ) we can assign the schedule to both subgroups
+                    // if we do have timeslot = 16 (row 4) and group = all we can assign the schedule to all subgroups ( all columns )
                     auto *cellWidget = new QWidget();
                     auto *cellLayout = new QVBoxLayout(cellWidget);
                     cellLayout->setContentsMargins(5, 5, 5, 5);
                     cellLayout->setSpacing(5);
 
-                    auto *subjectLabel = new QLabel("Mathematics", cellWidget);
+
+
+
+                    auto *subjectLabel = new QLabel("", cellWidget);
                     subjectLabel->setStyleSheet("font-weight: bold; font-size: 13px; color: #016B61; background-color: transparent;");
                     subjectLabel->setAlignment(Qt::AlignCenter);
 
-                    auto *profLabel = new QLabel("Prof. John Smith", cellWidget);
+                    auto *profLabel = new QLabel("", cellWidget);
                     profLabel->setStyleSheet("font-size: 11px; color: #70B2B2; background-color: transparent;");
                     profLabel->setAlignment(Qt::AlignCenter);
                     profLabel->setWordWrap(true);
 
+                    auto *roomLabel = new QLabel("", cellWidget);
+                    roomLabel->setStyleSheet("font-size: 9px; color: #3ED67B; background-color: transparent;");
+                    roomLabel->setAlignment(Qt::AlignCenter);
+                    roomLabel->setWordWrap(true);
+
                     cellLayout->addWidget(subjectLabel);
                     cellLayout->addWidget(profLabel);
+                    cellLayout->addWidget(roomLabel);
                     cellLayout->addStretch();
 
                     m_scheduleTable->setCellWidget(row, col, cellWidget);
                 }
             }
+
+            for ( const auto &schedule : daySchedules) {
+                int timeSlot = schedule.getTimeSlot(); // e.g., 8, 10, 12, etc.
+                QString subGroup = QString::fromStdString(schedule.getGroup()); // e.g., "1A", "2B", etc.
+
+                int row = (timeSlot - 8) / 2;
+                int col = -1;
+
+                if ( subGroup == "all") {
+
+
+
+                    for (col = 0 ; col <= 5;col++) {
+
+                        QWidget *cellWidget = m_scheduleTable->cellWidget(row, col);
+                        if (cellWidget) {
+                            auto *layout = static_cast<QVBoxLayout*>(cellWidget->layout());
+                            if (layout && layout->count() >= 2) {
+                                auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
+                                auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+                                auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
+
+                                 if ( col == 1) subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                                 if ( col == 2 )profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                                 if ( col == 3) roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
+
+
+                            }
+
+
+                            QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
+
+
+                            //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
+                            cellWidget->setStyleSheet(color);
+                        }
+
+                    }
+                    continue;
+
+                }
+
+                if ( subGroup == "1" or subGroup == "2" or subGroup == "3") { // technically here we should only have seminars
+                    col = subGroup == "1" ? 0 : (subGroup == "2" ? 2 : 4);
+
+                    for (int i = 0 ; i <= 1;i++) {
+
+                        QWidget *cellWidget = m_scheduleTable->cellWidget(row, col + i);
+                        if (cellWidget) {
+                            auto *layout = static_cast<QVBoxLayout*>(cellWidget->layout());
+                            if (layout && layout->count() >= 2) {
+                                auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
+                                auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+                                auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
+
+                               if (i==0) {
+                                   subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                                   roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
+                               }
+                               if (i==1) profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+
+
+                            }
+
+
+                            QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
+
+
+                            //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
+                            cellWidget->setStyleSheet(color);
+                        }
+
+                    }
+                    continue;
+
+
+
+                }
+
+                if (subGroup == "1A") col = 0;
+                else if (subGroup == "1B") col = 1;
+                else if (subGroup == "2A") col = 2;
+                else if (subGroup == "2B") col = 3;
+                else if (subGroup == "3A") col = 4;
+                else if (subGroup == "3B") col = 5;
+
+                if (col != -1 && row >= 0 && row < m_scheduleTable->rowCount()) {
+                    QWidget *cellWidget = m_scheduleTable->cellWidget(row, col);
+                    if (cellWidget) {
+                        auto *layout = static_cast<QVBoxLayout*>(cellWidget->layout());
+                        if (layout && layout->count() >= 2) {
+                            auto *subjectLabel = static_cast<QLabel*>(layout->itemAt(0)->widget());
+                            auto *profLabel = static_cast<QLabel*>(layout->itemAt(1)->widget());
+                            auto *roomLabel = static_cast<QLabel*>(layout->itemAt(2)->widget());
+
+                            subjectLabel->setText(QString::fromStdString(schedule.getSubject()));
+                            profLabel->setText(QString::fromStdString(schedule.getProfessor()));
+                            roomLabel->setText(QString::fromStdString("Room: " + schedule.getRoom()));
+                            if (schedule.getSubject().size() > 14) subjectLabel->setStyleSheet("font-weight: bold; font-size: 11px; color: #016B61; background-color: transparent;"); // if they are too big , make the font smaller so everything is clear and visible
+                            if (schedule.getProfessor().size() > 16) profLabel->setStyleSheet("font-size: 9px; color: #70B2B2; background-color: transparent;"); // if they are too big , make the font smaller so everything is clear and visible
+
+
+
+
+                        }
+
+
+                        QString color = "background-color: " + QString::fromStdString(schedule.getColor()) + "; border-radius: 6px;";
+
+
+
+                       //cellWidget->setStyleSheet("background-color: #FFCDD2; border-radius: 6px;");c
+                       cellWidget->setStyleSheet(color);
+                    }
+
+                }
+            }
         }
 
         void updateScheduleForDay(const QString &day) {
-            Q_UNUSED(day);
-            populateScheduleTable();
+
+            //Q_UNUSED(day);
+            populateScheduleTable(day);
         }
 
         QComboBox *m_daySelector;
@@ -413,12 +563,70 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
         QPushButton *m_backButton;
     };
 
-    return new ProfessorScheduleWidget(parent);
+    return new ProfessorScheduleWidget(parent, user);
 }
 
 
 void Professor::initialiseSchedules(){
+
     std::map<TimeUtilis::Day, std::vector<Schedule>> schedules;
+
+    std::cout << "Professor::initialiseSchedules" << std::endl;
+
+
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        this->schedules = schedules;
+    }
+
+
+
+    QTextStream in(&file);
+
+    std::cout<<"Reading schedules.txt" ;
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(",");
+
+
+        //Stefan Groia,Matematica Speciala,lecture,Monday,8-10,B302,mandatory,1A
+        // parts[0] to parts[7]
+        if (parts.size() < 4) continue;
+
+        bool mandatory = (parts[6] == "mandatory");
+
+
+        int timeSlot = parts[4].toInt(); // get starting hour
+
+
+        TimeUtilis::Day day = TimeUtilis::stringToDayEnum(parts[3].toStdString());
+
+
+        Schedule schedule = Schedule(parts[0].toStdString(), parts[1].toStdString(), parts[2].toStdString(),day,timeSlot, parts[5].toStdString(), mandatory, parts[7].toStdString());
+        std::cout << parts[0].toStdString() << parts[1].toStdString() << parts[2].toStdString() << std::endl;
+        std::cout << parts[4].toInt() << std::endl;
+
+        if ( schedules.find(day) == schedules.end() ) {
+            schedules[day] = std::vector<Schedule>(); // initialize vector if day not present
+            schedules[day].push_back(schedule);
+        }
+        else {
+            schedules[day].push_back(schedule);
+        }
+
+
+
+    }// we should sort the schedules for each day based on the time slot ( period )
+
+    for (int i = 0; i < 5; ++i) {
+        auto day = static_cast<TimeUtilis::Day>(i);
+        if (schedules.find(day) != schedules.end()) {
+            std::sort(schedules[day].begin(), schedules[day].end(), Schedule::compareSchedulesByPeriod);
+        }
+    }
+
+    std::cout << "da";
+
     this->schedules = schedules;
 
 }
