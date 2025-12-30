@@ -20,6 +20,11 @@
 #include <vector>
 #include <iostream>
 #include <QFile>
+#include <QDialog>
+#include <QLineEdit>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QMessageBox>
 
 void Professor::AccountCreated()  {
     printf("Professor Account Created\n");
@@ -348,14 +353,40 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 }
             )");
 
-
-
             m_backButton->setCursor(Qt::PointingHandCursor);
+
+            // Add Course button
+            m_addCourseButton = new QPushButton("+ Add Course", this);
+            m_addCourseButton->setStyleSheet(R"(
+                QPushButton {
+                    background-color: #57C785;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: 600;
+                    padding: 10px 24px;
+                    border: none;
+                    border-radius: 5px;
+                    min-height: 40px;
+                }
+                QPushButton:hover {
+                    background-color: #3ED67B;
+                }
+                QPushButton:pressed {
+                    background-color: #70B2B2;
+                }
+            )");
+            m_addCourseButton->setCursor(Qt::PointingHandCursor);
+
+            // Footer layout with both buttons
+            auto *footerLayout = new QHBoxLayout();
+            footerLayout->addWidget(m_backButton);
+            footerLayout->addStretch();
+            footerLayout->addWidget(m_addCourseButton);
 
             mainLayout->addWidget(titleLabel);
             mainLayout->addLayout(selectorLayout);
             mainLayout->addWidget(m_scheduleTable, 1);
-            mainLayout->addWidget(m_backButton, 0, Qt::AlignLeft);
+            mainLayout->addLayout(footerLayout);
 
             // Populate with sample data
             populateScheduleTable();
@@ -364,6 +395,116 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             connect(m_daySelector, &QComboBox::currentTextChanged,
                     this, &ProfessorScheduleWidget::updateScheduleForDay);
             connect(m_backButton, &QPushButton::clicked, this, &QWidget::close);
+            connect(m_addCourseButton, &QPushButton::clicked, this, &ProfessorScheduleWidget::showAddCourseDialog);
+        }
+
+        void showAddCourseDialog() {
+            QDialog dialog(this);
+            dialog.setWindowTitle("Add New Course");
+            dialog.setModal(true);
+            dialog.resize(400, 300);
+            dialog.setStyleSheet("QDialog { background-color: #E5E9C5; }");
+
+            auto *formLayout = new QFormLayout(&dialog);
+            formLayout->setContentsMargins(30, 30, 30, 30);
+            formLayout->setSpacing(15);
+
+            // Course name input
+            auto *courseNameEdit = new QLineEdit(&dialog);
+            courseNameEdit->setPlaceholderText("e.g., Advanced Mathematics");
+            courseNameEdit->setStyleSheet(R"(
+                QLineEdit {
+                    background-color: white;
+                    border: 2px solid #016B61;
+                    border-radius: 5px;
+                    padding: 8px;
+                    font-size: 13px;
+                    color: #016B61;
+                }
+                QLineEdit:focus {
+                    border-color: #70B2B2;
+                }
+            )");
+
+            // Room input
+            auto *roomEdit = new QLineEdit(&dialog);
+            roomEdit->setPlaceholderText("e.g., B302");
+            roomEdit->setStyleSheet(courseNameEdit->styleSheet());
+
+            // Type selector
+            auto *typeCombo = new QComboBox(&dialog);
+            typeCombo->addItems({"lecture", "seminar", "lab", "project"});
+            typeCombo->setStyleSheet(R"(
+                QComboBox {
+                    background-color: white;
+                    border: 2px solid #016B61;
+                    border-radius: 5px;
+                    padding: 8px;
+                    font-size: 13px;
+                    color: #016B61;
+                }
+                QComboBox:hover {
+                    border-color: #70B2B2;
+                }
+                QComboBox::drop-down {
+                    border: none;
+                }
+                QComboBox QAbstractItemView {
+                    background-color: white;
+                    selection-background-color: #9ECFD4;
+                    selection-color: #016B61;
+                }
+            )");
+
+            formLayout->addRow("Course Name:", courseNameEdit);
+            formLayout->addRow("Room:", roomEdit);
+            formLayout->addRow("Type:", typeCombo);
+
+            // Button box
+            auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+            buttonBox->setStyleSheet(R"(
+                QPushButton {
+                    background-color: #016B61;
+                    color: white;
+                    font-size: 13px;
+                    font-weight: 600;
+                    padding: 8px 16px;
+                    border: none;
+                    border-radius: 5px;
+                    min-width: 80px;
+                }
+                QPushButton:hover {
+                    background-color: #70B2B2;
+                }
+            )");
+
+            formLayout->addRow(buttonBox);
+
+            connect(buttonBox, &QDialogButtonBox::accepted, [&]() {
+                QString courseName = courseNameEdit->text().trimmed();
+                QString room = roomEdit->text().trimmed();
+                QString type = typeCombo->currentText();
+
+                if (courseName.isEmpty() || room.isEmpty()) {
+                    QMessageBox::warning(&dialog, "Invalid Input",
+                        "Please fill in all fields.");
+                    return;
+                }
+
+                // Here you would add logic to save the course
+                std::cout << "Adding course: " << courseName.toStdString()
+                          << ", Room: " << room.toStdString()
+                          << ", Type: " << type.toStdString() << std::endl;
+
+                QMessageBox::information(&dialog, "Success",
+                    QString("Course '%1' added successfully!").arg(courseName));
+
+                dialog.accept();
+            });
+
+            connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+            dialog.exec();
         }
 
 
@@ -560,6 +701,7 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
         QComboBox *m_daySelector;
         QTableWidget *m_scheduleTable;
         QPushButton *m_backButton;
+        QPushButton *m_addCourseButton;
     };
 
     return new ProfessorScheduleWidget(parent, user);
@@ -632,5 +774,3 @@ void Professor::initialiseSchedules(){
     this->schedules = schedules;
 
 }
-
-

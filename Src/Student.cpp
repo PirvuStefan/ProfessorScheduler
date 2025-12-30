@@ -87,7 +87,6 @@ void Student::initialiseSchedules(){
         }
     }
 
-    std::cout << "da";
 
   this->schedules = schedules;
 }
