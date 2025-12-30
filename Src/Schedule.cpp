@@ -109,6 +109,10 @@ bool Schedule::testValability(){
             return false;
         }
 
+       //TODO: check for subgroup conflicts as well, not just based on same room occupied at the same time
+        // we need to check if the groups overlap as well, the room conflict may not happen, but we cant assign for example
+        // group 1A to a schedule if group 1 already has a schedule at the same time, because group 1A is part of group 1 and group 1 is part of "all"
+
         // either room, time or day conflicts, we cannot have two schedules in the same room at the same time on the same day
 
 
