@@ -97,4 +97,4 @@ return a.period < b.period;
 }
 ```
 
-**Note on Privacy**: The `getSubject()` and `getProfessor()` methods implement an ownership check. If `ownership` is `false`, these methods return an empty string to protect the data of classes the user is not part of.
+**Note on Privacy**: The `getSubject()` and `getProfessor()` methods implement an ownership check. If `ownership` is `std::nullopt`, these methods return an empty string to protect the data of classes that the user does not have access.
