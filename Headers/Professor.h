@@ -18,6 +18,8 @@ class Professor : public User {
 
     Professor(QString email, QString password, QString name);
 
+    bool testValability(QString room, QString hour, QString day);
+
 
     void initialiseSchedules() override;
     QWidget* createWidget(QWidget *parent) override;

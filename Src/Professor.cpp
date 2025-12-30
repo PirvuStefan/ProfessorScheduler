@@ -40,6 +40,9 @@ Professor::Professor(const User& user) : User(user) {}
 
 Professor::Professor( QString email, QString password, QString name) : User(name, email, password) {}
 
+
+
+
 QWidget* Professor::createWidget(QWidget* parent) {
 
     User* user = this;
@@ -456,9 +459,25 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 }
             )");
 
+            auto *dayCombo= new QComboBox(&dialog);
+            dayCombo->addItems({"Mon", "Thu", "Wed", "Thu", "Fri"});
+            dayCombo->setStyleSheet(typeCombo->styleSheet());
+
+            auto *hourCombo= new QComboBox(&dialog);
+            hourCombo->addItems({"8", "10", "12", "14", "16", "18"});
+            hourCombo->setStyleSheet(typeCombo->styleSheet());
+
+            auto *groupCombo= new QComboBox(&dialog);
+            groupCombo->addItems({"1A", "1B", "1", "2A","2B","2","3A","3B","3","all"});
+            groupCombo->setStyleSheet(typeCombo->styleSheet());
+
+
             formLayout->addRow("Course Name:", courseNameEdit);
             formLayout->addRow("Room:", roomEdit);
             formLayout->addRow("Type:", typeCombo);
+            formLayout->addRow("Day:", dayCombo);
+            formLayout->addRow("Hour:", hourCombo);
+            formLayout->addRow("Group:", groupCombo);
 
             // Button box
             auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
@@ -484,12 +503,34 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 QString courseName = courseNameEdit->text().trimmed();
                 QString room = roomEdit->text().trimmed();
                 QString type = typeCombo->currentText();
+                QString day = dayCombo->currentText().trimmed();
+                QString hour = hourCombo->currentText().trimmed();
+                QString group = groupCombo->currentText().trimmed();
 
                 if (courseName.isEmpty() || room.isEmpty()) {
                     QMessageBox::warning(&dialog, "Invalid Input",
                         "Please fill in all fields.");
                     return;
                 }
+
+
+
+                Schedule schedule = Schedule(m_user->getName(),courseName.toStdString(),
+                                               "neither",
+                                               TimeUtilis::stringToDayEnum(day.toStdString()),
+                                               stoi(hour.toStdString()),
+                                               room.toStdString(),
+                                               false,group.toStdString());
+                // this is a pseudo-schedule just for calling the test function below
+                if (!schedule.testValability()) {
+                    QMessageBox::warning(&dialog, "Invalid Input","This schedule conflicts with existing schedules.");
+                    return;
+                }
+
+
+
+
+
 
                 // Here you would add logic to save the course
                 std::cout << "Adding course: " << courseName.toStdString()

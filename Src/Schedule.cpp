@@ -4,6 +4,8 @@
 
 #include "../Headers/Schedule.h"
 #include <string>
+#include <QFile>
+#include <qtextstream.h>
 
 #include "../Headers/TimeUtilis.h"
 
@@ -74,5 +76,44 @@ std::string Schedule::getColor() const {
     if (type == "lab") return "#D16924";
     if (type == "seminar") return "#EDDD53";
     return "#762BC2"; // project or other types
+
+}
+
+bool Schedule::testValability(){
+
+
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    //check if the current schedule conflicts with an existing one
+
+
+
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(",");
+
+
+        //Stefan Groia,Matematica Speciala,lecture,Monday,8,B302,mandatory,1A
+        // parts[0] to parts[7]
+        if (parts.size() < 4) continue;
+
+        if ( day != TimeUtilis::stringToDayEnum(parts[2].toStdString())) continue; // different day, no conflict
+
+        if ( room == parts[4] and period == parts[4].toInt()) {
+            type = "full_conflict";
+            return false;
+        }
+
+        // either room, time or day conflicts, we cannot have two schedules in the same room at the same time on the same day
+
+
+    }
+
+    return true;
 
 }

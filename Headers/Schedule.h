@@ -4,6 +4,7 @@
 
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
+#include <qstring.h>
 #include <string>
 
 #include "TimeUtilis.h"
@@ -48,6 +49,7 @@ class Schedule {
 
     std::string getColor() const;
 
+    bool testValability();
 
 
     void setOptional(bool optional);
