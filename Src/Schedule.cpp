@@ -104,7 +104,10 @@ bool Schedule::testValability(){
 
         if ( day != TimeUtilis::stringToDayEnum(parts[3].toStdString())) continue; // different day, no conflict
 
-        if ( room == parts[4] and period == parts[4].toInt()) {
+
+
+
+        if ( room == parts[5] and period == parts[4].toInt()) {
             type = "full_conflict";
             return false;
         }
@@ -147,6 +150,7 @@ bool Schedule::testValability(){
 }
 
 std::string Schedule::getErrorDescription() const {
+    if (type == "full_conflict") return "Schedule conflicts with existing schedule in the same room at the same time.";
     if (type == "year_conflict") return "Schedule conflicts with existing schedule for the whole year at the same time.";
     if (type == "group_conflict") return "Schedule conflicts with existing schedule for the same group at the same time.";
     if (type == "overlap_conflict") return "Schedule conflicts with existing schedule for overlapping groups at the same time.";
@@ -154,6 +158,7 @@ std::string Schedule::getErrorDescription() const {
 }
 
 QString Schedule::getErrorDescriptionQString() const {
+    if (type == "full_conflict") return "Schedule conflicts with existing schedule in the same room at the same time.";
     if (type == "year_conflict") return "Schedule conflicts with existing schedule for the whole year at the same time.";
     if (type == "group_conflict") return "Schedule conflicts with existing schedule for the same group at the same time.";
     if (type == "overlap_conflict") return "Schedule conflicts with existing schedule for overlapping groups at the same time.";
