@@ -51,6 +51,10 @@ class Schedule {
 
     bool testValability();
 
+    std::string getErrorDescription() const;
+
+    QString getErrorDescriptionQString() const;
+
 
     void setOptional(bool optional);
 };

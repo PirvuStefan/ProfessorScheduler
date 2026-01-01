@@ -102,14 +102,38 @@ bool Schedule::testValability(){
         // parts[0] to parts[7]
         if (parts.size() < 4) continue;
 
-        if ( day != TimeUtilis::stringToDayEnum(parts[2].toStdString())) continue; // different day, no conflict
+        if ( day != TimeUtilis::stringToDayEnum(parts[3].toStdString())) continue; // different day, no conflict
 
         if ( room == parts[4] and period == parts[4].toInt()) {
             type = "full_conflict";
             return false;
         }
 
-       //TODO: check for subgroup conflicts as well, not just based on same room occupied at the same time
+        if ( period == parts[4].toInt() ) {
+            // same time slot, check for group conflicts
+            std::string existingGroup = parts[7].toStdString();
+
+            if ( existingGroup == "all" or group == "all") {
+                type = "year_conflict";
+                return false; // whole year conflict
+            }
+
+            if ( existingGroup == group ) {
+                type = "group_conflict";
+                return false; // same group conflict
+            }
+
+            // 1A dar 1 are curs la aceeasi ora
+            // 1 dar 1A are curs la aceeasi ora
+
+
+            if (existingGroup[0] == group[0]) {
+                type = "overlap_conflict";
+                return false;
+            }
+
+        }
+
         // we need to check if the groups overlap as well, the room conflict may not happen, but we cant assign for example
         // group 1A to a schedule if group 1 already has a schedule at the same time, because group 1A is part of group 1 and group 1 is part of "all"
 
@@ -120,4 +144,18 @@ bool Schedule::testValability(){
 
     return true;
 
+}
+
+std::string Schedule::getErrorDescription() const {
+    if (type == "year_conflict") return "Schedule conflicts with existing schedule for the whole year at the same time.";
+    if (type == "group_conflict") return "Schedule conflicts with existing schedule for the same group at the same time.";
+    if (type == "overlap_conflict") return "Schedule conflicts with existing schedule for overlapping groups at the same time.";
+    return "No conflict."; // this should be unreachable
+}
+
+QString Schedule::getErrorDescriptionQString() const {
+    if (type == "year_conflict") return "Schedule conflicts with existing schedule for the whole year at the same time.";
+    if (type == "group_conflict") return "Schedule conflicts with existing schedule for the same group at the same time.";
+    if (type == "overlap_conflict") return "Schedule conflicts with existing schedule for overlapping groups at the same time.";
+    return "No conflict."; // this should be unreachable
 }

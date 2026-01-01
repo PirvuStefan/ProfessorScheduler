@@ -519,11 +519,11 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                                                "neither",
                                                TimeUtilis::stringToDayEnum(day.toStdString()),
                                                stoi(hour.toStdString()),
-                                               room.toStdString(),
+                                               room.toUpper().toStdString(),
                                                false,group.toStdString());
                 // this is a pseudo-schedule just for calling the test function below
                 if (!schedule.testValability()) {
-                    QMessageBox::warning(&dialog, "Invalid Input","This schedule conflicts with existing schedules.");
+                    QMessageBox::warning(&dialog, "Invalid Input",schedule.getErrorDescriptionQString());
                     return;
                 }
 
@@ -532,7 +532,6 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
 
 
-                // Here you would add logic to save the course
                 std::cout << "Adding course: " << courseName.toStdString()
                           << ", Room: " << room.toStdString()
                           << ", Type: " << type.toStdString() << std::endl;
