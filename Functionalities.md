@@ -7,14 +7,20 @@ This page allows the user to create a new account by providing necessary details
 
 ## User Class Attributes
 
-The `User` class contains the following attributes:
+The `User` abstract class contains the following attributes:
 
 ```cpp
-protected:
-    std::string fullName;    // Full name of the user
-    std::string email;       // Email address for login
-    std::string password;    // User password (stored as plain text)
-};
+std::string fullName;
+std::string email;
+std::string password;
+std::map < TimeUtilis::Day, std::vector < Schedule > > schedules; 
+
+virtual void initialiseSchedules() = 0 ; 
+    virtual void AccountCreated() ;    
+    virtual void AccountLogin()  = 0 ;
+    virtual QWidget* createWidget(QWidget *parent) = 0 ; // we will override this method in derived classes to set the user interface depending on the type of user
+    virtual QWidget* createScheduleWidget(QWidget *parent) = 0 ; // we will override this method in derived classes to set the schedule interface depending on the type of user
+
 
 ```
 
