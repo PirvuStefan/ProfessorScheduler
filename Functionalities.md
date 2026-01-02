@@ -105,3 +105,37 @@ return a.period < b.period;
 
 **Note on Privacy**: The `getSubject()` and `getProfessor()` methods implement an ownership check. If `ownership` is `std::nullopt`, these methods return an empty string to protect the data of classes that the user does not have access.
 We use std::optional<bool> for that purpose to represent three states: owned, not owned, and not applicable (for students), similar to Boolean in Java (tertiary logic).
+
+## Data Strorage
+
+The program uses txt files to store user data and schedules.Every information is stored in a CSV format to make if future migrations easier if needed. (e.g. moving to a database system later on).
+
+```cpp  
+void Schedule::addScheduleToFile() {
+QFile file("Schedules/schedules.txt");
+if (!file.open(QIODevice::Append | QIODevice::Text)) {
+return;
+}
+
+    QTextStream out(&file);
+    out << QString::fromStdString(professor) << ","
+        << QString::fromStdString(subject) << ","
+        << QString::fromStdString(type) << ","
+        << QString::fromStdString( (day == TimeUtilis::Day::MONDAY) ? "Monday" :
+                                    (day == TimeUtilis::Day::TUESDAY) ? "Tuesday" :
+                                    (day == TimeUtilis::Day::WEDNESDAY) ? "Wednesday" :
+                                    (day == TimeUtilis::Day::THURSDAY) ? "Thursday" :
+                                    "Friday") << ","
+        << QString::number(period) << ","
+        << QString::fromStdString(room) << ","
+        << (optional ? "optional" : "mandatory") << ","
+        << QString::fromStdString(group) << "\n";
+
+    std::cout << "Succesfully added the following schedule to the system";
+    print();
+
+    file.close();
+    // example of a standard write operation to a text file in C++ using Qt framework
+    // each attribute is separated by a comma to follow the CSV format
+}
+```
