@@ -104,3 +104,4 @@ return a.period < b.period;
 ```
 
 **Note on Privacy**: The `getSubject()` and `getProfessor()` methods implement an ownership check. If `ownership` is `std::nullopt`, these methods return an empty string to protect the data of classes that the user does not have access.
+We use std::optional<bool> for that purpose to represent three states: owned, not owned, and not applicable (for students), similar to Boolean in Java (tertiary logic).

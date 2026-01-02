@@ -51,12 +51,19 @@ class Schedule {
 
     bool testValability();
 
+    void addScheduleToFile();
+
+    void print();
+
+
     std::string getErrorDescription() const;
 
     QString getErrorDescriptionQString() const;
 
 
     void setOptional(bool optional);
+
+    void setType(std::string type);
 };
 
 

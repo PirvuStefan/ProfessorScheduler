@@ -19,6 +19,7 @@
 #include <QHeaderView>
 #include <vector>
 #include <iostream>
+#include <QCheckBox>
 #include <QFile>
 #include <QDialog>
 #include <QLineEdit>
@@ -471,6 +472,12 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             groupCombo->addItems({"1A", "1B", "1", "2A","2B","2","3A","3B","3","all"});
             groupCombo->setStyleSheet(typeCombo->styleSheet());
 
+            auto *optionalCheckBox = new QCheckBox("Optional:", this);
+            optionalCheckBox->setObjectName("optionalCheckBox");
+
+
+
+
 
             formLayout->addRow("Course Name:", courseNameEdit);
             formLayout->addRow("Room:", roomEdit);
@@ -478,6 +485,7 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             formLayout->addRow("Day:", dayCombo);
             formLayout->addRow("Hour:", hourCombo);
             formLayout->addRow("Group:", groupCombo);
+            formLayout->addRow("Optional:", optionalCheckBox);
 
             // Button box
             auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
@@ -506,8 +514,9 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 QString day = dayCombo->currentText().trimmed();
                 QString hour = hourCombo->currentText().trimmed();
                 QString group = groupCombo->currentText().trimmed();
+                bool optional = optionalCheckBox->isChecked();
 
-                if (courseName.isEmpty() || room.isEmpty()) {
+                if (courseName.isEmpty() || room.isEmpty() || day.isEmpty() || hour.isEmpty() || group.isEmpty() || type.isEmpty()) {
                     QMessageBox::warning(&dialog, "Invalid Input",
                         "Please fill in all fields.");
                     return;
@@ -520,21 +529,21 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                                                TimeUtilis::stringToDayEnum(day.toStdString()),
                                                stoi(hour.toStdString()),
                                                room.toUpper().toStdString(),
-                                               false,group.toStdString());
+                                               optional,group.toStdString());
                 // this is a pseudo-schedule just for calling the test function below
                 if (!schedule.testValability()) {
                     QMessageBox::warning(&dialog, "Invalid Input",schedule.getErrorDescriptionQString());
                     return;
                 }
 
+                schedule.setType(type.toStdString());
 
 
 
 
 
-                std::cout << "Adding course: " << courseName.toStdString()
-                          << ", Room: " << room.toStdString()
-                          << ", Type: " << type.toStdString() << std::endl;
+                schedule.addScheduleToFile();
+                populateScheduleTable();  // refresh the table to show the new course
 
                 QMessageBox::information(&dialog, "Success",
                     QString("Course '%1' added successfully!").arg(courseName));

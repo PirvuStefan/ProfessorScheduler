@@ -6,6 +6,7 @@
 #include <string>
 #include <QFile>
 #include <qtextstream.h>
+#include <iostream>
 
 #include "../Headers/TimeUtilis.h"
 
@@ -37,6 +38,10 @@ std::optional<bool> Schedule::getOwnership() const {
 
 void Schedule::setOptional(bool optional = true) {
     this->optional = optional;
+}
+
+void Schedule::setType(std::string type) {
+    this->type = type;
 }
 
 bool Schedule::compareSchedulesByPeriod(const Schedule &a, const Schedule &b) {
@@ -133,7 +138,7 @@ bool Schedule::testValability(){
             if (existingGroup[0] == group[0]) {
                 type = "overlap_conflict";
                 return false;
-            }
+            } // TODO: fix overlapping groups logic here, this does not work as intended, because 1 overlapps with 1A, but 1A does not overlap with 1B
 
         }
 
@@ -147,6 +152,48 @@ bool Schedule::testValability(){
 
     return true;
 
+}
+
+void Schedule::addScheduleToFile() {
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::Append | QIODevice::Text)) {
+        return;
+    }
+
+    QTextStream out(&file);
+    out << QString::fromStdString(professor) << ","
+        << QString::fromStdString(subject) << ","
+        << QString::fromStdString(type) << ","
+        << QString::fromStdString( (day == TimeUtilis::Day::MONDAY) ? "Monday" :
+                                    (day == TimeUtilis::Day::TUESDAY) ? "Tuesday" :
+                                    (day == TimeUtilis::Day::WEDNESDAY) ? "Wednesday" :
+                                    (day == TimeUtilis::Day::THURSDAY) ? "Thursday" :
+                                    "Friday") << ","
+        << QString::number(period) << ","
+        << QString::fromStdString(room) << ","
+        << (optional ? "optional" : "mandatory") << ","
+        << QString::fromStdString(group) << "\n";
+
+    std::cout << "Succesfully added the following schedule to the system";
+    print();
+
+    file.close();
+}
+
+void Schedule::print() {
+    std::cout << "Schedule Details:\n";
+    std::cout << "Professor: " << professor << "\n";
+    std::cout << "Subject: " << subject << "\n";
+    std::cout << "Type: " << type << "\n";
+    std::cout << "Day: " << (day == TimeUtilis::Day::MONDAY ? "Monday" :
+                             day == TimeUtilis::Day::TUESDAY ? "Tuesday" :
+                             day == TimeUtilis::Day::WEDNESDAY ? "Wednesday" :
+                             day == TimeUtilis::Day::THURSDAY ? "Thursday" :
+                             "Friday") << "\n";
+    std::cout << "Period: " << period << "\n";
+    std::cout << "Room: " << room << "\n";
+    std::cout << "Optional: " << (optional ? "Yes" : "No") << "\n";
+    std::cout << "Group: " << group << "\n";
 }
 
 std::string Schedule::getErrorDescription() const {
