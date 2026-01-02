@@ -135,10 +135,10 @@ bool Schedule::testValability(){
             // 1 dar 1A are curs la aceeasi ora
 
 
-            if (existingGroup[0] == group[0]) {
+            if (existingGroup[0] == group[0] and (existingGroup.length() > 1 xor group.length() > 1) ){
                 type = "overlap_conflict";
                 return false;
-            } // TODO: fix overlapping groups logic here, this does not work as intended, because 1 overlapps with 1A, but 1A does not overlap with 1B
+            } //  1 overlapps with 1A, but 1A does not overlap with 1B
 
         }
 
