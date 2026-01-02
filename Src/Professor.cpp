@@ -359,11 +359,11 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
             m_backButton->setCursor(Qt::PointingHandCursor);
 
-            // Add Course button
+
             m_addCourseButton = new QPushButton("+ Add Course", this);
             m_addCourseButton->setStyleSheet(R"(
                 QPushButton {
-                    background-color: #57C785;
+                    background-color: #016B61;
                     color: white;
                     font-size: 14px;
                     font-weight: 600;
@@ -381,7 +381,7 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             )");
             m_addCourseButton->setCursor(Qt::PointingHandCursor);
 
-            // Footer layout with both buttons
+
             auto *footerLayout = new QHBoxLayout();
             footerLayout->addWidget(m_backButton);
             footerLayout->addStretch();
@@ -392,7 +392,6 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             mainLayout->addWidget(m_scheduleTable, 1);
             mainLayout->addLayout(footerLayout);
 
-            // Populate with sample data
             populateScheduleTable();
 
             // Connect signals
@@ -475,17 +474,35 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             auto *optionalCheckBox = new QCheckBox("Optional:", this);
             optionalCheckBox->setObjectName("optionalCheckBox");
 
+            // text layout for them
+            auto *lblCourse = new QLabel("Course Name:", &dialog);
+            lblCourse->setStyleSheet("color: black;");
+            formLayout->addRow(lblCourse, courseNameEdit);
 
+            auto *lblRoom = new QLabel("Room:", &dialog);
+            lblRoom->setStyleSheet("color: black;");
+            formLayout->addRow(lblRoom, roomEdit);
 
+            auto *lblType = new QLabel("Type:", &dialog);
+            lblType->setStyleSheet("color: black;");
+            formLayout->addRow(lblType, typeCombo);
 
+            auto *lblDay = new QLabel("Day:", &dialog);
+            lblDay->setStyleSheet("color: black;");
+            formLayout->addRow(lblDay, dayCombo);
 
-            formLayout->addRow("Course Name:", courseNameEdit);
-            formLayout->addRow("Room:", roomEdit);
-            formLayout->addRow("Type:", typeCombo);
-            formLayout->addRow("Day:", dayCombo);
-            formLayout->addRow("Hour:", hourCombo);
-            formLayout->addRow("Group:", groupCombo);
-            formLayout->addRow("Optional:", optionalCheckBox);
+            auto *lblHour = new QLabel("Hour:", &dialog);
+            lblHour->setStyleSheet("color: black;");
+            formLayout->addRow(lblHour, hourCombo);
+
+            auto *lblGroup = new QLabel("Group:", &dialog);
+            lblGroup->setStyleSheet("color: black;");
+            formLayout->addRow(lblGroup, groupCombo);
+
+            optionalCheckBox->setText("");
+            auto *lblOptional = new QLabel("Optional:", &dialog);
+            lblOptional->setStyleSheet("color: black;");
+            formLayout->addRow(lblOptional, optionalCheckBox);
 
             // Button box
             auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
@@ -537,13 +554,7 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 }
 
                 schedule.setType(type.toStdString());
-
-
-
-
-
                 schedule.addScheduleToFile();
-                populateScheduleTable();  // refresh the table to show the new course
 
                 QMessageBox::information(&dialog, "Success",
                     QString("Course '%1' added successfully!").arg(courseName));
@@ -553,7 +564,12 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
             connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
+
+            m_user->initialiseSchedules();
             dialog.exec();
+
+
+            populateScheduleTable();
         }
 
 

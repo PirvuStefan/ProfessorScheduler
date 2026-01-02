@@ -80,6 +80,7 @@ std::string Schedule::getColor() const {
     if (type == "lecture") return "#0F8CBD";
     if (type == "lab") return "#D16924";
     if (type == "seminar") return "#EDDD53";
+    if (type == "lecture" and optional) return "#70B2B2";
     return "#762BC2"; // project or other types
 
 }
