@@ -63,7 +63,7 @@ private:
 };
 ```
 
-### Modern C++ Implementation: TimeUtilis
+### Modern C++ Enums
 
 The program utilizes a dedicated namespace `TimeUtilis` to handle temporal logic. By using `enum class`, we ensure type safety and prevent naming conflicts between different parts of the system.
 
@@ -90,7 +90,7 @@ The `Schedule` class includes a `getColor()` method that directly supports the G
 | Non-Owned   | #302825 | High     |
 
 ### Data Organization
-
+    
 To ensure the schedule is displayed chronologically, the class provides a static helper `compareSchedulesByPeriod`. This allows the program to sort schedules first by their period and subsequently by their group designation.
 
 ```cpp
@@ -105,6 +105,20 @@ return a.period < b.period;
 
 **Note on Privacy**: The `getSubject()` and `getProfessor()` methods implement an ownership check. If `ownership` is `std::nullopt`, these methods return an empty string to protect the data of classes that the user does not have access.
 We use std::optional<bool> for that purpose to represent three states: owned, not owned, and not applicable (for students), similar to Boolean in Java (tertiary logic).
+
+```cpp
+std::string Schedule::getSubject() const {
+if (ownership == false) return "";
+return subject;
+}
+
+std::string Schedule::getProfessor() const {
+if (ownership == false) return "";
+return professor;
+}
+```
+
+The description of the schedules is displayed based on the attributes ownership ( polymorphic behavior depending on the user type, but without any dynamic cast or override in the derived class).
 
 ## Data Strorage
 

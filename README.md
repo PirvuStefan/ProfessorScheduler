@@ -2,7 +2,7 @@
 
 ## What is Professor Scheduler?
 
-Professor Scheduler is a desktop application designed to help university professors and students manage their academic timetables. Think of it as a digital calendar specifically built for academic life, where everyone can view their class schedules, see when and where their classes take place, and avoid scheduling conflicts.
+Professor Scheduler is a Qt desktop application designed to help university professors and students manage their academic timetables. Think of it as a digital calendar specifically built for academic life, where everyone can view their class schedules, see when and where their classes take place, and avoid scheduling conflicts.
 
 ## Who is it for?
 
@@ -36,7 +36,10 @@ This application serves two main groups:
   - **Blue**: Lectures
   - **Orange**: Lab sessions
   - **Yellow**: Seminars
-  - **Dark**: Times when you're not available
+  - **Purple**: Project sessions
+  - **Blue-Green**: Optional classes
+  - **Dark**: Defined/occupied slots (exclusively for professors)
+  - **Transparent**: Free slots
 
 ### ⏰ **Schedule Management**
 - **For Professors**: Add new classes you'll be teaching
@@ -70,6 +73,7 @@ The system automatically prevents scheduling conflicts:
    - Choose a secure password
    - Select whether you're a professor or student
 3. **Log In**: Use your email and password to access your account
+4. **View the accounts.txt file** in the project directory to see pre-created accounts for testing
 
 ### Viewing Your Schedule
 Once logged in, you'll see:
@@ -105,14 +109,6 @@ Once logged in, you'll see:
 **Platform:**
 - Desktop application for Windows, macOS, and Linux
 
-## Benefits
-
-✅ **Saves Time**: No more manually tracking schedules or checking multiple sources  
-✅ **Prevents Mistakes**: Automatic conflict detection ensures no double-bookings  
-✅ **Easy to Use**: Clean, intuitive interface that anyone can navigate  
-✅ **Organized**: All your academic schedule information in one place  
-✅ **Accessible**: Works on your personal computer without internet required  
-
 ## Privacy & Security
 
 - Your account information is stored securely
@@ -121,9 +117,14 @@ Once logged in, you'll see:
 - Students see the classes they attend
 - Private information is protected from unauthorized access
 
+## Setup
 
-## How to Run
 1. Ensure you have a C++ development environment set up with Qt installed.
-2. Clone the repository to your local machine.
-3. Open the project and build it using your IDE. 
-4. Make sure to have the qt libraries linked properly.
+2. Clone the repository to your local machine:
+   - Command: `git clone https://github.com/PirvuStefan/ProfessorScheduler.git`
+3. Open the project and build it using your IDE.
+4. Make sure to have the Qt libraries linked properly.
+
+## Note
+
+This application is a prototype and may require further enhancements for production use. This is strictly a college project, not meant to be production ready or to be used in a real academic context.Feedback and contributions are welcome.
