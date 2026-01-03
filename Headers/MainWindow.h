@@ -5,7 +5,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-#include "Headers/User.h"
+#include "User.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

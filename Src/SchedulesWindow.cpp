@@ -2,7 +2,7 @@
 // Created by Stefan Pirvu on 17.11.2025.
 //
 
-#include "SchedulesWindow.h"
+#include "../Headers/SchedulesWindow.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>

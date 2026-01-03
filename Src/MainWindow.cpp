@@ -1,5 +1,5 @@
-#include "MainWindow.h"
-#include "CreateAccount.h"
+#include "../Headers/MainWindow.h"
+#include "../Headers/CreateAccount.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -12,10 +12,10 @@
 #include <optional>
 #include <QFile>
 
-#include "Headers/User.h"
-#include "Headers/UserFactory.h"
-#include "Headers/Professor.h"
-#include "Headers/Student.h"
+#include "../Headers/User.h"
+#include "../Headers/UserFactory.h"
+#include "../Headers/Professor.h"
+#include "../Headers/Student.h"
 
 User* MainWindow::authenticateUser(const QString &email, const QString &password) {
 

@@ -13,21 +13,21 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(ProfessorScheduler_Public_ main.cpp
-        MainWindow.cpp
-        MainWindow.h
+add_executable(ProfessorScheduler_Public_ Src/main.cpp
+        Src/MainWindow.cpp
+        Headers/MainWindow.h
         Src/Schedule.cpp
         Headers/Schedule.h
-        CreateAccount.cpp
-        CreateAccount.h
+        Src/CreateAccount.cpp
+        Headers/CreateAccount.h
         Src/User.cpp
         Headers/User.h
         Src/Student.cpp
         Headers/Student.h
         Src/Professor.cpp
         Headers/Professor.h
-        SchedulesWindow.cpp
-        SchedulesWindow.h
+        Src/SchedulesWindow.cpp
+        Headers/SchedulesWindow.h
         Src/UserFactory.cpp
         Headers/UserFactory.h
         Headers/TimeUtilis.h)
