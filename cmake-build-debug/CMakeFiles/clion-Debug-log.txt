@@ -20,6 +20,6 @@
 -- Found OpenGL: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework
 -- Found WrapOpenGL: TRUE
 -- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
--- Configuring done (1.9s)
+-- Configuring done (3.0s)
 -- Generating done (0.2s)
 -- Build files have been written to: /Users/stefanpirvu/ProfessorScheduler Public /cmake-build-debug

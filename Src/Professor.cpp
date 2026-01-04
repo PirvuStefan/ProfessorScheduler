@@ -360,6 +360,8 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             m_backButton->setCursor(Qt::PointingHandCursor);
 
 
+
+
             m_addCourseButton = new QPushButton("+ Add Course", this);
             m_addCourseButton->setStyleSheet(R"(
                 QPushButton {
@@ -381,10 +383,33 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             )");
             m_addCourseButton->setCursor(Qt::PointingHandCursor);
 
+            auto *m_addDeleteButton = new QPushButton("- Delete Course", this);
+            m_addDeleteButton->setStyleSheet(R"(
+                QPushButton {
+                    background-color: #016B61;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: 600;
+                    padding: 10px 24px;
+                    border: none;
+                    border-radius: 5px;
+                    min-height: 40px;
+                }
+                QPushButton:hover {
+                    background-color: #3ED67B;
+                }
+                QPushButton:pressed {
+                    background-color: #70B2B2;
+                }
+                )");
+            m_addDeleteButton->setCursor(Qt::PointingHandCursor);
+
+
 
             auto *footerLayout = new QHBoxLayout();
             footerLayout->addWidget(m_backButton);
             footerLayout->addStretch();
+            footerLayout->addWidget(m_addDeleteButton);
             footerLayout->addWidget(m_addCourseButton);
 
             mainLayout->addWidget(titleLabel);
@@ -399,6 +424,7 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                     this, &ProfessorScheduleWidget::updateScheduleForDay);
             connect(m_backButton, &QPushButton::clicked, this, &QWidget::close);
             connect(m_addCourseButton, &QPushButton::clicked, this, &ProfessorScheduleWidget::showAddCourseDialog);
+            connect(m_addDeleteButton, &QPushButton::clicked, this, &ProfessorScheduleWidget::showDeleteCourseDialog);
         }
 
         void showAddCourseDialog() {
@@ -571,6 +597,179 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
             populateScheduleTable();
         }
+
+        void showDeleteCourseDialog() {
+
+            QDialog dialog(this);
+            dialog.setWindowTitle("Delete a Course");
+            dialog.setModal(true);
+            dialog.resize(400, 300);
+            dialog.setStyleSheet("QDialog { background-color: #E5E9C5; }");
+
+            auto *formLayout = new QFormLayout(&dialog);
+            formLayout->setContentsMargins(30, 30, 30, 30);
+            formLayout->setSpacing(15);
+
+            // Course name input
+            auto *courseNameEdit = new QLineEdit(&dialog);
+            courseNameEdit->setPlaceholderText("e.g., Advanced Mathematics");
+            courseNameEdit->setStyleSheet(R"(
+                QLineEdit {
+                    background-color: white;
+                    border: 2px solid #016B61;
+                    border-radius: 5px;
+                    padding: 8px;
+                    font-size: 13px;
+                    color: #016B61;
+                }
+                QLineEdit:focus {
+                    border-color: #70B2B2;
+                }
+            )");
+
+            // Room input
+            auto *roomEdit = new QLineEdit(&dialog);
+            roomEdit->setPlaceholderText("e.g., B302");
+            roomEdit->setStyleSheet(courseNameEdit->styleSheet());
+
+            // Type selector
+            auto *typeCombo = new QComboBox(&dialog);
+            typeCombo->addItems({"lecture", "seminar", "lab", "project"});
+            typeCombo->setStyleSheet(R"(
+                QComboBox {
+                    background-color: white;
+                    border: 2px solid #016B61;
+                    border-radius: 5px;
+                    padding: 8px;
+                    font-size: 13px;
+                    color: #016B61;
+                }
+                QComboBox:hover {
+                    border-color: #70B2B2;
+                }
+                QComboBox::drop-down {
+                    border: none;
+                }
+                QComboBox QAbstractItemView {
+                    background-color: white;
+                    selection-background-color: #9ECFD4;
+                    selection-color: #016B61;
+                }
+            )");
+
+            auto *dayCombo= new QComboBox(&dialog);
+            dayCombo->addItems({"Mon", "Thu", "Wed", "Thu", "Fri"});
+            dayCombo->setStyleSheet(typeCombo->styleSheet());
+
+            auto *hourCombo= new QComboBox(&dialog);
+            hourCombo->addItems({"8", "10", "12", "14", "16", "18"});
+            hourCombo->setStyleSheet(typeCombo->styleSheet());
+
+            auto *groupCombo= new QComboBox(&dialog);
+            groupCombo->addItems({"1A", "1B", "1", "2A","2B","2","3A","3B","3","all"});
+            groupCombo->setStyleSheet(typeCombo->styleSheet());
+
+
+
+            // text layout for them
+            auto *lblCourse = new QLabel("Course Name:", &dialog);
+            lblCourse->setStyleSheet("color: black;");
+            formLayout->addRow(lblCourse, courseNameEdit);
+
+            auto *lblRoom = new QLabel("Room:", &dialog);
+            lblRoom->setStyleSheet("color: black;");
+            formLayout->addRow(lblRoom, roomEdit);
+
+            auto *lblType = new QLabel("Type:", &dialog);
+            lblType->setStyleSheet("color: black;");
+            formLayout->addRow(lblType, typeCombo);
+
+            auto *lblDay = new QLabel("Day:", &dialog);
+            lblDay->setStyleSheet("color: black;");
+            formLayout->addRow(lblDay, dayCombo);
+
+            auto *lblHour = new QLabel("Hour:", &dialog);
+            lblHour->setStyleSheet("color: black;");
+            formLayout->addRow(lblHour, hourCombo);
+
+            auto *lblGroup = new QLabel("Group:", &dialog);
+            lblGroup->setStyleSheet("color: black;");
+            formLayout->addRow(lblGroup, groupCombo);
+
+
+
+            // Button box
+            auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+            buttonBox->setStyleSheet(R"(
+                QPushButton {
+                    background-color: #016B61;
+                    color: white;
+                    font-size: 13px;
+                    font-weight: 600;
+                    padding: 8px 16px;
+                    border: none;
+                    border-radius: 5px;
+                    min-width: 80px;
+                }
+                QPushButton:hover {
+                    background-color: #70B2B2;
+                }
+            )");
+
+            formLayout->addRow(buttonBox);
+
+            connect(buttonBox, &QDialogButtonBox::accepted, [&]() {
+                QString courseName = courseNameEdit->text().trimmed();
+                QString room = roomEdit->text().trimmed();
+                QString type = typeCombo->currentText();
+                QString day = dayCombo->currentText().trimmed();
+                QString hour = hourCombo->currentText().trimmed();
+                QString group = groupCombo->currentText().trimmed();
+
+
+                if (courseName.isEmpty() || room.isEmpty() || day.isEmpty() || hour.isEmpty() || group.isEmpty() || type.isEmpty()) {
+                    QMessageBox::warning(&dialog, "Invalid Input",
+                        "Please fill in all fields.");
+                    return;
+                }
+
+
+
+                Schedule schedule = Schedule(m_user->getName(),courseName.toStdString(),
+                                               "neither",
+                                               TimeUtilis::stringToDayEnum(day.toStdString()),
+                                               stoi(hour.toStdString()),
+                                               room.toUpper().toStdString(),
+                                               false,group.toStdString());
+                // this is a pseudo-schedule just for calling the test function below
+                if (!schedule.testValability()) {
+                    QMessageBox::warning(&dialog, "Invalid Input",schedule.getErrorDescriptionQString());
+                    return;
+                }
+
+                schedule.setType(type.toStdString());
+                schedule.addScheduleToFile();
+
+                QMessageBox::information(&dialog, "Success",
+                    QString("Course '%1' deleted successfully!").arg(courseName));
+
+                dialog.accept();
+            });
+
+            connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+            //TODO: Actualy test if the course exists before deleting it and also delete it from the txt file
+
+
+            m_user->initialiseSchedules();
+            dialog.exec();
+
+
+            populateScheduleTable();
+
+        }
+
+
 
 
 

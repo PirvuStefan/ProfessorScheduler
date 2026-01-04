@@ -100,7 +100,9 @@ void CreateAccount::setupUi() {
     auto *formLayout = new QVBoxLayout(formWidget);
     formLayout->setSpacing(0);
 
-    // Header
+
+
+
     auto *headerLabel = new QLabel("Create Account", this);
     headerLabel->setObjectName("welcomeLabel");
 
@@ -112,7 +114,6 @@ void CreateAccount::setupUi() {
     formLayout->addWidget(subtitleLabel);
     formLayout->addSpacing(35);
 
-    // Full Name field
     auto *nameLabel = new QLabel("Full Name", this);
     nameLabel->setObjectName("fieldLabel");
     fullNameLineEdit = new QLineEdit(this);
@@ -125,7 +126,6 @@ void CreateAccount::setupUi() {
     formLayout->addWidget(fullNameLineEdit);
     formLayout->addSpacing(20);
 
-    // Email field
     auto *emailLabel = new QLabel("Email", this);
     emailLabel->setObjectName("fieldLabel");
     emailLineEdit = new QLineEdit(this);
@@ -138,7 +138,6 @@ void CreateAccount::setupUi() {
     formLayout->addWidget(emailLineEdit);
     formLayout->addSpacing(20);
 
-    // Password field
     auto *passwordLabel = new QLabel("Password", this);
     passwordLabel->setObjectName("fieldLabel");
     passwordLineEdit = new QLineEdit(this);
@@ -152,7 +151,6 @@ void CreateAccount::setupUi() {
     formLayout->addWidget(passwordLineEdit);
     formLayout->addSpacing(20);
 
-    // Confirm Password field
     auto *confirmPasswordLabel = new QLabel("Confirm Password", this);
     confirmPasswordLabel->setObjectName("fieldLabel");
     confirmPasswordLineEdit = new QLineEdit(this);
@@ -166,14 +164,12 @@ void CreateAccount::setupUi() {
     formLayout->addWidget(confirmPasswordLineEdit);
     formLayout->addSpacing(20);
 
-    // Professor checkbox
     professorCheckBox = new QCheckBox("I am a Professor", this);
     professorCheckBox->setObjectName("professorCheckBox");
 
     formLayout->addWidget(professorCheckBox);
     formLayout->addSpacing(25);
 
-    // Create Account button
     createAccountButton = new QPushButton("Create Account", this);
     createAccountButton->setObjectName("loginButton");
     createAccountButton->setCursor(Qt::PointingHandCursor);
@@ -182,7 +178,6 @@ void CreateAccount::setupUi() {
     formLayout->addWidget(createAccountButton);
     formLayout->addSpacing(20);
 
-    // Back to login link
     auto *loginLayout = new QHBoxLayout();
     auto *loginText = new QLabel("Already have an account? ", this);
     loginText->setObjectName("normalText");
@@ -201,7 +196,6 @@ void CreateAccount::setupUi() {
 
     rightLayout->addWidget(formWidget);
 
-    // Add panels to main layout
     mainLayout->addWidget(leftPanel, 1);
     mainLayout->addWidget(rightPanel, 1);
 
@@ -370,13 +364,11 @@ void CreateAccount::onCreateAccountClicked() {
         return;
     }
 
-    // TODO: Implement actual account creation logic here
     QString accountType = isProfessor ? "Professor" : "Student";
     QMessageBox::information(this, "Account Created",
                             QString("Account created for %1\nEmail: %2\nType: %3")
                             .arg(fullName).arg(email).arg(accountType));
 
-    // After successful creation, go back to login
     storeAccountDetails(fullName, email, password, isProfessor);
     onBackToLoginClicked();
 }
