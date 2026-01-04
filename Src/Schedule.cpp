@@ -3,12 +3,15 @@
 //
 
 #include "../Headers/Schedule.h"
+#include "../Headers/User.h"
 #include <string>
 #include <QFile>
 #include <qtextstream.h>
 #include <iostream>
 
 #include "../Headers/TimeUtilis.h"
+
+class User;
 
 Schedule::Schedule(std::string subject, std::string type, bool optional = false ) {
     this->type = type;
@@ -42,6 +45,10 @@ void Schedule::setOptional(bool optional = true) {
 
 void Schedule::setType(std::string type) {
     this->type = type;
+}
+
+void Schedule::setSubject(std::string subject) {
+    this->subject = subject;
 }
 
 bool Schedule::compareSchedulesByPeriod(const Schedule &a, const Schedule &b) {
@@ -155,7 +162,7 @@ bool Schedule::testValability(){
 
 }
 
-bool Schedule::testDeleteValability() {
+bool Schedule::testDeleteValability(User* user) {
 
     QFile file("Schedules/schedules.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -174,7 +181,11 @@ bool Schedule::testDeleteValability() {
 
         if ( parts.size() < 7) continue;
         if ( day != TimeUtilis::stringToDayEnum(parts[3].toStdString())) continue; // different day, no conflict
-        if ( period == parts[4].toInt() and group == parts[7].toStdString()) return true;
+        if ( user->getName() != parts[0].toStdString()) continue; // we only want to delete our own schedules, we can not delete others' schedules
+        if ( period == parts[4].toInt() and group == parts[7].toStdString()) {
+            subject = parts[1].toStdString();
+            return true;
+        }
 
     }
 
@@ -210,6 +221,46 @@ void Schedule::addScheduleToFile() {
     file.close();
 }
 
+void Schedule::deleteSchedule() {
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QStringList lines;
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(",");
+
+        if (parts.size() < 8) { // Note: index 7 requires at least 8 parts
+            lines.append(line);
+            continue;
+        }
+
+        // Logic check: if it DOES NOT match, we KEEP it.
+        // If it matches, we skip adding it to the 'lines' list.
+        bool isMatch = (group == parts[7].toStdString() &&
+                        period == parts[4].toInt() &&
+                        day == TimeUtilis::stringToDayEnum(parts[3].toStdString()) &&
+                        professor == parts[0].toStdString());
+
+        if (!isMatch) {
+            lines.append(line);
+        }
+    }
+    file.close();
+
+    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        QTextStream out(&file);
+        for (const QString &remainingLine : lines) {
+            out << remainingLine << "\n";
+        }
+        file.close();
+    }
+}
+
 void Schedule::print() {
     std::cout << "Schedule Details:\n";
     std::cout << "Professor: " << professor << "\n";
@@ -231,6 +282,7 @@ std::string Schedule::getErrorDescription() const {
     if (type == "year_conflict") return "Schedule conflicts with existing schedule for the whole year at the same time.";
     if (type == "group_conflict") return "Schedule conflicts with existing schedule for the same group at the same time.";
     if (type == "overlap_conflict") return "Schedule conflicts with existing schedule for overlapping groups at the same time.";
+    if (type == "delete") return "You either do not own this schedule or it does not exist.";
     return "No conflict."; // this should be unreachable
 }
 
@@ -239,5 +291,6 @@ QString Schedule::getErrorDescriptionQString() const {
     if (type == "year_conflict") return "Schedule conflicts with existing schedule for the whole year at the same time.";
     if (type == "group_conflict") return "Schedule conflicts with existing schedule for the same group at the same time.";
     if (type == "overlap_conflict") return "Schedule conflicts with existing schedule for overlapping groups at the same time.";
+    if (type == "delete") return "You either do not own this schedule or it does not exist.";
     return "No conflict."; // this should be unreachable
 }

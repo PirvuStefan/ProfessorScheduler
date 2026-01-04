@@ -8,6 +8,7 @@
 #include <string>
 
 #include "TimeUtilis.h"
+class User;
 
 
 class Schedule {
@@ -51,9 +52,11 @@ class Schedule {
 
     bool testValability();
 
-    bool testDeleteValability();
+    bool testDeleteValability(User *user);
 
     void addScheduleToFile();
+
+    void deleteSchedule();
 
     void print();
 
@@ -66,6 +69,8 @@ class Schedule {
     void setOptional(bool optional);
 
     void setType(std::string type);
+
+    void setSubject(std::string subject);
 };
 
 

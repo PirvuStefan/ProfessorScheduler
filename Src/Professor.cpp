@@ -699,35 +699,31 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
 
                 Schedule schedule = Schedule(m_user->getName(),"none",
-                                               "neither",
+                                               "delete",
                                                TimeUtilis::stringToDayEnum(day.toStdString()),
                                                stoi(hour.toStdString()),
                                                "none",
                                                false,group.toStdString());
                 // this is a pseudo-schedule just for calling the test function below
-                if (!schedule.testValability()) {
+
+                if (!schedule.testDeleteValability(m_user)) {
                     QMessageBox::warning(&dialog, "Invalid Input",schedule.getErrorDescriptionQString());
                     return;
                 }
 
-                //schedule.setType(type.toStdString());
-                schedule.addScheduleToFile();
                 QString courseName = QString::fromStdString(schedule.getSubject());
-
                 QMessageBox::information(&dialog, "Success",
                     QString("Course '%1' deleted successfully!").arg(courseName));
+                schedule.deleteSchedule();
 
                 dialog.accept();
             });
 
             connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-            //TODO: Actualy test if the course exists before deleting it and also delete it from the txt file
-
 
             m_user->initialiseSchedules();
             dialog.exec();
-
 
             populateScheduleTable();
 
