@@ -610,32 +610,12 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             formLayout->setContentsMargins(30, 30, 30, 30);
             formLayout->setSpacing(15);
 
-            // Course name input
-            auto *courseNameEdit = new QLineEdit(&dialog);
-            courseNameEdit->setPlaceholderText("e.g., Advanced Mathematics");
-            courseNameEdit->setStyleSheet(R"(
-                QLineEdit {
-                    background-color: white;
-                    border: 2px solid #016B61;
-                    border-radius: 5px;
-                    padding: 8px;
-                    font-size: 13px;
-                    color: #016B61;
-                }
-                QLineEdit:focus {
-                    border-color: #70B2B2;
-                }
-            )");
 
-            // Room input
-            auto *roomEdit = new QLineEdit(&dialog);
-            roomEdit->setPlaceholderText("e.g., B302");
-            roomEdit->setStyleSheet(courseNameEdit->styleSheet());
 
-            // Type selector
-            auto *typeCombo = new QComboBox(&dialog);
-            typeCombo->addItems({"lecture", "seminar", "lab", "project"});
-            typeCombo->setStyleSheet(R"(
+
+            auto *dayCombo= new QComboBox(&dialog);
+            dayCombo->addItems({"Mon", "Thu", "Wed", "Thu", "Fri"});
+            dayCombo->setStyleSheet(R"(
                 QComboBox {
                     background-color: white;
                     border: 2px solid #016B61;
@@ -657,32 +637,16 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                 }
             )");
 
-            auto *dayCombo= new QComboBox(&dialog);
-            dayCombo->addItems({"Mon", "Thu", "Wed", "Thu", "Fri"});
-            dayCombo->setStyleSheet(typeCombo->styleSheet());
-
             auto *hourCombo= new QComboBox(&dialog);
             hourCombo->addItems({"8", "10", "12", "14", "16", "18"});
-            hourCombo->setStyleSheet(typeCombo->styleSheet());
+            hourCombo->setStyleSheet(dayCombo->styleSheet());
 
             auto *groupCombo= new QComboBox(&dialog);
             groupCombo->addItems({"1A", "1B", "1", "2A","2B","2","3A","3B","3","all"});
-            groupCombo->setStyleSheet(typeCombo->styleSheet());
+            groupCombo->setStyleSheet(dayCombo->styleSheet());
 
 
 
-            // text layout for them
-            auto *lblCourse = new QLabel("Course Name:", &dialog);
-            lblCourse->setStyleSheet("color: black;");
-            formLayout->addRow(lblCourse, courseNameEdit);
-
-            auto *lblRoom = new QLabel("Room:", &dialog);
-            lblRoom->setStyleSheet("color: black;");
-            formLayout->addRow(lblRoom, roomEdit);
-
-            auto *lblType = new QLabel("Type:", &dialog);
-            lblType->setStyleSheet("color: black;");
-            formLayout->addRow(lblType, typeCombo);
 
             auto *lblDay = new QLabel("Day:", &dialog);
             lblDay->setStyleSheet("color: black;");
@@ -719,27 +683,26 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
             formLayout->addRow(buttonBox);
 
             connect(buttonBox, &QDialogButtonBox::accepted, [&]() {
-                QString courseName = courseNameEdit->text().trimmed();
-                QString room = roomEdit->text().trimmed();
-                QString type = typeCombo->currentText();
                 QString day = dayCombo->currentText().trimmed();
                 QString hour = hourCombo->currentText().trimmed();
                 QString group = groupCombo->currentText().trimmed();
 
 
-                if (courseName.isEmpty() || room.isEmpty() || day.isEmpty() || hour.isEmpty() || group.isEmpty() || type.isEmpty()) {
+                if (day.isEmpty() || hour.isEmpty() || group.isEmpty() ) {
                     QMessageBox::warning(&dialog, "Invalid Input",
                         "Please fill in all fields.");
                     return;
                 }
 
+                // we only need these to identify the course to delete , rest of the fields are dummy
 
 
-                Schedule schedule = Schedule(m_user->getName(),courseName.toStdString(),
+
+                Schedule schedule = Schedule(m_user->getName(),"none",
                                                "neither",
                                                TimeUtilis::stringToDayEnum(day.toStdString()),
                                                stoi(hour.toStdString()),
-                                               room.toUpper().toStdString(),
+                                               "none",
                                                false,group.toStdString());
                 // this is a pseudo-schedule just for calling the test function below
                 if (!schedule.testValability()) {
@@ -747,8 +710,9 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                     return;
                 }
 
-                schedule.setType(type.toStdString());
+                //schedule.setType(type.toStdString());
                 schedule.addScheduleToFile();
+                QString courseName = QString::fromStdString(schedule.getSubject());
 
                 QMessageBox::information(&dialog, "Success",
                     QString("Course '%1' deleted successfully!").arg(courseName));

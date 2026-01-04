@@ -106,7 +106,7 @@ bool Schedule::testValability(){
 
         //Stefan Groia,Matematica Speciala,lecture,Monday,8,B302,mandatory,1A
         // parts[0] to parts[7]
-        if (parts.size() < 4) continue;
+        if (parts.size() < 7) continue;
 
         if ( day != TimeUtilis::stringToDayEnum(parts[3].toStdString())) continue; // different day, no conflict
 
@@ -152,6 +152,35 @@ bool Schedule::testValability(){
     }
 
     return true;
+
+}
+
+bool Schedule::testDeleteValability() {
+
+    QFile file("Schedules/schedules.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    //check if the current schedule conflicts with an existing one
+
+
+
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(",");
+
+        if ( parts.size() < 7) continue;
+        if ( day != TimeUtilis::stringToDayEnum(parts[3].toStdString())) continue; // different day, no conflict
+        if ( period == parts[4].toInt() and group == parts[7].toStdString()) return true;
+
+    }
+
+
+
+    return false;
 
 }
 

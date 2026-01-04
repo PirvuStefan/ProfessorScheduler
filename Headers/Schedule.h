@@ -51,6 +51,8 @@ class Schedule {
 
     bool testValability();
 
+    bool testDeleteValability();
+
     void addScheduleToFile();
 
     void print();
