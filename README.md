@@ -40,7 +40,7 @@ This application serves two main groups:
   - **Transparent**: Free slots
 
 ### ⏰ **Schedule Management**
-- **For Professors**: Add new classes you'll be teaching
+- **For Professors**: Add new classes you'll be teaching, delete existing ones
 - **For Students**: See all classes you're enrolled in
 - Each class shows:
   - Course name
@@ -54,7 +54,9 @@ This application serves two main groups:
 The system automatically prevents scheduling conflicts:
 - No two classes can use the same room at the same time
 - Student groups can't have overlapping classes
-- The system checks for conflicts before allowing a new class to be added
+- The system checks for conflicts before allowing a new class to be added/deleted
+- The system notifies users of any scheduling issues
+- Professors can only schedule classes in available time slots
 
 ### 👥 **Group Management**
 - Supports different student groups (like "1A", "1B", "2A", etc.)

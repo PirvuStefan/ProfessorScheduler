@@ -565,8 +565,6 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                     return;
                 }
 
-
-
                 Schedule schedule = Schedule(m_user->getName(),courseName.toStdString(),
                                                "neither",
                                                TimeUtilis::stringToDayEnum(day.toStdString()),
@@ -590,13 +588,11 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
             connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-
-            m_user->initialiseSchedules();
-            dialog.exec();
-
-
-            populateScheduleTable();
-
+            if (dialog.exec() == QDialog::Accepted) {
+                m_user->resetSchedules();
+                m_user->initialiseSchedules();
+                populateScheduleTable();
+            }
         }
 
         void showDeleteCourseDialog() {
@@ -723,13 +719,11 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
             connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-
-            m_user->resetSchedules();
-            m_user->initialiseSchedules();
-            dialog.exec();
-
-            populateScheduleTable();
-
+            if (dialog.exec() == QDialog::Accepted) {
+                m_user->resetSchedules();
+                m_user->initialiseSchedules();
+                populateScheduleTable();
+            } // to refresh the table after deletion
         }
 
 
