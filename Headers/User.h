@@ -46,6 +46,8 @@ public:
 
     std::vector<Schedule> getSchedulesForDay(TimeUtilis::Day day);
 
+    void resetSchedules();
+
 
     virtual void initialiseSchedules() = 0 ; // this will be declared pure virtual, but we leave it as virtual for now, so we can test the code easier
     virtual void AccountCreated() ; // we do want to have a different print message when a professor or a student creates an account

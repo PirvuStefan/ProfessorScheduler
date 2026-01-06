@@ -596,6 +596,7 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
 
 
             populateScheduleTable();
+
         }
 
         void showDeleteCourseDialog() {
@@ -716,12 +717,14 @@ QWidget* Professor::createScheduleWidget(QWidget *parent) {
                     QString("Course '%1' deleted successfully!").arg(courseName));
                 schedule.deleteSchedule();
 
+
                 dialog.accept();
             });
 
             connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
 
+            m_user->resetSchedules();
             m_user->initialiseSchedules();
             dialog.exec();
 

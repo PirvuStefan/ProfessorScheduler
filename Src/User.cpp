@@ -49,6 +49,10 @@ std::vector<Schedule> User::getSchedulesForDay(TimeUtilis::Day day) {
     return {};
 }
 
+void User::resetSchedules() {
+    schedules.clear();
+}
+
 TimeUtilis::Day stringToDayEnum(const std::string &dayStr) {
     if (dayStr == "MONDAY") return TimeUtilis::Day::MONDAY;
     if (dayStr == "TUESDAY") return TimeUtilis::Day::TUESDAY;
