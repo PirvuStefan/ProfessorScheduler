@@ -2,6 +2,9 @@
 
 Professor Scheduler is a Qt desktop application designed to help university professors and students manage their academic timetables. Think of it as a digital calendar specifically built for academic life, where everyone can view their class schedules, see when and where their classes take place, and avoid scheduling conflicts.
 
+<img width="1189" height="818" alt="Screenshot 2026-01-05 at 15 50 21" src="https://github.com/user-attachments/assets/d756ccf6-be3c-4cea-bd43-c3578f47fe28" />
+
+
 ## Who is it for?
 
 This application serves two main groups:
